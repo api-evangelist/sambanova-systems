@@ -1,0 +1,1010 @@
+openapi: 3.1.0
+info:
+  title: Sambanova Agents Service Audio API
+  description: Service for Sambanova agents
+  version: 0.0.1
+  termsOfService: https://sambanova.ai/cloud-end-user-license-agreement
+  contact:
+    email: info@sambanova.ai
+    name: SambaNova information
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://chat.sambanova.ai/api
+security:
+- api_key: []
+tags:
+- name: Audio
+paths:
+  /audio/transcriptions:
+    post:
+      operationId: createTranscription
+      tags:
+      - Audio
+      summary: Transcribes audio into the input language.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TranscriptionRequest'
+        description: Audio to transcribe and parameters
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/TranscriptionResponse'
+                - $ref: '#/components/schemas/TranscriptionStreamResponse'
+            text/plain:
+              schema:
+                type: string
+                example: It's a sound effect of a bell chiming, specifically a church bell.
+        '400':
+          description: Bad Request - Missing or invalid parameters
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 'Invalid request body:  - missing property ''model''"'
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/GeneralError'
+                - $ref: '#/components/schemas/SimpleError'
+              examples:
+                missing_model:
+                  summary: No model parameter provided
+                  value:
+                    error:
+                      message: you must provide a model parameter
+                      type: invalid_request_error
+                      param: null
+                      code: null
+                    request_id: a4fa849e
+                simple:
+                  summary: Simple error (unhandled cases)
+                  value:
+                    error: Model name is required
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+              examples:
+                invalid_api_key:
+                  summary: Invalid API key provided
+                  value:
+                    error:
+                      message: 'Incorrect API key provided: *****. You can find your API key at https://cloud.sambanova.ai/apis.'
+                      type: invalid_request_error
+                      param: null
+                      code: invalid_api_key
+                    request_id: d79vcq57os633dverhi0
+                missing_api_key:
+                  summary: No API key provided
+                  value:
+                    error:
+                      message: 'You didn''t provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY).'
+                      type: invalid_request_error
+                      param: null
+                      code: null
+                    request_id: d7a0dct7os633dvesi60
+        '404':
+          description: Not found - model does not exist or wrong endpoint called
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/GeneralError'
+                - $ref: '#/components/schemas/SimpleError'
+              examples:
+                model_not_found:
+                  summary: Model does not exist or is not accessible
+                  value:
+                    error:
+                      code: model_not_found
+                      message: The model `abc` does not exist or you do not have access to it.
+                      param: model
+                      type: invalid_request_error
+                    request_id: 887a8227
+                simple:
+                  summary: Simple error (unhandled cases e.g. wrong endpoint)
+                  value:
+                    error: Not found
+        '408':
+          description: Request timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleError'
+        '410':
+          description: Gone - model is no longer available (deprecated or removed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+        '500':
+          description: Internal Server Error. Unexpected issue on server side.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '503':
+          description: Service Temporarily Unavailable
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Service Temporarily Unavailable
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import fs from 'fs';\nimport SambaNova from 'sambanova';\n\nconst client = new SambaNova({\n  apiKey: process.env['SAMBANOVA_API_KEY'], // This is the default and can be omitted\n});\n\nconst transcription = await client.audio.transcriptions.create({\n  file: fs.createReadStream('path/to/file'),\n  model: 'Whisper-Large-v3',\n});\n\nconsole.log(transcription);"
+      - lang: Python
+        source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nfor transcription in client.audio.transcriptions.create(\n    file=b\"Example data\",\n    model=\"Whisper-Large-v3\",\n):\n  print(transcription)"
+  /audio/translations:
+    post:
+      operationId: createTranslation
+      tags:
+      - Audio
+      summary: Translate audio into English.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TranslationRequest'
+        description: Audio to translate and parameters
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/TranslationResponse'
+                - $ref: '#/components/schemas/TranslationStreamResponse'
+            text/plain:
+              schema:
+                type: string
+                example: It's a sound effect of a bell chiming, specifically a church bell.
+        '400':
+          description: Bad Request - Missing or invalid parameters
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 'Invalid request body:  - missing property ''model''"'
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/GeneralError'
+                - $ref: '#/components/schemas/SimpleError'
+              examples:
+                missing_model:
+                  summary: No model parameter provided
+                  value:
+                    error:
+                      message: you must provide a model parameter
+                      type: invalid_request_error
+                      param: null
+                      code: null
+                    request_id: a4fa849e
+                simple:
+                  summary: Simple error (unhandled cases)
+                  value:
+                    error: Model name is required
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+              examples:
+                invalid_api_key:
+                  summary: Invalid API key provided
+                  value:
+                    error:
+                      message: 'Incorrect API key provided: *****. You can find your API key at https://cloud.sambanova.ai/apis.'
+                      type: invalid_request_error
+                      param: null
+                      code: invalid_api_key
+                    request_id: d79vcq57os633dverhi0
+                missing_api_key:
+                  summary: No API key provided
+                  value:
+                    error:
+                      message: 'You didn''t provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY).'
+                      type: invalid_request_error
+                      param: null
+                      code: null
+                    request_id: d7a0dct7os633dvesi60
+        '404':
+          description: Not found - model does not exist or wrong endpoint called
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/GeneralError'
+                - $ref: '#/components/schemas/SimpleError'
+              examples:
+                model_not_found:
+                  summary: Model does not exist or is not accessible
+                  value:
+                    error:
+                      code: model_not_found
+                      message: The model `abc` does not exist or you do not have access to it.
+                      param: model
+                      type: invalid_request_error
+                    request_id: 887a8227
+                simple:
+                  summary: Simple error (unhandled cases e.g. wrong endpoint)
+                  value:
+                    error: Not found
+        '408':
+          description: Request timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleError'
+        '410':
+          description: Gone - model is no longer available (deprecated or removed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+        '500':
+          description: Internal Server Error. Unexpected issue on server side.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '503':
+          description: Service Temporarily Unavailable
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Service Temporarily Unavailable
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import fs from 'fs';\nimport SambaNova from 'sambanova';\n\nconst client = new SambaNova({\n  apiKey: process.env['SAMBANOVA_API_KEY'], // This is the default and can be omitted\n});\n\nconst translation = await client.audio.translations.create({\n  file: fs.createReadStream('path/to/file'),\n  model: 'Whisper-Large-v3',\n});\n\nconsole.log(translation);"
+      - lang: Python
+        source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nfor translation in client.audio.translations.create(\n    file=b\"Example data\",\n    model=\"Whisper-Large-v3\",\n):\n  print(translation)"
+components:
+  schemas:
+    TranscriptionRequest:
+      type: object
+      title: Transcription Request
+      description: Transcription request object
+      allOf:
+      - $ref: '#/components/schemas/TranscriptionTranslationRequestProperties'
+      required:
+      - model
+      - file
+      example:
+        model: Whisper-Large-v3
+        file: (binary audio file, e.g. "sample.wav")
+        prompt: Please transcribe carefully, including pauses and hesitations.
+        language: es
+        response_format: json
+        stream: true
+        stream_options:
+          include_usage: true
+    TranscriptionResponse:
+      type: object
+      title: Transcription Response
+      description: Transcription response json object
+      additionalProperties: true
+      properties:
+        text:
+          title: text
+          description: audio file text transcription
+          type: string
+      required:
+      - text
+      example:
+        text: Es un efecto de sonido de una campana sonando, específicamente una campana de iglesia.
+    TranscriptionStreamResponse:
+      type: object
+      title: Transcription  Stream Response
+      description: streamed chunk of a transcription response returned by the model
+      allOf:
+      - $ref: '#/components/schemas/TranscriptionTranslationResponseProperties'
+      required:
+      - choices
+      - created
+      - id
+      - model
+      - object
+      - system_fingerprint
+      examples:
+      - choices:
+        - delta:
+            content: es un sonido
+          index: 0
+          finish_reason: null
+          logprobs: null
+        created: 1737642515.3407679
+        custom_id: 0
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: Whisper-Large-v3
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+      - choices: []
+        created: 1737642515.3407679
+        custom_id: 0
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: Whisper-Large-v3
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+        usage:
+          completion_tokens: 100
+          completion_tokens_after_first_per_sec: 262.2771255106759
+          completion_tokens_after_first_per_sec_first_ten: 266.98193514986144
+          completion_tokens_after_first_per_sec_graph: 53.16720674817285
+          completion_tokens_per_sec: 217.87260449707574
+          end_time: 1737642515.9077535
+          is_last_response: true
+          prompt_tokens: 43
+          start_time: 1737642515.4458635
+          time_to_first_token: 0.0844266414642334
+          total_latency: 0.4589838186899821
+          total_tokens: 143
+          total_tokens_per_sec: 311.55782443081836
+    TopLogProbs:
+      title: TopLogProbs
+      type: object
+      additionalProperties: true
+      properties:
+        bytes:
+          title: Bytes
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+        logprob:
+          title: Logprob
+          type: number
+        token:
+          title: Token
+          type: string
+      required:
+      - token
+      - logprob
+      examples:
+      - token: ' Hello'
+        logprob: -0.00012340000000000002
+        bytes:
+        - 32
+        - 72
+        - 101
+        - 108
+        - 108
+        - 111
+      - token: ' Hi'
+        logprob: -8.243
+        bytes:
+        - 32
+        - 72
+        - 105
+    SimpleError:
+      title: SimpleError
+      type: object
+      description: other kind of simple schema errors
+      properties:
+        error:
+          title: error
+          type: string
+          description: error detail.
+          nullable: true
+      required:
+      - error
+    Usage:
+      title: Usage
+      type: object
+      description: Usage metrics for the completion, embeddings,transcription or translation request
+      additionalProperties: true
+      properties:
+        acceptance_rate:
+          title: Acceptance Rate
+          type: number
+          description: acceptance rate
+        completion_tokens:
+          title: Completion Tokens
+          type: integer
+          description: number of tokens generated in completion
+        completion_tokens_after_first_per_sec:
+          title: Completion Tokens After First Per Sec
+          type: number
+          description: completion tokens per second after first token generation
+        completion_tokens_after_first_per_sec_first_ten:
+          title: Completion Tokens After First Per Sec First Ten
+          type: number
+          description: completion tokens per second after first token generation first ten
+        completion_tokens_after_first_per_sec_graph:
+          title: Completion Tokens After First Per Sec Graph
+          type: number
+          description: completion tokens per second after first token generation
+        completion_tokens_per_sec:
+          title: Completion Tokens Per Sec
+          type: number
+          description: completion tokens per second
+        end_time:
+          title: End Time
+          type: number
+          description: The Unix timestamp (in seconds) of when the generation finished.
+        is_last_response:
+          title: Is Last Response
+          type: boolean
+          description: whether or not is last response, always true for non streaming response
+          const: true
+        prompt_tokens_details:
+          title: Prompt tokens details
+          type: object
+          description: Extra tokens details
+          additionalProperties: true
+          properties:
+            cached_tokens:
+              title: Cached tokens
+              description: amount of cached tokens
+              type: integer
+        prompt_tokens:
+          title: Prompt Tokens
+          type: integer
+          description: number of tokens used in the prompt sent
+        start_time:
+          title: Start Time
+          type: number
+          description: The Unix timestamp (in seconds) of when the generation started.
+        time_to_first_token:
+          title: Time To First Token
+          type: number
+          description: also TTF, time (in seconds) taken to generate the first token
+        time_to_first_token_graph:
+          title: Time To First Token Graph
+          type: number
+          description: Time (in seconds) to first token, adjusted for graph rendering. May differ slightly from time_to_first_token.
+        stop_reason:
+          title: Stop Reason
+          type: string
+          description: The reason generation stopped (e.g. "stop", "length"). Mirrors the choice-level finish_reason but reported at the usage level.
+          nullable: true
+        completion_tokens_details:
+          title: Completion Tokens Details
+          type: object
+          description: Breakdown of completion token consumption.
+          additionalProperties: true
+          properties:
+            reasoning_tokens:
+              title: Reasoning Tokens
+              type: integer
+              description: Number of tokens consumed by the model's internal reasoning process. Only present on reasoning-capable models.
+          nullable: true
+        total_latency:
+          title: Total Latency
+          type: number
+          description: total time (in seconds) taken to generate the full generation
+        total_tokens:
+          title: Total Tokens
+          type: integer
+          description: prompt tokens + completion tokens
+        total_tokens_per_sec:
+          title: Total Tokens Per Sec
+          type: number
+          description: tokens per second including prompt and completion
+      nullable: true
+      examples:
+      - completion_tokens: 260
+        completion_tokens_after_first_per_sec: 422.79282728043336
+        completion_tokens_after_first_per_sec_first_ten: 423.6108998455803
+        completion_tokens_after_first_per_sec_graph: 423.6108998455803
+        completion_tokens_per_sec: 314.53312043711406
+        completion_tokens_details:
+          reasoning_tokens: 55
+        end_time: 1776189309.02061
+        is_last_response: true
+        prompt_tokens: 90
+        prompt_tokens_details:
+          cached_tokens: 0
+        start_time: 1776189308.193988
+        stop_reason: stop
+        time_to_first_token: 0.21402883529663086
+        time_to_first_token_graph: 0.2102978229522705
+        total_latency: 0.8266220092773438
+        total_tokens: 350
+        total_tokens_per_sec: 423.40996981919204
+      - prompt_tokens: 43
+        total_tokens: 393
+    TranslationResponse:
+      type: object
+      title: Translation Response
+      description: Translation response json object
+      additionalProperties: true
+      properties:
+        text:
+          title: text
+          description: audio file english text translation
+          type: string
+      required:
+      - text
+      example:
+        text: It's a sound effect of a bell chiming, specifically a church bell.
+    TranscriptionTranslationChunkChoice:
+      title: Transcription Translation Chunk Choice
+      type: object
+      description: Transcription or translation chunk choice generated by streamed model responses.
+      additionalProperties: true
+      properties:
+        delta:
+          $ref: '#/components/schemas/TranscriptionTranslationResponseDelta'
+        finish_reason:
+          title: Finish Reason
+          type: string
+          description: The reason the model stopped generating tokens
+          enum:
+          - stop
+          nullable: true
+        index:
+          title: Index
+          type: integer
+          description: The index of the choice in the list of choices
+        logprobs:
+          title: Logprobs
+          anyOf:
+          - $ref: '#/components/schemas/LogProbs'
+          description: currently not supported, always null will be returned
+          nullable: true
+      required:
+      - index
+      - delta
+    TranslationRequest:
+      type: object
+      title: Translation Request
+      description: Translation request object
+      allOf:
+      - $ref: '#/components/schemas/TranscriptionTranslationRequestProperties'
+      required:
+      - model
+      - file
+      example:
+        model: Whisper-Large-v3
+        file: (binary audio file, e.g. "sample.wav")
+        prompt: Please translate carefully, including pauses and hesitations.
+        language: es
+        response_format: json
+        stream: true
+        stream_options:
+          include_usage: true
+    TranscriptionTranslationResponseProperties:
+      title: Transcription Translation Response Properties
+      type: object
+      additionalProperties: true
+      properties:
+        choices:
+          title: Choices
+          type: array
+          description: A list of transcription or translation choices.
+          items:
+            $ref: '#/components/schemas/TranscriptionTranslationChunkChoice'
+          minItems: 0
+          nullable: true
+        created:
+          title: Created
+          type: number
+          description: The Unix timestamp (in seconds) of when the chat completion was created.
+        id:
+          title: Id
+          type: string
+          description: A unique identifier for the chat completion.
+        model:
+          title: Model
+          description: The model used for the chat completion.
+          type: string
+        object:
+          title: Object
+          type: string
+          description: The object type, always `chat.completion.chunk`.
+          enum:
+          - chat.completion.chunk
+          const: chat.completion.chunk
+        system_fingerprint:
+          title: System fingerprint
+          type: string
+          description: Backend configuration that the model runs with.
+        usage:
+          $ref: '#/components/schemas/Usage'
+    LogProbs:
+      title: Completion Log Probs
+      type: object
+      description: Completion Log Probs object
+      additionalProperties: true
+      properties:
+        content:
+          $ref: '#/components/schemas/LogProbsContent'
+      required:
+      - content
+      examples:
+      - content:
+        - token: ' Hello'
+          logprob: -0.00012340000000000002
+          bytes:
+          - 32
+          - 72
+          - 101
+          - 108
+          - 108
+          - 111
+          top_logprobs:
+          - token: ' Hello'
+            logprob: -0.00012340000000000002
+            bytes:
+            - 32
+            - 72
+            - 101
+            - 108
+            - 108
+            - 111
+          - token: ' Hi'
+            logprob: -8.243
+            bytes:
+            - 32
+            - 72
+            - 105
+        - token: '!'
+          logprob: -0.0023456
+          bytes:
+          - 33
+          top_logprobs:
+          - token: '!'
+            logprob: -0.0023456
+            bytes:
+            - 33
+          - token: ','
+            logprob: -6.712
+            bytes:
+            - 44
+    LogProbsContent:
+      title: Log Probs Content
+      additionalProperties: true
+      properties:
+        bytes:
+          title: Bytes
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          nullable: true
+        logprob:
+          title: Logprob
+          type: number
+        token:
+          title: Token
+          type: string
+        top_logprobs:
+          $ref: '#/components/schemas/TopLogProbs'
+      required:
+      - token
+      - logprob
+      - top_logprobs
+      examples:
+      - token: ' Hello'
+        logprob: -0.00012340000000000002
+        bytes:
+        - 32
+        - 72
+        - 101
+        - 108
+        - 108
+        - 111
+        top_logprobs:
+        - token: ' Hello'
+          logprob: -0.00012340000000000002
+          bytes:
+          - 32
+          - 72
+          - 101
+          - 108
+          - 108
+          - 111
+        - token: ' Hi'
+          logprob: -8.243
+          bytes:
+          - 32
+          - 72
+          - 105
+    TranscriptionTranslationRequestProperties:
+      title: Transcription Translation Request Properties
+      type: object
+      additionalProperties: true
+      properties:
+        model:
+          title: Model
+          description: The model ID to use See available [models](https://docs.sambanova.ai/docs/en/models/sambacloud-models)
+          anyOf:
+          - type: string
+          - enum:
+            - Whisper-Large-v3
+        file:
+          title: file
+          description: 'The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.'
+          type: string
+          format: binary
+        prompt:
+          title: prompt
+          description: 'Optional text prompt provided to influence transcription Translation style or vocabulary. Example: “Please transcribe carefully, including pauses and hesitations.”'
+          type: string
+          nullable: true
+        language:
+          title: language
+          description: Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency.
+          nullable: true
+          type: string
+          enum:
+          - en
+          - zh
+          - de
+          - es
+          - ru
+          - ko
+          - fr
+          - ja
+          - pt
+          - tr
+          - pl
+          - ca
+          - nl
+          - ar
+          - sv
+          - it
+          - id
+          - hi
+          - fi
+          - vi
+          - he
+          - uk
+          - el
+          - ms
+          - cs
+          - ro
+          - da
+          - hu
+          - ta
+          - 'no'
+          - th
+          - ur
+          - hr
+          - bg
+          - lt
+          - la
+          - mi
+          - ml
+          - cy
+          - sk
+          - te
+          - fa
+          - lv
+          - bn
+          - sr
+          - az
+          - sl
+          - kn
+          - et
+          - mk
+          - br
+          - eu
+          - is
+          - hy
+          - ne
+          - mn
+          - bs
+          - kk
+          - sq
+          - sw
+          - gl
+          - mr
+          - pa
+          - si
+          - km
+          - sn
+          - yo
+          - so
+          - af
+          - oc
+          - ka
+          - be
+          - tg
+          - sd
+          - gu
+          - am
+          - yi
+          - lo
+          - uz
+          - fo
+          - ht
+          - ps
+          - tk
+          - nn
+          - mt
+          - sa
+          - lb
+          - my
+          - bo
+          - tl
+          - mg
+          - as
+          - tt
+          - haw
+          - ln
+          - ha
+          - ba
+          - jw
+          - su
+          - yue
+        response_format:
+          title: response format
+          description: Output format JSON or text.
+          type: string
+          enum:
+          - json
+          - text
+          default: json
+        stream:
+          title: stream
+          description: Enables streaming responses.
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          default: 'false'
+          x-stainless-override-schema:
+            type: boolean
+            default: false
+        stream_options:
+          title: stream options
+          description: Optional settings that apply when `stream` is true.
+          type: object
+          properties:
+            include_usage:
+              title: include usage
+              description: If true and `stream` is enabled, optional usage metadata will be included in the last streamed response event.
+              type: string
+              enum:
+              - 'true'
+              - 'false'
+              x-stainless-override-schema:
+                type: boolean
+              nullable: true
+          nullable: true
+    GeneralError:
+      title: GeneralError
+      type: object
+      description: other kind of errors
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              title: code
+              type: string
+              description: error code
+              nullable: true
+            message:
+              title: message
+              type: string
+              description: error message
+            param:
+              title: param
+              type: string
+              description: error params
+              nullable: true
+            type:
+              title: type
+              type: string
+              description: error type
+            error_model_output:
+              title: Error Model Output
+              type: string
+              description: Raw model output that could not be parsed. Present on `server_error` responses when the model produced output that failed internal parsing (e.g. a malformed tool call JSON).
+              nullable: true
+        request_id:
+          title: request_id
+          type: string
+          description: unique request identifier for debugging
+          nullable: true
+      required:
+      - error
+    TranscriptionTranslationResponseDelta:
+      title: Transcription Response Delta
+      type: object
+      description: Transcription or translation response delta chunk generated by streamed model responses.
+      additionalProperties: true
+      properties:
+        role:
+          title: Role
+          type: string
+          description: The role of the messages author
+          enum:
+          - assistant
+          const: assistant
+          nullable: true
+        content:
+          title: Content
+          type: string
+          description: The content delta of the transcription or translation.
+          nullable: true
+      required:
+      - content
+    TranslationStreamResponse:
+      type: object
+      title: Translation Stream Response
+      description: streamed chunk of a translation response returned by the model
+      allOf:
+      - $ref: '#/components/schemas/TranscriptionTranslationResponseProperties'
+      required:
+      - choices
+      - created
+      - id
+      - model
+      - object
+      - system_fingerprint
+      examples:
+      - choices:
+        - delta:
+            content: It's a sound
+          index: 0
+          finish_reason: null
+          logprobs: null
+        created: 1737642515.6076705
+        custom_id: 0
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: Whisper-Large-v3
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+      - choices: []
+        created: 1737642515.6076705
+        custom_id: 0
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: Whisper-Large-v3
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+        usage:
+          completion_tokens: 100
+          completion_tokens_after_first_per_sec: 262.2771255106759
+          completion_tokens_after_first_per_sec_first_ten: 266.98193514986144
+          completion_tokens_after_first_per_sec_graph: 53.16720674817285
+          completion_tokens_per_sec: 217.87260449707574
+          end_time: 1737642515.9077535
+          is_last_response: true
+          prompt_tokens: 43
+          start_time: 1737642515.4458635
+          time_to_first_token: 0.0844266414642334
+          total_latency: 0.4589838186899821
+          total_tokens: 143
+          total_tokens_per_sec: 311.55782443081836
+  securitySchemes:
+    api_key:
+      type: http
+      description: SambaNova API Key
+      scheme: bearer
+      bearerFormat: apiKey
+externalDocs:
+  description: Find out more in the official SambaNova docs
+  url: https://docs.sambanova.ai/cloud/api-reference/overview

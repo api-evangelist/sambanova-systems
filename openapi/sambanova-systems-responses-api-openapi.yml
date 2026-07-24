@@ -1,0 +1,2428 @@
+openapi: 3.1.0
+info:
+  title: Sambanova Agents Service Audio Responses API
+  description: Service for Sambanova agents
+  version: 0.0.1
+  termsOfService: https://sambanova.ai/cloud-end-user-license-agreement
+  contact:
+    email: info@sambanova.ai
+    name: SambaNova information
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://chat.sambanova.ai/api
+security:
+- api_key: []
+tags:
+- name: Responses
+paths:
+  /responses:
+    post:
+      operationId: createResponse
+      tags:
+      - Responses
+      summary: Create a model response
+      description: 'Creates a model response for the given input. Only `type: "function"` tools are supported; other tool types are filtered server-side. SambaNova is stateless, conversation history must be supplied in full via `input[]` on each request.'
+      security:
+      - api_key: []
+      requestBody:
+        required: true
+        description: Response creation parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResponseRequest'
+      responses:
+        '200':
+          description: 'Successful response. Returns a ResponseResponse object (non-streaming), or a stream of server-sent ResponseStreamEvent object events ending with a response.completed event (when stream: true).'
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ResponseResponse'
+                - $ref: '#/components/schemas/ResponseStreamEvent'
+        '400':
+          description: Bad Request — missing or invalid parameters
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/GeneralError'
+                - $ref: '#/components/schemas/SimpleError'
+              examples:
+                missing_input:
+                  summary: Required field missing
+                  value:
+                    error:
+                      message: 'Missing required field: ''input''.'
+                      type: invalid_request_error
+                      param: input
+                      code: missing_required_field
+                    request_id: abc123
+                invalid_role:
+                  summary: Invalid role on input item
+                  value:
+                    error:
+                      message: 'Invalid value: ''foo''. Supported values are: ''user'', ''assistant'', ''system'', ''developer''.'
+                      type: invalid_request_error
+                      param: input[1].role
+                      code: invalid_value
+                    request_id: abc124
+                empty_input:
+                  summary: Empty input array
+                  value:
+                    error:
+                      message: 'Invalid value for ''input'': expected a non-empty array or string.'
+                      type: invalid_request_error
+                      param: input
+                      code: invalid_value
+                    request_id: abc125
+                invalid_json:
+                  summary: Malformed JSON body
+                  value:
+                    error:
+                      code: null
+                      message: 'We could not parse the JSON body of your request. (HINT: This likely means you aren''t using your HTTP library correctly. A JSON payload is expected, but what was sent was not valid JSON.)'
+                      param: null
+                      type: invalid_request_error
+                    request_id: 3f7db127
+                adapter_mapping_failed:
+                  summary: Server failed to parse model tool call output
+                  value:
+                    error:
+                      code: adapter_mapping_failed
+                      error_model_output: "{\n  \"name\": \"get_weather\",\n  \"arguments\": {\n    city: \"Bogotá\"\n  }\n}"
+                      message: 'Failed to parse tool call from GPT OSS output: Expecting property name enclosed in double quotes: line 4 column 5 (char 48)'
+                      param: null
+                      type: server_error
+                    request_id: 494e734dc82b4b37bd914238c79c3e6c
+                simple:
+                  summary: Simple error (unhandled cases)
+                  value:
+                    error: Unhandled error
+        '401':
+          description: Unauthorized — invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+              examples:
+                invalid_api_key:
+                  summary: Invalid API key
+                  value:
+                    error:
+                      message: 'Incorrect API key provided: *****. You can find your API key at https://cloud.sambanova.ai/apis.'
+                      type: invalid_request_error
+                      param: null
+                      code: invalid_api_key
+                    request_id: abc126
+                missing_api_key:
+                  summary: No API key provided
+                  value:
+                    error:
+                      message: 'You didn''t provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY).'
+                      type: invalid_request_error
+                      param: null
+                      code: null
+                    request_id: abc127
+        '404':
+          description: Not found — model does not exist or is not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+              examples:
+                model_not_found:
+                  summary: Model does not exist or is not accessible
+                  value:
+                    error:
+                      message: The model `abc` does not exist or you do not have access to it.
+                      type: invalid_request_error
+                      param: model
+                      code: model_not_found
+                    request_id: abc128
+                simple:
+                  summary: Simple error (unhandled cases e.g. wrong endpoint)
+                  value:
+                    error: Not found
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleError'
+        '410':
+          description: Gone — model is no longer available (deprecated or removed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleError'
+        '429':
+          description: Too Many Requests — rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+        '500':
+          description: Internal Server Error — unexpected issue on server side
+          content:
+            text/plain:
+              schema:
+                type: string
+        '503':
+          description: Service Temporarily Unavailable
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Service Temporarily Unavailable
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import SambaNova from 'sambanova';\n\nconst client = new SambaNova({\n  apiKey: process.env['SAMBANOVA_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.responses.create({\n  input: [\n    {\n      content: 'What is the weather in San Francisco?',\n      role: 'user',\n      type: 'message',\n    },\n    {\n      content: [\n        { text: 'The weather in San Francisco is 65°F and partly cloudy.', type: 'output_text' },\n      ],\n      role: 'assistant',\n      type: 'message',\n    },\n    {\n      content: 'What should I wear?',\n      role: 'user',\n      type: 'message',\n    },\n  ],\n  model: 'gpt-oss-120b',\n});\n\nconsole.log(response);"
+      - lang: Python
+        source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nfor response in client.responses.create(\n    input=[{\n        \"content\": \"What is the weather in San Francisco?\",\n        \"role\": \"user\",\n        \"type\": \"message\",\n    }, {\n        \"content\": [{\n            \"text\": \"The weather in San Francisco is 65°F and partly cloudy.\",\n            \"type\": \"output_text\",\n        }],\n        \"role\": \"assistant\",\n        \"type\": \"message\",\n    }, {\n        \"content\": \"What should I wear?\",\n        \"role\": \"user\",\n        \"type\": \"message\",\n    }],\n    model=\"gpt-oss-120b\",\n):\n  print(response)"
+components:
+  schemas:
+    ResponseStreamEvent:
+      title: Response Stream Event
+      description: 'Top-level discriminated union of all Server-Sent Events emitted during a streaming `POST /responses` call. Discriminated by the `type` field. Events arrive in `sequence_number` order and cover the full lifecycle of a response: creation, content generation (text, reasoning, function call arguments), and completion.'
+      oneOf:
+      - $ref: '#/components/schemas/ResponseCreatedEvent'
+      - $ref: '#/components/schemas/ResponseInProgressEvent'
+      - $ref: '#/components/schemas/ResponseOutputItemAddedEvent'
+      - $ref: '#/components/schemas/ResponseContentPartAddedEvent'
+      - $ref: '#/components/schemas/ResponseReasoningTextDeltaEvent'
+      - $ref: '#/components/schemas/ResponseReasoningTextDoneEvent'
+      - $ref: '#/components/schemas/ResponseOutputTextDeltaEvent'
+      - $ref: '#/components/schemas/ResponseOutputTextDoneEvent'
+      - $ref: '#/components/schemas/ResponseFunctionCallArgumentsDeltaEvent'
+      - $ref: '#/components/schemas/ResponseFunctionCallArgumentsDoneEvent'
+      - $ref: '#/components/schemas/ResponseContentPartDoneEvent'
+      - $ref: '#/components/schemas/ResponseOutputItemDoneEvent'
+      - $ref: '#/components/schemas/ResponseCompletedEvent'
+      discriminator:
+        propertyName: type
+        mapping:
+          response.created: '#/components/schemas/ResponseCreatedEvent'
+          response.in_progress: '#/components/schemas/ResponseInProgressEvent'
+          response.output_item.added: '#/components/schemas/ResponseOutputItemAddedEvent'
+          response.content_part.added: '#/components/schemas/ResponseContentPartAddedEvent'
+          response.reasoning_text.delta: '#/components/schemas/ResponseReasoningTextDeltaEvent'
+          response.reasoning_text.done: '#/components/schemas/ResponseReasoningTextDoneEvent'
+          response.output_text.delta: '#/components/schemas/ResponseOutputTextDeltaEvent'
+          response.output_text.done: '#/components/schemas/ResponseOutputTextDoneEvent'
+          response.function_call_arguments.delta: '#/components/schemas/ResponseFunctionCallArgumentsDeltaEvent'
+          response.function_call_arguments.done: '#/components/schemas/ResponseFunctionCallArgumentsDoneEvent'
+          response.content_part.done: '#/components/schemas/ResponseContentPartDoneEvent'
+          response.output_item.done: '#/components/schemas/ResponseOutputItemDoneEvent'
+          response.completed: '#/components/schemas/ResponseCompletedEvent'
+    SimpleError:
+      title: SimpleError
+      type: object
+      description: other kind of simple schema errors
+      properties:
+        error:
+          title: error
+          type: string
+          description: error detail.
+          nullable: true
+      required:
+      - error
+    ResponseOutputItemAddedEvent:
+      title: Response Output Item Added Event
+      type: object
+      description: 'Emitted when a new output item (message, function call, or reasoning) is added to the response output array. The item has `status: in_progress` and may have empty content at this point.'
+      properties:
+        type:
+          type: string
+          enum:
+          - response.output_item.added
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        output_index:
+          type: integer
+          description: Index of the output item in the response `output` array.
+        item:
+          $ref: '#/components/schemas/ResponseOutputItem'
+      required:
+      - type
+      - sequence_number
+      - output_index
+      - item
+      examples:
+      - type: response.output_item.added
+        sequence_number: 2
+        output_index: 0
+        item:
+          id: rs_d608e0328e6340a69919f808ee38df6c
+          type: reasoning
+          status: in_progress
+          summary: []
+          content: []
+      - type: response.output_item.added
+        sequence_number: 8
+        output_index: 1
+        item:
+          id: msg_c1eb06dccbc64f469533bb51be664a9e
+          type: message
+          role: assistant
+          status: in_progress
+          content: []
+      - type: response.output_item.added
+        sequence_number: 8
+        output_index: 1
+        item:
+          id: fc_c839dacb61a54c10b6560ad8d161f004
+          type: function_call
+          call_id: call_e52f086a16c94fa796
+          name: get_weather
+          arguments: ''
+          status: in_progress
+    ResponseOutputTextDeltaEvent:
+      title: Response Output Text Delta Event
+      type: object
+      description: Emitted for each incremental chunk of assistant message text. Accumulate `delta` values in order to reconstruct the full output text.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.output_text.delta
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        item_id:
+          type: string
+          description: ID of the message output item this delta belongs to.
+        output_index:
+          type: integer
+          description: Index of the message output item in the response `output` array.
+        content_index:
+          type: integer
+          description: Index of the content part within the output item's `content` array.
+        delta:
+          type: string
+          description: The incremental chunk of output text.
+        annotations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseAnnotation'
+          description: Annotations attached to this delta chunk, if any.
+        logprobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogProbsContent'
+          description: Log probability information for the tokens in this delta, if requested.
+      required:
+      - type
+      - sequence_number
+      - item_id
+      - output_index
+      - content_index
+      - delta
+      - annotations
+      - logprobs
+      example:
+        type: response.output_text.delta
+        sequence_number: 10
+        item_id: msg_c1eb06dccbc64f469533bb51be664a9e
+        output_index: 1
+        content_index: 0
+        delta: Under a moonlit canopy of twinkling stars, a silver-mane unicorn tiptoed into the meadow, leaving a trail of soft
+        annotations: []
+        logprobs: []
+    ResponseUsage:
+      title: Response Usage
+      type: object
+      description: Token usage statistics for this response.
+      properties:
+        input_tokens:
+          title: Input Tokens
+          type: integer
+          description: Number of tokens in the input, including conversation history and any system instructions.
+        output_tokens:
+          title: Output Tokens
+          type: integer
+          description: Number of tokens generated in the output, including visible text and any reasoning tokens.
+        total_tokens:
+          title: Total Tokens
+          type: integer
+          description: Total tokens consumed by this request (input + output).
+        input_tokens_details:
+          title: Input Tokens Details
+          type: object
+          description: Breakdown of input token consumption.
+          properties:
+            cached_tokens:
+              title: Cached Tokens
+              type: integer
+              description: Number of input tokens served from the prompt cache. Cached tokens are billed at a reduced rate.
+          nullable: true
+        output_tokens_details:
+          title: Output Tokens Details
+          type: object
+          description: Breakdown of output token consumption.
+          properties:
+            reasoning_tokens:
+              title: Reasoning Tokens
+              type: integer
+              description: Number of tokens consumed by the model's internal reasoning process. Only present on reasoning-capable models.
+          nullable: true
+        start_time:
+          title: Start Time
+          type: number
+          description: Unix timestamp (seconds) of when generation started.
+          nullable: true
+        end_time:
+          title: End Time
+          type: number
+          description: Unix timestamp (seconds) of when generation finished.
+          nullable: true
+        time_to_first_token:
+          title: Time To First Token
+          type: number
+          description: Time in seconds from request receipt to first output token (TTFT).
+          nullable: true
+        total_latency:
+          title: Total Latency
+          type: number
+          description: Total time in seconds taken to generate the full response.
+          nullable: true
+        output_tokens_per_sec:
+          title: Output Tokens Per Sec
+          type: number
+          description: Output token throughput (tokens/second) for this response.
+          nullable: true
+        output_tokens_after_first_per_sec:
+          title: Output Tokens After First Per Sec
+          type: number
+          description: Output token throughput measured after the first token was emitted. Excludes the time-to-first-token latency from the rate calculation.
+          nullable: true
+        total_tokens_per_sec:
+          title: Total Tokens Per Sec
+          type: number
+          description: Total token throughput (input + output tokens/second).
+          nullable: true
+        acceptance_rate:
+          title: Acceptance Rate
+          type: number
+          description: Speculative decoding acceptance rate. Ratio of draft tokens accepted by the verifier model. Higher values indicate better speculation efficiency.
+          nullable: true
+        is_last_response:
+          title: Is Last Response
+          type: boolean
+          description: Always true for non-streaming responses. For streaming, true only on the final chunk that carries usage.
+          nullable: true
+      required:
+      - input_tokens
+      - output_tokens
+      - total_tokens
+      example:
+        input_tokens: 248
+        output_tokens: 72
+        total_tokens: 320
+        input_tokens_details:
+          cached_tokens: 0
+        output_tokens_details:
+          reasoning_tokens: 18
+        start_time: 1737642515.445
+        end_time: 1737642515.904
+        time_to_first_token: 0.084
+        total_latency: 0.459
+        output_tokens_per_sec: 156.8
+        output_tokens_after_first_per_sec: 161.2
+        total_tokens_per_sec: 311.6
+        acceptance_rate: 4.06
+        is_last_response: true
+    ResponseReasoningTextDoneEvent:
+      title: Response Reasoning Text Done Event
+      type: object
+      description: Emitted when a reasoning content part has been fully generated. The `text` field contains the complete accumulated reasoning text (equivalent to concatenating all preceding `response.reasoning_text.delta` values). Structural mirror of `response.reasoning_text.delta` with `text` instead of `delta`.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.reasoning_text.done
+          x-stainless-const: true
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        item_id:
+          type: string
+          description: ID of the reasoning output item this content belongs to.
+        output_index:
+          type: integer
+          description: Index of the reasoning output item in the response `output` array.
+        text:
+          type: string
+          description: The full accumulated reasoning text for this content part.
+      required:
+      - type
+      - sequence_number
+      - item_id
+      - output_index
+      - text
+      example:
+        type: response.reasoning_text.done
+        sequence_number: 5
+        item_id: rs_d608e0328e6340a69919f808ee38df6c
+        output_index: 0
+        text: User wants a three-sentence bedtime story about a unicorn. Provide three sentences, gentle, bedtime. Should be concise.
+    ResponseOutputItem:
+      title: Response Output Item
+      description: A single item in the output[] array returned by the model. Can be a message (with text or tool call content), a function call request, or a reasoning trace. Discriminated by the "type" field.
+      oneOf:
+      - $ref: '#/components/schemas/ResponseMessage'
+      - $ref: '#/components/schemas/ResponseFunctionCall'
+      - $ref: '#/components/schemas/ResponseOutputReasoning'
+      discriminator:
+        propertyName: type
+        mapping:
+          message: '#/components/schemas/ResponseMessage'
+          function_call: '#/components/schemas/ResponseFunctionCall'
+          reasoning: '#/components/schemas/ResponseOutputReasoning'
+    ResponseReasoningContent:
+      title: Response Reasoning Content
+      type: object
+      description: A single content part within a reasoning item's content[]. Contains the raw reasoning text produced by the model during its internal thinking process.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The type of this reasoning content part. Always "reasoning_text".
+          enum:
+          - reasoning_text
+        text:
+          title: Text
+          type: string
+          description: The raw reasoning text generated by the model.
+      required:
+      - type
+      - text
+      example:
+        type: reasoning_text
+        text: The user is asking about the weather. I should call the get_weather function with the location extracted from the message.
+    ResponseToolChoiceOption:
+      title: Response Tool Choice Option
+      description: 'Controls which tool (if any) the model calls. String values: "none" disables tool calls; "auto" lets the model decide; "required" forces at least one tool call. To force a specific function, provide a ResponseNamedToolChoice object.'
+      oneOf:
+      - type: string
+        title: Tool choice mode
+        description: String shorthand for tool selection behavior.
+        enum:
+        - none
+        - auto
+        - required
+      - $ref: '#/components/schemas/ResponseNamedToolChoice'
+    ResponseImageContent:
+      title: Response Image Content
+      type: object
+      description: An image content part for use inside a ResponseMessage. Supported in input messages (user role). Provide a base64-encoded image as a data URL. external URLs not supported.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The type of this content part. Always "input_image".
+          enum:
+          - input_image
+        image_url:
+          title: Image URL
+          type: string
+          description: A base64-encoded image in data URL format or fully qualified URL (e.g. "data:image/png;base64,..."). Currently only base64-encoded image data is supported.
+          nullable: true
+        detail:
+          title: Detail
+          type: string
+          description: The detail level for image processing. "auto" lets the model decide. "low" uses a fixed low-res tile. "high" enables high-res tiling.
+          enum:
+          - auto
+          - low
+          - high
+          default: auto
+          nullable: true
+      required:
+      - type
+      - image_url
+    ResponseInputItem:
+      title: Response Input Item
+      description: A single item in the input[] array. Can be a message, a function call, a function call result, or a reasoning trace replayed from a prior turn. When building multi-turn conversations, pass all items from the previous response output[] back as input[] items (including reasoning items) so the model has full context. Discriminated by the "type" field.
+      oneOf:
+      - $ref: '#/components/schemas/ResponseMessage'
+      - $ref: '#/components/schemas/ResponseFunctionCall'
+      - $ref: '#/components/schemas/ResponseFunctionCallOutput'
+      - $ref: '#/components/schemas/ResponseOutputReasoning'
+      discriminator:
+        propertyName: type
+        mapping:
+          message: '#/components/schemas/ResponseMessage'
+          function_call: '#/components/schemas/ResponseFunctionCall'
+          function_call_output: '#/components/schemas/ResponseFunctionCallOutput'
+          reasoning: '#/components/schemas/ResponseOutputReasoning'
+    ResponseOutputReasoning:
+      title: Response Output Reasoning
+      type: object
+      description: A reasoning item emitted in output[] by models that expose their internal chain-of-thought. Contains the raw reasoning text the model produced before generating its final answer.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The type of this output item. Always "reasoning".
+          enum:
+          - reasoning
+        id:
+          title: ID
+          type: string
+          description: Unique identifier for this reasoning item, assigned by the server.
+          nullable: true
+        status:
+          title: Status
+          type: string
+          description: Processing state of this item. "in_progress" while streaming; "completed" when the full reasoning text has been emitted.
+          enum:
+          - in_progress
+          - completed
+          - incomplete
+          nullable: true
+        content:
+          title: Content
+          type: array
+          description: The reasoning content parts. Each part has type "reasoning_text" and carries the raw thinking text. Absent when the item is first added (`response.output_item.added`); populated by `response.output_item.done`.
+          items:
+            $ref: '#/components/schemas/ResponseReasoningContent'
+          nullable: true
+        summary:
+          title: Summary
+          type: array
+          description: A condensed summary of the reasoning content. Always returned as an empty array. Included for OpenAI API compatibility.
+          items:
+            type: object
+            additionalProperties: true
+          nullable: true
+      required:
+      - type
+      example:
+        type: reasoning
+        id: rs_msg_5dc0dc6fca844a20885869634cd3014a
+        status: completed
+        summary: []
+        content:
+        - type: reasoning_text
+          text: The user wants weather information for San Francisco. I'll call get_weather with location "San Francisco, CA".
+    ResponseFunctionCall:
+      title: Response Function Call
+      type: object
+      description: A function call item used in both input[] and output[]. When present in output[], the model is requesting a tool call — id and status are always set by the server. When used in input[], it replays a prior function call from the conversation history for multi-turn tool loops.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The type of this item. Always "function_call".
+          enum:
+          - function_call
+        id:
+          title: ID
+          type: string
+          description: Unique identifier for this function call item. Always present on output items returned by the server. Required when replaying this item in a subsequent input[].
+          nullable: true
+        call_id:
+          title: Call ID
+          type: string
+          description: The call ID generated by the model for this tool invocation. Used to correlate the function call with its corresponding function_call_output result.
+        name:
+          title: Name
+          type: string
+          description: The name of the function the model wants to call.
+        arguments:
+          title: Arguments
+          type: string
+          description: A JSON string of the arguments to pass to the function, as generated by the model. Validate the arguments in your code before calling the function — the model may hallucinate parameters not defined in the schema.
+        status:
+          title: Status
+          type: string
+          description: Processing state of this item. Always set on output items returned by the server. Not required when constructing input items.
+          enum:
+          - in_progress
+          - completed
+          - incomplete
+          nullable: true
+      required:
+      - type
+      - call_id
+      - name
+      - arguments
+      example:
+        type: function_call
+        id: fc_abc123
+        call_id: call_abc123
+        name: get_weather
+        arguments: '{"location":"San Francisco, CA"}'
+        status: completed
+    ResponseFunctionCallArgumentsDeltaEvent:
+      title: Response Function Call Arguments Delta Event
+      type: object
+      description: Emitted for each incremental chunk of function call arguments JSON generated by the model. Accumulate `delta` values in order to reconstruct the full arguments string. The accumulated result will be a valid JSON string once the corresponding `response.function_call_arguments.done` event is received.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.function_call_arguments.delta
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        item_id:
+          type: string
+          description: ID of the function call output item this delta belongs to.
+        output_index:
+          type: integer
+          description: Index of the function call output item in the response `output` array.
+        delta:
+          type: string
+          description: The incremental chunk of the function call arguments JSON string.
+      required:
+      - type
+      - sequence_number
+      - item_id
+      - output_index
+      - delta
+      example:
+        type: response.function_call_arguments.delta
+        sequence_number: 9
+        item_id: fc_c839dacb61a54c10b6560ad8d161f004
+        output_index: 1
+        delta: '{"city":"Bogotá"}'
+    ResponseAudioContent:
+      title: Response Audio Content
+      type: object
+      description: An audio content part for use inside a ResponseMessage. Supported in input messages (user role). Provide base64-encoded audio data with the format.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The type of this content part. Always "input_audio".
+          enum:
+          - input_audio
+        input_audio:
+          title: Input Audio
+          type: object
+          description: The audio data and format.
+          properties:
+            data:
+              title: Data
+              type: string
+              description: Base64-encoded audio data.
+            format:
+              title: Format
+              type: string
+              enum:
+              - mp3
+              - wav
+              description: The format of the audio data.
+          required:
+          - data
+          - format
+      required:
+      - type
+      - input_audio
+    ResponseCreatedEvent:
+      title: Response Created Event
+      type: object
+      description: Emitted as the first SSE event when a streaming response begins. The embedded response object has status `in_progress` and an empty `output` array. Clients can use this event to capture the response `id` for later correlation.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.created
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response. Starts at 0 for `response.created`.
+        response:
+          $ref: '#/components/schemas/ResponseResponse'
+      required:
+      - type
+      - sequence_number
+      - response
+      example:
+        type: response.created
+        sequence_number: 0
+        response:
+          id: resp_18cb0a9a457241f5b0383ebeee31b80d
+          object: response
+          created_at: 1775853213
+          status: in_progress
+          model: gpt-oss-120b
+          output: []
+          usage: null
+          error: null
+          incomplete_details: null
+          instructions: null
+          metadata: {}
+          parallel_tool_calls: true
+          tool_choice: auto
+          tools: []
+          temperature: 1
+          top_p: 1
+          frequency_penalty: 0
+          presence_penalty: 0
+          reasoning:
+            effort: medium
+            summary: null
+          text:
+            format:
+              type: text
+          truncation: disabled
+          store: false
+          background: false
+          service_tier: free
+    ResponseFormatConfiguration:
+      title: Response Format Configuration
+      description: Controls the format of the model's output for the Responses API text.format field. "text" returns plain text (default). "json_object" returns a raw JSON object. "json_schema" enforces structured output matching a provided JSON Schema definition (fields are flat — no json_schema wrapper key).
+      oneOf:
+      - $ref: '#/components/schemas/ResponseTextFormatText'
+      - $ref: '#/components/schemas/ResponseTextFormatJSONObject'
+      - $ref: '#/components/schemas/ResponseTextFormatJSONSchema'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/ResponseTextFormatText'
+          json_object: '#/components/schemas/ResponseTextFormatJSONObject'
+          json_schema: '#/components/schemas/ResponseTextFormatJSONSchema'
+    ResponseTextFormatJSONSchema:
+      title: Response Text Format JSON Schema
+      type: object
+      description: Specifies that the model should produce structured output conforming to the provided JSON Schema. Unlike the Chat Completions API, the Responses API places name, schema, strict, and description directly on this object (not nested under a json_schema key).
+      additionalProperties: false
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The format type. Always "json_schema".
+          enum:
+          - json_schema
+        name:
+          title: Name
+          type: string
+          description: A name for the schema, used to identify it in the model's output.
+        description:
+          title: Description
+          type: string
+          description: An optional description of the schema, used to guide the model.
+          nullable: true
+        schema:
+          title: Schema
+          type: object
+          description: A JSON Schema object defining the structure the model's output must conform to. Typically includes "type", "properties", "required", and optionally "additionalProperties". Must be a valid JSON Schema.
+          additionalProperties: true
+          nullable: true
+        strict:
+          title: Strict
+          type: boolean
+          description: When true, the model is instructed to produce output that strictly matches the schema. Not currently enforced by SambaNova — accepted for API compatibility.
+          nullable: true
+      required:
+      - type
+      - name
+      example:
+        type: json_schema
+        name: event_extraction
+        description: Extract structured event information from text
+        strict: false
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+            date:
+              type: string
+            time:
+              type: string
+            location:
+              type: string
+          required:
+          - title
+          - date
+          - time
+          - location
+          additionalProperties: false
+    ResponseReasoningTextDeltaEvent:
+      title: Response Reasoning Text Delta Event
+      type: object
+      description: Emitted for each incremental chunk of reasoning text generated by the model. Accumulate `delta` values in order to reconstruct the full reasoning text.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.reasoning_text.delta
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        item_id:
+          type: string
+          description: ID of the reasoning output item this delta belongs to.
+        output_index:
+          type: integer
+          description: Index of the reasoning output item in the response `output` array.
+        delta:
+          type: string
+          description: The incremental chunk of reasoning text.
+      required:
+      - type
+      - sequence_number
+      - item_id
+      - output_index
+      - delta
+      example:
+        type: response.reasoning_text.delta
+        sequence_number: 4
+        item_id: rs_d608e0328e6340a69919f808ee38df6c
+        output_index: 0
+        delta: User wants a three-sentence bedtime story about a unicorn. Provide three sentences, gentle, bedtime. Should be concise.
+    ResponseUrlCitation:
+      title: Response URL Citation
+      type: object
+      description: A URL citation annotation on an output text span. Not currently implemented by SambaNova — included for OpenAI API compatibility.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The annotation type. Always "url_citation".
+          enum:
+          - url_citation
+        url:
+          title: URL
+          type: string
+          description: The URL being cited.
+        title:
+          title: Title
+          type: string
+          description: The title of the cited page.
+          nullable: true
+        start_index:
+          title: Start Index
+          type: integer
+          description: Character offset in the output text where the citation starts.
+        end_index:
+          title: End Index
+          type: integer
+          description: Character offset in the output text where the citation ends.
+      required:
+      - type
+      - url
+      - start_index
+      - end_index
+    ResponseMessage:
+      title: Response Message
+      type: object
+      description: A message item. When used as input, id and status are optional. When present in output[], id and status are always set by the server.  Role "assistant" with content type "output_text" represents a prior model turn; user/system/developer turns use content type "input_text". Plain string content is accepted in all roles on input.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The type of this item. Always "message".
+          enum:
+          - message
+          nullable: true
+        id:
+          title: ID
+          type: string
+          description: Unique identifier for this message item. Always present on output items returned by the server. Not required when constructing input items.
+          nullable: true
+        role:
+          title: Role
+          type: string
+          description: The role of the message. "assistant" is set by the server on output items. All four values are valid when constructing input items.
+          enum:
+          - user
+          - assistant
+          - system
+          - developer
+        content:
+          title: Content
+          description: The message content. Either a plain text string or an array of typed content parts. For assistant turns, array parts use type "output_text"; for user/system/developer turns, array parts use type "input_text".
+          oneOf:
+          - type: string
+            title: Text content
+            description: A plain text message body.
+          - type: array
+            title: Content part array
+            description: An array of typed content parts.
+            items:
+              $ref: '#/components/schemas/ResponseContent'
+        status:
+          title: Status
+          type: string
+          description: Processing state of this item. Always set on output items returned by the server. Not required when constructing input items.
+          enum:
+          - in_progress
+          - completed
+          - incomplete
+      required:
+      - type
+      - role
+      - content
+      examples:
+      - type: message
+        role: user
+        content: What is the weather in San Francisco?
+      - type: message
+        role: user
+        content:
+        - type: input_text
+          text: Describe what you see in this image.
+      - type: message
+        role: assistant
+        content:
+        - type: output_text
+          text: The weather in San Francisco is 65°F and partly cloudy.
+      - type: message
+        role: system
+        content: You are a helpful assistant that provides weather information.
+      - type: message
+        role: developer
+        content: Always respond in JSON format when asked for structured data.
+    TopLogProbs:
+      title: TopLogProbs
+      type: object
+      additionalProperties: true
+      properties:
+        bytes:
+          title: Bytes
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+        logprob:
+          title: Logprob
+          type: number
+        token:
+          title: Token
+          type: string
+      required:
+      - token
+      - logprob
+      examples:
+      - token: ' Hello'
+        logprob: -0.00012340000000000002
+        bytes:
+        - 32
+        - 72
+        - 101
+        - 108
+        - 108
+        - 111
+      - token: ' Hi'
+        logprob: -8.243
+        bytes:
+        - 32
+        - 72
+        - 105
+    ResponseCompletedEvent:
+      title: Response Completed Event
+      type: object
+      description: 'Emitted as the final SSE event when a streaming response has been fully generated. The embedded response object has `status: completed`, a fully populated `output` array, and a populated `usage` object. Structural mirror of `response.created`.'
+      properties:
+        type:
+          type: string
+          enum:
+          - response.completed
+          x-stainless-const: true
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        response:
+          $ref: '#/components/schemas/ResponseResponse'
+      required:
+      - type
+      - sequence_number
+      - response
+      examples:
+      - type: response.completed
+        sequence_number: 18
+        response:
+          id: resp_18cb0a9a457241f5b0383ebeee31b80d
+          object: response
+          created_at: 1775853213
+          completed_at: 1775853214
+          status: completed
+          model: gpt-oss-120b
+          output:
+          - id: rs_d608e0328e6340a69919f808ee38df6c
+            type: reasoning
+            status: completed
+            summary: []
+            content:
+            - type: reasoning_text
+              text: User wants a three-sentence bedtime story about a unicorn. Provide three sentences, gentle, bedtime. Should be concise.
+          - id: msg_c1eb06dccbc64f469533bb51be664a9e
+            type: message
+            role: assistant
+            status: completed
+            content:
+            - type: output_text
+              annotations: []
+              logprobs: []
+              text: Under a moonlit canopy of twinkling stars, a silver-mane unicorn tiptoed into the meadow, leaving a trail of soft, glowing stardust behind each gentle step.
+          usage:
+            input_tokens: 78
+            output_tokens: 126
+            total_tokens: 204
+            input_tokens_details:
+              cached_tokens: 0
+          tool_choice: auto
+          tools: []
+          temperature: 1
+          top_p: 1
+          reasoning:
+            effort: medium
+            summary: null
+          text:
+            format:
+              type: text
+      - type: response.completed
+        sequence_number: 12
+        response:
+          id: resp_e8e3ad78db7546ce969f79b0828f3be3
+          object: response
+          created_at: 1775856350
+          completed_at: 1775856350
+          status: completed
+          model: gpt-oss-120b
+          output:
+          - id: rs_c512ec8087b247b0962b64b7595c92d2
+            type: reasoning
+            status: completed
+            summary: []
+            content:
+            - type: reasoning_text
+              text: 'User asks: "What is the weather in Bogotá?" Need to fetch current weather using function get_weather.'
+          - id: fc_c839dacb61a54c10b6560ad8d161f004
+            type: function_call
+            call_id: call_e52f086a16c94fa796
+            name: get_weather
+            arguments: '{"city":"Bogotá"}'
+            status: completed
+          usage:
+            input_tokens: 128
+            output_tokens: 59
+            total_tokens: 187
+            input_tokens_details:
+              cached_tokens: 0
+            output_tokens_details:
+              reasoning_tokens: 43
+          tools:
+          - type: function
+            name: get_weather
+            description: Get the current weather for a city
+            parameters:
+              type: object
+              properties:
+                city:
+                  type: string
+              required:
+              - city
+            strict: null
+      - type: response.completed
+        sequence_number: 14
+        response:
+          id: resp_673393d2de28449581eb6190a8168f84
+          object: response
+          created_at: 1775517028
+          completed_at: 1775517028
+          status: completed
+          model: gpt-oss-120b
+          output:
+          - id: rs_0c34dec41df941b2bce83e11a7614d31
+            type: reasoning
+            status: completed
+            summary: []
+            content:
+            - type: reasoning_text
+              text: The user wants to extract event info from a sentence. We need to output a JSON in the prescribed format.
+          - id: msg_3b1e13019bd84ebcbcf0c15f45f91dfe
+            type: message
+            role: assistant
+            status: completed
+            content:
+            - type: output_text
+              annotations: []
+              logprobs: []
+              text: "{\n  \"title\": \"SambaNova demo\",\n  \"date\": \"2026-04-18\",\n  \"time\": \"15:30\",\n  \"location\": \"San Francisco\"\n}\n"
+          usage:
+            input_tokens: 131
+            output_tokens: 280
+            total_tokens: 411
+            input_tokens_details:
+              cached_tokens: 0
+          text:
+            format:
+              type: json_schema
+              name: event_extraction
+              schema:
+                type: object
+                additionalProperties: false
+                properties:
+                  title:
+                    type: string
+                  date:
+                    type: string
+                  time:
+                    type: string
+                  location:
+                    type: string
+                required:
+                - title
+                - date
+                - time
+                - location
+    ResponseTextContent:
+      title: Response Input Text Content
+      type: object
+      description: A plain text content part for use inside a ResponseMessage.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The type of this content part. "input_text" for user, developer, and system roles,  and output_text for assistant messages.
+          enum:
+          - input_text
+          - output_text
+        text:
+          title: Text
+          type: string
+          description: The text content of this part.
+        annotations:
+          title: Annotations
+          type: array
+          description: Annotations on spans of this text part, such as URL or file citations. Only present on output_text parts returned by the server. Not currently produced by SambaNova — included for OpenAI API compatibility.
+          items:
+            $ref: '#/components/schemas/ResponseAnnotation'
+          nullable: true
+        logprobs:
+          title: Log Probs
+          type: array
+          description: Log probability information for the output tokens. Only present on output_text parts when `top_logprobs` is set on the request.
+          items:
+            $ref: '#/components/schemas/LogProbsContent'
+          nullable: true
+      required:
+      - type
+      - text
+    ResponseRequest:
+      title: Response Request
+      type: object
+      description: responses request object
+      additionalProperties: true
+      properties:
+        model:
+          title: Model
+          description: The model ID to use (e.g. gpt-oss-120b).  See available [models](https://docs.sambanova.ai/docs/en/models/sambacloud-models)
+          anyOf:
+          - type: string
+          - enum:
+            - gpt-oss-120b
+            - MiniMax-M2.5
+            - MiniMax-M2.7
+        input:
+          title: Input
+          description: Text input to the model, or a structured list of input items representing the full conversation turn. A plain string is equivalent to a single user message.
+          oneOf:
+          - type: string
+            title: Text input
+            description: A plain text input equivalent to a user-role message.
+          - type: array
+            title: Input item list
+            description: An ordered list of input items (messages, tool calls, tool results, etc.).
+            items:
+              $ref: '#/components/schemas/ResponseInputItem'
+            examples:
+            - - role: user
+                content: What is the weather in San Francisco?
+              - role: assistant
+                content:
+                - type: output_text
+                  text: The weather in San Francisco is 65°F and partly cloudy.
+              - role: user
+                content: What should I wear?
+            - - role: user
+                content: What is the weather in San Francisco?
+              - type: function_call
+                id: fc_abc123
+                call_id: call_abc123
+                name: get_weather
+                arguments: '{"location":"San Francisco, CA"}'
+                status: completed
+              - type: function_call_output
+                call_id: call_abc123
+                output: '{"temperature":"65°F","condition":"partly cloudy"}'
+        instructions:
+          title: Instructions
+          type: string
+          description: Inserts a system (or developer) message as the first item in the model's context. Equivalent to a system-role message prepended to input[].
+          nullable: true
+        stream:
+          title: Stream
+          type: boolean
+          description: If true, the response is delivered as server-sent events (SSE).
+          default: false
+          nullable: true
+        max_output_tokens:
+          title: Max Output Tokens
+          type: integer
+          description: Upper bound on the number of tokens the model may generate, including visible output tokens and reasoning tokens.
+          nullable: true
+          example: 1024
+        temperature:
+          title: Temperature
+          type: number
+          description: 'Controls randomness in generation. Range: 0–2. It is recommended to alter this, top_p, or top_k but not more than one at a time.'
+          minimum: 0
+          maximum: 2
+          default: 0.7
+          nullable: true
+          example: 0.7
+        top_p:
+          title: Top P
+          type: number
+          description: 'Nucleus sampling cutoff. Range: 0–1. It is recommended to alter this, temperature, or top_k but not more than one at a time.'
+          minimum: 0
+          maximum: 1
+          default: 1
+          nullable: true
+          example: 1
+        top_k:
+          title: Top K
+          type: integer
+          description: Limits sampling to the top K most probable tokens. It is recommended to alter this, top_p, or temperature but not more than one at a time.
+          minimum: 1
+          maximum: 100
+          nullable: true
+          example: 5
+        top_logprobs:
+          title: Top Logprobs
+          description: Number of top log-probability entries to return per output token. Null means log probabilities are not returned.
+          type: integer
+          nullable: true
+        frequency_penalty:
+          title: Frequency Penalty
+          type: number
+          description: Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim. Not currently implemented; accepted for API compatibility and echoed in the response.
+          minimum: -2
+          maximum: 2
+          default: 0
+          nullable: true
+        presence_penalty:
+          title: Presence Penalty
+          type: number
+          description: Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics. Not currently implemented; accepted for API compatibility and echoed in the response.
+          minimum: -2
+          maximum: 2
+          default: 0
+          nullable: true
+        tools:
+          title: Tools
+          type: array
+          description: 'Tools available to the model. Only type: "function" is supported; all other tool types are filtered server-side.'
+          items:
+            $ref: '#/components/schemas/ResponseTool'
+          nullable: true
+          maxItems: 128
+        parallel_tool_calls:
+          title: Parallel Tool Calls
+          type: boolean
+          description: Whether the model may issue multiple tool calls in parallel within one turn.
+          default: true
+          nullable: true
+        max_tool_calls:
+          title: Max Tool Calls
+          type: integer
+          description: Maximum number of tool calls the model may make in a single response turn. Not currently implemented; accepted for API compatibility.
+          nullable: true
+        tool_choice:
+          $ref: '#/components/schemas/ResponseToolChoiceOption'
+        text:
+          title: Text
+          type: object
+          description: Response format configuration. Supports plain text, json_object, and json_schema.
+          properties:
+            format:
+              $ref: '#/components/schemas/ResponseFormatConfiguration'
+        reasoning:
+          title: Reasoning
+          type: object
+          description: Reasoning configuration for models that support it. Ignored on non-reasoning models.
+          properties:
+            effort:
+              title: Effort
+              type: string
+              enum:
+              - low
+              - medium
+              - high
+              default: medium
+              nullable: true
+              description: Reasoning effort level. "low" is faster with less depth; "high" is deeper at higher token cost.
+          nullable: true
+        user:
+          title: User
+          type: string
+          description: 'Included for API compatibility, but only echoed back in response '
+          nullable: true
+        metadata:
+          title: Metadata
+          type: object
+          description: Included for API compatibility, but not supported
+          nullable: true
+          additionalProperties:
+            type: string
+        store:
+          title: Store
+          type: boolean
+          description: SambaNova is stateless - this field is accepted for API compatibility but has no effect. Always echoed back as false.
+          default: false
+          nullable: true
+        truncation:
+          title: Truncation
+          type: string
+          description: Accepted for API compatibility and echoed in the response. Context truncation behavior is not currently configurable via this field in SambaNova.
+          enum:
+          - auto
+          - disabled
+          default: disabled
+          nullable: true
+        previous_response_id:
+          title: Previous Response ID
+          type: string
+          description: Not supported. SambaNova is stateless and does not maintain server-side conversation state. Accepted for API compatibility but ignored; clients must supply the full conversation history in input[].
+          nullable: true
+        background:
+          title: Background
+          type: boolean
+          description: Accepted for API compatibility and echoed back in the response. Has no effect on server behavior.
+          nullable: true
+        service_tier:
+          title: Service Tier
+          type: string
+          description: Accepted for API compatibility and echoed back in the response. Has no effect on server behavior.
+          nullable: true
+      required:
+      - model
+      - input
+    ResponseVideoContent:
+      title: Response Video Content
+      type: object
+      description: A video content part for use inside a ResponseMessage. Supported in input messages (user role). Provide a URL or base64-encoded video data.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The type of this content part. Always "input_video".
+          enum:
+          - input_video
+        video_url:
+          title: Video URL
+          type: string
+          description: A URL of the video or base64-encoded video data in data URL format (e.g. "data:video/mp4;base64,...").
+      required:
+      - type
+      - video_url
+    ResponseTextFormatText:
+      title: Response Text Format Text
+      type: object
+      description: Specifies that the model should produce output as plain text. This is the default.
+      additionalProperties: false
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The format type. Always "text".
+          enum:
+          - text
+      required:
+      - type
+      example:
+        type: text
+    GeneralError:
+      title: GeneralError
+      type: object
+      description: other kind of errors
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              title: code
+              type: string
+              description: error code
+              nullable: true
+            message:
+              title: message
+              type: string
+              description: error message
+            param:
+              title: param
+              type: string
+              description: error params
+              nullable: true
+            type:
+              title: type
+              type: string
+              description: error type
+            error_model_output:
+              title: Error Model Output
+              type: string
+              description: Raw model output that could not be parsed. Present on `server_error` responses when the model produced output that failed internal parsing (e.g. a malformed tool call JSON).
+              nullable: true
+        request_id:
+          title: request_id
+          type: string
+          description: unique request identifier for debugging
+          nullable: true
+      required:
+      - error
+    ResponseResponse:
+      title: Response Response
+      type: object
+      description: A response object returned by POST /responses (non-streaming). Contains the model's output items, echoed input parameters, lifecycle metadata, and token usage.
+      properties:
+        id:
+          title: ID
+          type: string
+          description: Unique identifier for this response.
+        object:
+          title: Object
+          type: string
+          description: The object type. Always "response".
+          enum:
+          - response
+        status:
+          title: Status
+          type: string
+          description: Lifecycle status of the response. "completed" means the model finished successfully. "failed" means an error occurred during generation. "incomplete" means generation was cut short (e.g. max_output_tokens reached).
+          enum:
+          - completed
+          - failed
+          - in_progress
+          - incomplete
+        created_at:
+          title: Created At
+          type: integer
+          description: Unix timestamp (seconds) when the response was created.
+        completed_at:
+          title: Completed At
+          type: integer
+          description: Unix timestamp (seconds) when the response finished generating.
+          nullable: true
+        model:
+          title: Model
+          type: string
+          description: The model ID used to generate this response.
+        output:
+          title: Output
+          type: array
+          description: Ordered array of output items generated by the model. Items may be of type "message", "reasoning", or "function_call".
+          items:
+            $ref: '#/components/schemas/ResponseOutputItem'
+        usage:
+          $ref: '#/components/schemas/ResponseUsage'
+        error:
+          title: Error
+          type: object
+          description: In-band error object present when status is "failed". Null when the response completed successfully.
+          properties:
+            code:
+              title: Code
+              type: string
+              description: The error code.
+            message:
+              title: message
+              type: string
+              description: A human-readable error message.
+          nullable: true
+          required:
+          - code
+          - message
+        incomplete_details:
+          title: Incomplete Details
+          type: object
+          description: Present when status is "incomplete". Describes why generation stopped before completion (e.g. max_output_tokens reached).
+          properties:
+            reason:
+              type: string
+              description: The reason why the response is incomplete.
+          nullable: true
+        instructions:
+          title: Instructions
+          type: string
+          description: The system instructions echoed from the request, or null if none were provided.
+          nullable: true
+        temperature:
+          title: Temperature
+          type: number
+          description: The temperature value used for this response.
+          nullable: true
+        top_p:
+          title: Top P
+          type: number
+          description: The top_p value used for this response.
+          nullable: true
+        top_k:
+          title: Top K
+          type: integer
+          description: The top_k value used for this response.
+          nullable: true
+        frequency_penalty:
+          title: Frequency Penalty
+          type: number
+          description: The frequency_penalty value echoed from the request. Not currently implemented; accepted for API compatibility
+          nullable: true
+        presence_penalty:
+          title: Presence Penalty
+          type: number
+          description: The presence_penalty value echoed from the request. Not currently implemented; accepted for API compatibility
+          nullable: true
+        tools:
+          title: Tools
+          type: array
+          description: Tool definitions available to the model for this response.
+          items:
+            $ref: '#/components/schemas/ResponseTool'
+        parallel_tool_calls:
+          title: Parallel Tool Calls
+          type: boolean
+          description: Whether parallel tool calls were enabled.
+        max_tool_calls:
+          title: Max Tool Calls
+          type: integer
+          description: The max_tool_calls value echoed from the request.
+          nullable: true
+        tool_choice:
+          $ref: '#/components/schemas/ResponseToolChoiceOption'
+        text:
+          title: Text
+          type: object
+          description: 'The text format configuration (structured output mode) used for this response. '
+          properties:
+            format:
+              $ref: '#/components/schemas/ResponseFormatConfiguration'
+        reasoning:
+          title: Reasoning
+          type: object
+          description: The reasoning configuration used for this response.
+          properties:
+            effort:
+              title: Effort
+              type: string
+              description: The reasoning effort level that was applied for supported models.
+              enum:
+              - low
+              - medium
+              - high
+              nullable: true
+            summary:
+              title: Summary
+              type: string
+              description: Not supported.
+              nullable: true
+          nullable: true
+        truncation:
+          title: Truncation
+          type: string
+          description: The truncation value echoed from the request.
+          enum:
+          - auto
+          - disabled
+          nullable: true
+        background:
+          title: Background
+          type: boolean
+          description: Whether background generation was requested.
+          nullable: true
+        metadata:
+          title: Metadata
+          type: object
+          description: The metadata echoed from the request.
+          nullable: true
+          additionalProperties:
+            type: string
+        max_output_tokens:
+          title: Max Output Tokens
+          type: integer
+          description: The max_output_tokens limit echoed from the request.
+          nullable: true
+        top_logprobs:
+          title: Top Logprobs
+          type: integer
+          description: The top_logprobs value echoed from the request.
+          nullable: true
+        previous_response_id:
+          title: Previous Response ID
+          type: string
+          description: Not supported. Always null. SambaNova is stateless; use input[] to supply full conversation history.
+          nullable: true
+        store:
+          title: Store
+          type: boolean
+          description: Whether the response was stored server-side. SambaNova is stateless - always false.
+          nullable: true
+        service_tier:
+          title: Service Tier
+          type: string
+          description: The service tier used to process this request, as reported by the server.
+          nullable: true
+        user:
+          title: User
+          type: string
+          description: The user, echoed back from request.
+          nullable: true
+      required:
+      - id
+      - object
+      - status
+      - created_at
+      - model
+      - output
+      - tools
+      - tool_choice
+      - truncation
+      - parallel_tool_calls
+      - background
+      - metadata
+      - temperature
+      - top_p
+      - store
+      - service_tier
+      - error
+      - incomplete_details
+      - frequency_penalty
+      - presence_penalty
+      - user
+      examples:
+      - id: resp_18cb0a9a457241f5b0383ebeee31b80d
+        object: response
+        created_at: 1775853213
+        completed_at: 1775853214
+        status: completed
+        model: gpt-oss-120b
+        output:
+        - id: rs_d608e0328e6340a69919f808ee38df6c
+          type: reasoning
+          status: completed
+          summary: []
+          content:
+          - type: reasoning_text
+            text: User wants a three-sentence bedtime story about a unicorn. Provide three sentences, gentle, bedtime. Should be concise.
+        - id: msg_c1eb06dccbc64f469533bb51be664a9e
+          type: message
+          role: assistant
+          status: completed
+          content:
+          - type: output_text
+            annotations: []
+            logprobs: []
+            text: Under a moonlit canopy of twinkling stars, a silver-mane unicorn tiptoed into the meadow, leaving a trail of soft, glowing stardust behind each gentle step. She whispered a lullaby to the sleepy flowers, and they swayed in rhythm, their petals folding like tiny blankets around the night. As the world hushed, the unicorn curled around a sleepy child's dream, gifting them a night of sweet, sparkling adventures until sunrise.
+        usage:
+          input_tokens: 78
+          output_tokens: 126
+          total_tokens: 204
+          input_tokens_details:
+            cached_tokens: 0
+          output_tokens_details:
+            reasoning_tokens: 48
+        error: null
+        incomplete_details: null
+        instructions: null
+        metadata: {}
+        parallel_tool_calls: true
+        tool_choice: auto
+        tools: []
+        temperature: 1
+        top_p: 1
+        frequency_penalty: 0
+        presence_penalty: 0
+        reasoning:
+          effort: medium
+          summary: null
+        text:
+          format:
+            type: text
+        truncation: disabled
+        store: false
+        background: false
+        service_tier: free
+        user: null
+        previous_response_id: null
+      - id: resp_e8e3ad78db7546ce969f79b0828f3be3
+        object: response
+        created_at: 1775856350
+        completed_at: 1775856350
+        status: completed
+        model: gpt-oss-120b
+        output:
+        - id: rs_c512ec8087b247b0962b64b7595c92d2
+          type: reasoning
+          status: completed
+          summary: []
+          content:
+          - type: reasoning_text
+            text: 'User asks: "What is the weather in Bogotá?" Need to fetch current weather using function get_weather. Provide city name "Bogotá". Use function.'
+        - id: fc_c839dacb61a54c10b6560ad8d161f004
+          type: function_call
+          call_id: call_e52f086a16c94fa796
+          name: get_weather
+          arguments: '{"city":"Bogotá"}'
+          status: completed
+        usage:
+          input_tokens: 128
+          output_tokens: 59
+          total_tokens: 187
+          input_tokens_details:
+            cached_tokens: 0
+          output_tokens_details:
+            reasoning_tokens: 43
+        error: null
+        incomplete_details: null
+        instructions: null
+        metadata: {}
+        parallel_tool_calls: true
+        tool_choice: auto
+        tools:
+        - type: function
+          name: get_weather
+          description: Get the current weather for a city
+          parameters:
+            type: object
+            properties:
+              city:
+                type: string
+            required:
+            - city
+          strict: null
+        temperature: 1
+        top_p: 1
+        frequency_penalty: 0
+        presence_penalty: 0
+        reasoning:
+          effort: medium
+          summary: null
+        text:
+          format:
+            type: text
+        truncation: disabled
+        store: false
+        background: false
+        service_tier: free
+        user: null
+        previous_response_id: null
+      - id: resp_673393d2de28449581eb6190a8168f84
+        object: response
+        created_at: 1775517028
+        completed_at: 1775517028
+        status: completed
+        model: gpt-oss-120b
+        output:
+        - id: rs_0c34dec41df941b2bce83e11a7614d31
+          type: reasoning
+          status: completed
+          summary: []
+          content:
+          - type: reasoning_text
+            text: The user wants to extract event info from a sentence. We need to output a JSON in the prescribed format.
+        - id: msg_3b1e13019bd84ebcbcf0c15f45f91dfe
+          type: message
+          role: assistant
+          status: completed
+          content:
+          - type: output_text
+            annotations: []
+            logprobs: []
+            text: "{\n  \"title\": \"SambaNova demo\",\n  \"date\": \"2026-04-18\",\n  \"time\": \"15:30\",\n  \"location\": \"San Francisco\"\n}\n"
+        usage:
+          input_tokens: 131
+          output_tokens: 280
+          total_tokens: 411
+          input_tokens_details:
+            cached_tokens: 0
+          output_tokens_details:
+            reasoning_tokens: 18
+        error: null
+        incomplete_details: null
+        instructions: null
+        metadata: {}
+        parallel_tool_calls: true
+        tool_choice: auto
+        tools: []
+        temperature: 1
+        top_p: 1
+        frequency_penalty: 0
+        presence_penalty: 0
+        reasoning:
+          effort: medium
+          summary: null
+        text:
+          format:
+            type: json_schema
+            name: event_extraction
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                title:
+                  type: string
+                date:
+                  type: string
+                time:
+                  type: string
+                location:
+                  type: string
+              required:
+              - title
+              - date
+              - time
+              - location
+        truncation: disabled
+        store: false
+        background: false
+        service_tier: free
+        user: null
+        previous_response_id: null
+    ResponseInProgressEvent:
+      title: Response In Progress Event
+      type: object
+      description: Emitted when the response transitions to the `in_progress` state, immediately after `response.created`. The embedded response object still has an empty `output` array; model generation has not yet produced any content.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.in_progress
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        response:
+          $ref: '#/components/schemas/ResponseResponse'
+      required:
+      - type
+      - sequence_number
+      - response
+      example:
+        type: response.in_progress
+        sequence_number: 1
+        response:
+          id: resp_18cb0a9a457241f5b0383ebeee31b80d
+          object: response
+          created_at: 1775853213
+          status: in_progress
+          model: gpt-oss-120b
+          output: []
+          usage: null
+          error: null
+          incomplete_details: null
+          instructions: null
+          metadata: {}
+          parallel_tool_calls: true
+          tool_choice: auto
+          tools: []
+          temperature: 1
+          top_p: 1
+          frequency_penalty: 0
+          presence_penalty: 0
+          reasoning:
+            effort: medium
+            summary: null
+          text:
+            format:
+              type: text
+          truncation: disabled
+          store: false
+          background: false
+          service_tier: free
+    ResponseContentPartAddedEvent:
+      title: Response Content Part Added Event
+      type: object
+      description: Emitted when a new content part is added to an output item's content array. The part's `text` is empty at this point; subsequent `response.output_text.delta` or `response.reasoning_text.delta` events carry the incremental content.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.content_part.added
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        item_id:
+          type: string
+          description: ID of the output item to which this content part belongs.
+        output_index:
+          type: integer
+          description: Index of the parent output item in the response `output` array.
+        content_index:
+          type: integer
+          description: Index of this content part within the output item's `content` array.
+        part:
+          $ref: '#/components/schemas/ResponseStreamContentPart'
+      required:
+      - type
+      - sequence_number
+      - item_id
+      - output_index
+      - content_index
+      - part
+      examples:
+      - type: response.content_part.added
+        sequence_number: 3
+        item_id: rs_d608e0328e6340a69919f808ee38df6c
+        output_index: 0
+        content_index: 0
+        part:
+          type: reasoning_text
+          text: ''
+      - type: response.content_part.added
+        sequence_number: 9
+        item_id: msg_c1eb06dccbc64f469533bb51be664a9e
+        output_index: 1
+        content_index: 0
+        part:
+          type: output_text
+          text: ''
+          annotations: []
+          logprobs: []
+    ResponseAnnotation:
+      title: Response Annotation
+      description: An annotation on a span of output text. Currently stubbed for OpenAI API compatibility — SambaNova does not produce annotations.
+      oneOf:
+      - $ref: '#/components/schemas/ResponseUrlCitation'
+      - $ref: '#/components/schemas/ResponseFileCitation'
+      discriminator:
+        propertyName: type
+        mapping:
+          url_citation: '#/components/schemas/ResponseUrlCitation'
+          file_citation: '#/components/schemas/ResponseFileCitation'
+    ResponseStreamContentPart:
+      title: Response Stream Content Part
+      description: 'A content part within a streaming event. Discriminated by `type`: `output_text` for assistant message content (reuses ResponseTextContent), `reasoning_text` for model reasoning (OSS extension).'
+      oneOf:
+      - $ref: '#/components/schemas/ResponseTextContent'
+      - $ref: '#/components/schemas/ResponseReasoningContent'
+      discriminator:
+        propertyName: type
+        mapping:
+          output_text: '#/components/schemas/ResponseTextContent'
+          reasoning_text: '#/components/schemas/ResponseReasoningContent'
+    ResponseNamedToolChoice:
+      title: Response Named Tool Choice
+      type: object
+      description: Forces the model to call a specific function. Pass this object as tool_choice to guarantee the model will invoke the named function.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The type of tool to force. Always "function".
+          enum:
+          - function
+        name:
+          title: Name
+          type: string
+          description: The name of the function to call.
+      required:
+      - type
+      - name
+      example:
+        type: function
+        name: get_weather
+    ResponseTool:
+      title: Response Tool
+      type: object
+      description: A tool definition passed to the model via the tools[] array. Only type "function" is supported; other tool types are filtered server-side.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The type of tool. Always "function".
+          enum:
+          - function
+        name:
+          title: Name
+          type: string
+          description: The name of the function to be called.
+        description:
+          title: Description
+          type: string
+          description: A description of what the function does. Used by the model to decide when and whether to call it.
+          nullable: true
+        parameters:
+          title: Parameters
+          type: object
+          description: The parameters the function accepts, described as a JSON Schema object. Omit or set to null for functions that take no parameters.
+          additionalProperties: true
+          nullable: true
+        strict:
+          title: Strict
+          type: boolean
+          description: When true, the model is instructed to generate arguments that strictly conform to the provided JSON schema. Not currently enforced by SambaNova accepted for API compatibility and echoed back as null in the response.
+          nullable: true
+      required:
+      - type
+      - name
+      example:
+        type: function
+        name: get_weather
+        description: Get the current weather for a given location.
+        parameters:
+          type: object
+          properties:
+            location:
+              type: string
+              description: The city and state, e.g. San Francisco, CA
+          required:
+          - location
+          additionalProperties: false
+        strict: null
+    ResponseFunctionCallOutput:
+      title: Response Function Call Output
+      type: object
+      description: A tool result item used in input[] to return the output of a function call back to the model. Always input-only — the model never outputs function_call_output items. The call_id must match the id of the corresponding ResponseFunctionCall item from the prior model turn.
+      properties:
+        type:
+          title: Type
+          type: string
+          enum:
+          - function_call_output
+          description: The type of this item. Always "function_call_output".
+        id:
+          title: ID
+          type: string
+          description: Optional identifier for this output item.
+          nullable: true
+        call_id:
+          title: Call ID
+          type: string
+          description: The call_id of the ResponseFunctionCall item this result corresponds to. Must match exactly.
+        output:
+          title: Output
+          type: string
+          description: A JSON string containing the result of the function call. Returned to the model as the tool's response.
+        status:
+          title: Status
+          type: string
+          enum:
+          - in_progress
+          - completed
+          - incomplete
+          description: Processing state. Optional when constructing input items.
+          nullable: true
+      required:
+      - type
+      - call_id
+      - output
+      example:
+        type: function_call_output
+        call_id: call_abc123
+        output: '{"temperature":"65°F","condition":"partly cloudy"}'
+    ResponseFunctionCallArgumentsDoneEvent:
+      title: Response Function Call Arguments Done Event
+      type: object
+      description: Emitted when a function call's arguments have been fully generated. The `arguments` field contains the complete JSON arguments string (equivalent to concatenating all preceding `response.function_call_arguments.delta` values). Structural mirror of `response.function_call_arguments.delta` with `arguments` instead of `delta`.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.function_call_arguments.done
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        item_id:
+          type: string
+          description: ID of the function call output item.
+        output_index:
+          type: integer
+          description: Index of the function call output item in the response `output` array.
+        arguments:
+          type: string
+          description: The complete JSON arguments string for the function call.
+      required:
+      - type
+      - sequence_number
+      - item_id
+      - output_index
+      - arguments
+      example:
+        type: response.function_call_arguments.done
+        sequence_number: 10
+        item_id: fc_c839dacb61a54c10b6560ad8d161f004
+        output_index: 1
+        arguments: '{"city":"Bogotá"}'
+    ResponseContentPartDoneEvent:
+      title: Response Content Part Done Event
+      type: object
+      description: Emitted when a content part has been fully generated. The `part` field contains the complete content for this part (equivalent to the state after accumulating all preceding delta events). Structural mirror of `response.content_part.added`.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.content_part.done
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        item_id:
+          type: string
+          description: ID of the output item this content part belongs to.
+        output_index:
+          type: integer
+          description: Index of the parent output item in the response `output` array.
+        content_index:
+          type: integer
+          description: Index of this content part within the output item's `content` array.
+        part:
+          $ref: '#/components/schemas/ResponseStreamContentPart'
+      required:
+      - type
+      - sequence_number
+      - item_id
+      - output_index
+      - content_index
+      - part
+      examples:
+      - type: response.content_part.done
+        sequence_number: 6
+        item_id: rs_d608e0328e6340a69919f808ee38df6c
+        output_index: 0
+        content_index: 0
+        part:
+          type: reasoning_text
+          text: User wants a three-sentence bedtime story about a unicorn. Provide three sentences, gentle, bedtime. Should be concise.
+      - type: response.content_part.done
+        sequence_number: 16
+        item_id: msg_c1eb06dccbc64f469533bb51be664a9e
+        output_index: 1
+        content_index: 0
+        part:
+          type: output_text
+          annotations: []
+          logprobs: []
+          text: Under a moonlit canopy of twinkling stars, a silver-mane unicorn tiptoed into the meadow, leaving a trail of soft, glowing stardust behind each gentle step. She whispered a lullaby to the sleepy flowers, and they swayed in rhythm, their petals folding like tiny blankets around the night. As the world hushed, the unicorn curled around a sleepy child's dream, gifting them a night of sweet, sparkling adventures until sunrise.
+    ResponseOutputItemDoneEvent:
+      title: Response Output Item Done Event
+      type: object
+      description: Emitted when an output item has been fully generated and its status transitions to `completed`. The `item` field contains the complete output item including all accumulated content. Structural mirror of `response.output_item.added`.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.output_item.done
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        output_index:
+          type: integer
+          description: Index of the output item in the response `output` array.
+        item:
+          $ref: '#/components/schemas/ResponseOutputItem'
+      required:
+      - type
+      - sequence_number
+      - output_index
+      - item
+      examples:
+      - type: response.output_item.done
+        sequence_number: 7
+        output_index: 0
+        item:
+          id: rs_d608e0328e6340a69919f808ee38df6c
+          type: reasoning
+          status: completed
+          summary: []
+          content:
+          - type: reasoning_text
+            text: User wants a three-sentence bedtime story about a unicorn. Provide three sentences, gentle, bedtime. Should be concise.
+      - type: response.output_item.done
+        sequence_number: 17
+        output_index: 1
+        item:
+          id: msg_c1eb06dccbc64f469533bb51be664a9e
+          type: message
+          role: assistant
+          status: completed
+          content:
+          - type: output_text
+            annotations: []
+            logprobs: []
+            text: Under a moonlit canopy of twinkling stars, a silver-mane unicorn tiptoed into the meadow, leaving a trail of soft, glowing stardust behind each gentle step. She whispered a lullaby to the sleepy flowers, and they swayed in rhythm, their petals folding like tiny blankets around the night. As the world hushed, the unicorn curled around a sleepy child's dream, gifting them a night of sweet, sparkling adventures until sunrise.
+      - type: response.output_item.done
+        sequence_number: 11
+        output_index: 1
+        item:
+          id: fc_c839dacb61a54c10b6560ad8d161f004
+          type: function_call
+          call_id: call_e52f086a16c94fa796
+          name: get_weather
+          arguments: '{"city":"Bogotá"}'
+          status: completed
+    ResponseFileCitation:
+      title: Response File Citation
+      type: object
+      description: A file citation annotation on an output text span. Not currently implemented by SambaNova — included for OpenAI API compatibility.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The annotation type. Always "file_citation".
+          enum:
+          - file_citation
+        file_id:
+          title: File ID
+          type: string
+          description: The ID of the cited file.
+        start_index:
+          title: Start Index
+          type: integer
+          description: Character offset in the output text where the citation starts.
+        end_index:
+          title: End Index
+          type: integer
+          description: Character offset in the output text where the citation ends.
+      required:
+      - type
+      - file_id
+      - start_index
+      - end_index
+    ResponseOutputTextDoneEvent:
+      title: Response Output Text Done Event
+      type: object
+      description: Emitted when an output text content part has been fully generated. The `text` field contains the complete accumulated output text (equivalent to concatenating all preceding `response.output_text.delta` values). Structural mirror of `response.output_text.delta` with `text` instead of `delta`.
+      properties:
+        type:
+          type: string
+          enum:
+          - response.output_text.done
+        sequence_number:
+          type: integer
+          description: Monotonically increasing counter for ordering events within a streaming response.
+        item_id:
+          type: string
+          description: ID of the message output item this content belongs to.
+        output_index:
+          type: integer
+          description: Index of the message output item in the response `output` array.
+        content_index:
+          type: integer
+          description: Index of the content part within the output item's `content` array.
+        text:
+          type: string
+          description: The full accumulated output text for this content part.
+        annotations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseAnnotation'
+          description: All annotations attached to this text part.
+        logprobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogProbsContent'
+          description: Log probability information for all tokens, if requested.
+      required:
+      - type
+      - sequence_number
+      - item_id
+      - output_index
+      - content_index
+      - text
+      - annotations
+      - logprobs
+      example:
+        type: response.output_text.done
+        sequence_number: 15
+        item_id: msg_c1eb06dccbc64f469533bb51be664a9e
+        output_index: 1
+        content_index: 0
+        annotations: []
+        logprobs: []
+        text: Under a moonlit canopy of twinkling stars, a silver-mane unicorn tiptoed into the meadow, leaving a trail of soft, glowing stardust behind each gentle step. She whispered a lullaby to the sleepy flowers, and they swayed in rhythm, their petals folding like tiny blankets around the night. As the world hushed, the unicorn curled around a sleepy child's dream, gifting them a night of sweet, sparkling adventures until sunrise.
+    ResponseTextFormatJSONObject:
+      title: Response Text Format JSON Object
+      type: object
+      description: Specifies that the model should produce output as a raw JSON object. The model is not constrained to any specific schema.
+      additionalProperties: false
+      properties:
+        type:
+          title: Type
+          type: string
+          description: The format type. Always "json_object".
+          enum:
+          - json_object
+      required:
+      - type
+      example:
+        type: json_object
+    LogProbsContent:
+      title: Log Probs Content
+      additionalProperties: true
+      properties:
+        bytes:
+          title: Bytes
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          nullable: true
+        logprob:
+          title: Logprob
+          type: number
+        token:
+          title: Token
+          type: string
+        top_logprobs:
+          $ref: '#/components/schemas/TopLogProbs'
+      required:
+      - token
+      - logprob
+      - top_logprobs
+      examples:
+      - token: ' Hello'
+        logprob: -0.00012340000000000002
+        bytes:
+        - 32
+        - 72
+        - 101
+        - 108
+        - 108
+        - 111
+        top_logprobs:
+        - token: ' Hello'
+          logprob: -0.00012340000000000002
+          bytes:
+          - 32
+          - 72
+          - 101
+          - 108
+          - 108
+          - 111
+        - token: ' Hi'
+          logprob: -8.243
+          bytes:
+          - 32
+          - 72
+          - 105
+    ResponseContent:
+      title: Response Content
+      description: A typed content part used in both input and output message content arrays. Discriminated by the "type" field.
+      oneOf:
+      - $ref: '#/components/schemas/ResponseTextContent'
+      - $ref: '#/components/schemas/ResponseImageContent'
+      - $ref: '#/components/schemas/ResponseAudioContent'
+      - $ref: '#/components/schemas/ResponseVideoContent'
+      discriminator:
+        propertyName: type
+        mapping:
+          input_text: '#/components/schemas/ResponseTextContent'
+          output_text: '#/components/schemas/ResponseTextContent'
+          input_image: '#/components/schemas/ResponseImageContent'
+          input_audio: '#/components/schemas/ResponseAudioContent'
+          input_video: '#/components/schemas/ResponseVideoContent'
+  securitySchemes:
+    api_key:
+      type: http
+      description: SambaNova API Key
+      scheme: bearer
+      bearerFormat: apiKey
+externalDocs:
+  description: Find out more in the official SambaNova docs
+  url: https://docs.sambanova.ai/cloud/api-reference/overview

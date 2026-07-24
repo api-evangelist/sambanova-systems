@@ -1,0 +1,332 @@
+openapi: 3.1.0
+info:
+  title: Sambanova Agents Service Audio Subagents API
+  description: Service for Sambanova agents
+  version: 0.0.1
+  termsOfService: https://sambanova.ai/cloud-end-user-license-agreement
+  contact:
+    email: info@sambanova.ai
+    name: SambaNova information
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://chat.sambanova.ai/api
+security:
+- api_key: []
+tags:
+- name: Subagents
+paths:
+  /agent/coding:
+    post:
+      tags:
+      - Subagents
+      summary: Coding Agent
+      description: 'The coding agent executes Python code in a sandboxed environment, fixes errors, and returns results. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.
+
+        '
+      operationId: coding_agent_agent_coding_post
+      security:
+      - api_key: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodingAgentRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseAgentResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /agent/datascience:
+    post:
+      tags:
+      - Subagents
+      description: 'The data science agent analyzes datasets, generates visualizations, and produces comprehensive reports. This fire-and-forget endpoint submits a prompt and returns the final report in a single call.
+
+        '
+      operationId: datascience_agent_and_report_agent_datascience_post
+      security:
+      - api_key: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DatascienceAgentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataScienceAgentHTMLResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Datascience Agent And Report
+  /agent/deepresearch:
+    post:
+      tags:
+      - Subagents
+      description: 'The deep research agent conducts multi-iteration research and produces comprehensive reports. This interactive endpoint uses a two-step workflow:
+
+
+        1. Submit a prompt to receive a thread_id and research plan for approval
+
+        2. Submit a prompt with thread_id and resume=true to generate the final report
+
+        '
+      operationId: deepresearch_agent_agent_deepresearch_post
+      security:
+      - api_key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeepResearchRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseAgentResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Deepresearch Agent
+  /agent/financialanalysis:
+    post:
+      tags:
+      - Subagents
+      summary: Financial Analysis Agent
+      description: 'The financial analysis agent analyzes stocks, companies, and market data. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.
+
+        '
+      operationId: financial_analysis_agent_agent_financialanalysis_post
+      security:
+      - api_key: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FinancialAnalysisRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseAgentResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    CodingAgentRequest:
+      title: CodingAgentRequest
+      type: object
+      description: Request for coding agent json object
+      additionalProperties: false
+      properties:
+        code:
+          title: Code
+          description: Code to run
+          type: string
+        prompt:
+          title: Prompt
+          description: The main prompt for the coding agent
+          type: string
+      required:
+      - prompt
+      - code
+      examples:
+      - prompt: Run this code and explain the output
+        code: 'import numpy as np
+
+          import matplotlib.pyplot as plt
+
+
+          x = np.linspace(0, 2 * np.pi, 100)
+
+          y = np.sin(x)
+
+          plt.plot(x, y)
+
+          plt.savefig("sine_wave.png")
+
+          print("Chart created!")
+
+          '
+    DatascienceAgentRequest:
+      title: DatascienceAgentRequest
+      type: object
+      description: Request for data science agent json object
+      additionalProperties: false
+      properties:
+        files:
+          description: One or more files to be analyzed.
+          items:
+            format: binary
+            type: string
+          title: Files
+          type: array
+        prompt:
+          description: The main prompt for the data science agent.
+          title: Prompt
+          type: string
+      required:
+      - prompt
+      - files
+      examples:
+      - prompt: Perform exploratory data analysis on this dataset
+        files: '@dataset.csv'
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    DeepResearchRequest:
+      title: DeepResearchRequest
+      type: object
+      description: Request for deep research agent json object
+      additionalProperties: false
+      properties:
+        prompt:
+          title: Prompt
+          description: The main prompt for the deep research agent
+          type: string
+      required:
+      - prompt
+      examples:
+      - prompt: Conduct research on quantum computing advances in 2024
+    DataScienceAgentHTMLResponse:
+      type: object
+      title: Data Science Agent HTML Response
+      description: Generated HTML report for exploratory data analysis (EDA)
+      additionalProperties: false
+      properties:
+        content_type:
+          title: content_type
+          description: MIME type of the generated report (should be 'text/html')
+          type: string
+          example: text/html
+        title:
+          title: title
+          description: Title of the analysis report
+          type: string
+          example: Data Science Analysis Report
+        html:
+          title: html
+          description: Full HTML content of the generated report
+          type: string
+          example: "<!DOCTYPE html>\n<html>\n<head>\n  <title>Data Science Analysis Report</title>\n  <style>/* Professional styling */</style>\n</head>\n<body>\n  <h1>Exploratory Data Analysis Report</h1>\n  <h2>Dataset Overview</h2>\n  <p>The dataset contains 1,000 rows and 15 columns...</p>\n  <h2>Statistical Summary</h2>\n  <table><!-- Summary statistics --></table>\n  <h2>Visualizations</h2>\n  <img src=\"data:image/png;base64,...\" alt=\"Distribution Plot\">\n  <img src=\"data:image/png;base64,...\" alt=\"Correlation Heatmap\">\n  <h2>Key Findings</h2>\n  <ul>\n    <li>Strong correlation between features X and Y</li>\n    <li>Missing values detected in column Z</li>\n  </ul>\n</body>\n</html>\n"
+      required:
+      - content_type
+      - title
+      - html
+    FinancialAnalysisRequest:
+      title: FinancialAnalysisRequest
+      type: object
+      description: Request for  financial agent json object
+      additionalProperties: false
+      properties:
+        prompt:
+          title: Prompt
+          description: The main prompt for the financial agent
+          type: string
+      required:
+      - prompt
+      examples:
+      - prompt: Perform a financial analysis of Apple
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+    BaseAgentResponse:
+      type: object
+      title: Base agent response object
+      description: Base agent response object
+      additionalProperties: false
+      properties:
+        status:
+          title: status
+          description: status of agent gereneration
+          type: string
+        result:
+          title: result
+          description: results description
+          type: string
+        artifacts:
+          title: artifacts
+          description: generated artifacts
+          type: array
+          items:
+            type: string
+            description: id of generated artifact
+        thread_id:
+          title: thread_id
+          description: thread id for persistent context
+          type: string
+      required:
+      - status
+      - result
+      - artifacts
+      - thread_id
+      example:
+        status: success
+        result: I've created the bar chart...
+        artifacts:
+        - file-id-123
+        thread_id: thread-abc
+  securitySchemes:
+    api_key:
+      type: http
+      description: SambaNova API Key
+      scheme: bearer
+      bearerFormat: apiKey
+externalDocs:
+  description: Find out more in the official SambaNova docs
+  url: https://docs.sambanova.ai/cloud/api-reference/overview

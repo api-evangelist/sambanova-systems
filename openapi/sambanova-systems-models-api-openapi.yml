@@ -1,0 +1,168 @@
+openapi: 3.1.0
+info:
+  title: Sambanova Agents Service Audio Models API
+  description: Service for Sambanova agents
+  version: 0.0.1
+  termsOfService: https://sambanova.ai/cloud-end-user-license-agreement
+  contact:
+    email: info@sambanova.ai
+    name: SambaNova information
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://chat.sambanova.ai/api
+security:
+- api_key: []
+tags:
+- name: Models
+paths:
+  /models:
+    get:
+      operationId: getModelList
+      tags:
+      - Models
+      summary: Get environment's available model list metadata
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelMetadataList'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import SambaNova from 'sambanova';\n\nconst client = new SambaNova({\n  apiKey: process.env['SAMBANOVA_API_KEY'], // This is the default and can be omitted\n});\n\nconst modelsResponse = await client.models.list();\n\nconsole.log(modelsResponse.data);"
+      - lang: Python
+        source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nmodels_response = client.models.list()\nprint(models_response.data)"
+  /models/{model_id}:
+    get:
+      operationId: getModel
+      tags:
+      - Models
+      summary: Get environment's available model metadata
+      parameters:
+      - in: path
+        name: model_id
+        required: true
+        schema:
+          title: Model Id
+          type: string
+          description: model id to get metadata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelMetadata'
+          description: Successful Response
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleError'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import SambaNova from 'sambanova';\n\nconst client = new SambaNova({\n  apiKey: process.env['SAMBANOVA_API_KEY'], // This is the default and can be omitted\n});\n\nconst modelResponse = await client.models.retrieve('model_id');\n\nconsole.log(modelResponse.id);"
+      - lang: Python
+        source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nmodel_response = client.models.retrieve(\n    \"model_id\",\n)\nprint(model_response.id)"
+components:
+  schemas:
+    SimpleError:
+      title: SimpleError
+      type: object
+      description: other kind of simple schema errors
+      properties:
+        error:
+          title: error
+          type: string
+          description: error detail.
+          nullable: true
+      required:
+      - error
+    ModelMetadata:
+      title: Model Metadata
+      type: object
+      description: model metadata
+      additionalProperties: true
+      properties:
+        id:
+          title: Id
+          type: string
+          description: model id
+        object:
+          title: Object
+          type: string
+          description: type
+          const: model
+          default: model
+          enum:
+          - model
+        owned_by:
+          title: OwnedBy
+          type: string
+          description: model owner
+        context_length:
+          title: context length
+          type: integer
+          description: model context length
+        max_completion_tokens:
+          title: max completion tokens
+          type: integer
+          description: model max completion tokens
+        sn_metadata:
+          title: sn metadata
+          type: object
+          description: additional sn metadata
+        pricing:
+          title: pricing
+          type: object
+          description: pricing details
+          additionalProperties: true
+          properties:
+            prompt:
+              title: prompt
+              type: number
+              description: price per prompt token in USD
+            completion:
+              title: completion
+              type: number
+              description: price per completion token in USD
+            duration_per_hour:
+              title: duration per hour
+              type: number
+              description: price per input hour
+              nullable: true
+      required:
+      - id
+    ModelMetadataList:
+      title: Model Metadata List
+      type: object
+      description: object containing available models and metadata
+      additionalProperties: true
+      properties:
+        data:
+          title: Data
+          type: array
+          description: array of model metadata list
+          items:
+            $ref: '#/components/schemas/ModelMetadata'
+        object:
+          title: Object
+          type: string
+          const: list
+          default: list
+          enum:
+          - list
+      required:
+      - data
+  securitySchemes:
+    api_key:
+      type: http
+      description: SambaNova API Key
+      scheme: bearer
+      bearerFormat: apiKey
+externalDocs:
+  description: Find out more in the official SambaNova docs
+  url: https://docs.sambanova.ai/cloud/api-reference/overview

@@ -1,0 +1,141 @@
+openapi: 3.1.0
+info:
+  title: Sambanova Agents Service Audio Main Agent API
+  description: Service for Sambanova agents
+  version: 0.0.1
+  termsOfService: https://sambanova.ai/cloud-end-user-license-agreement
+  contact:
+    email: info@sambanova.ai
+    name: SambaNova information
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://chat.sambanova.ai/api
+security:
+- api_key: []
+tags:
+- name: Main Agent
+paths:
+  /agent/mainagent:
+    post:
+      tags:
+      - Main Agent
+      summary: Main Agent
+      description: 'The main agent is a general-purpose AI assistant that coordinates with specialized subagents (coding, financial analysis, deep research, and data science) to complete complex tasks. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.
+
+        '
+      operationId: main_agent_agent_mainagent_post
+      security:
+      - api_key: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MainAgentRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseAgentResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    BaseAgentResponse:
+      type: object
+      title: Base agent response object
+      description: Base agent response object
+      additionalProperties: false
+      properties:
+        status:
+          title: status
+          description: status of agent gereneration
+          type: string
+        result:
+          title: result
+          description: results description
+          type: string
+        artifacts:
+          title: artifacts
+          description: generated artifacts
+          type: array
+          items:
+            type: string
+            description: id of generated artifact
+        thread_id:
+          title: thread_id
+          description: thread id for persistent context
+          type: string
+      required:
+      - status
+      - result
+      - artifacts
+      - thread_id
+      example:
+        status: success
+        result: I've created the bar chart...
+        artifacts:
+        - file-id-123
+        thread_id: thread-abc
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+    MainAgentRequest:
+      type: object
+      title: MainAgentRequest
+      description: Request for  main agent json object
+      additionalProperties: false
+      properties:
+        prompt:
+          title: prompt
+          description: The main prompt for the main agent
+          type: string
+      required:
+      - prompt
+      examples:
+      - prompt: Create a bar chart for Q1 sales
+        resume: false
+  securitySchemes:
+    api_key:
+      type: http
+      description: SambaNova API Key
+      scheme: bearer
+      bearerFormat: apiKey
+externalDocs:
+  description: Find out more in the official SambaNova docs
+  url: https://docs.sambanova.ai/cloud/api-reference/overview

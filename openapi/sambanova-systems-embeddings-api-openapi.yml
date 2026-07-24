@@ -1,0 +1,439 @@
+openapi: 3.1.0
+info:
+  title: Sambanova Agents Service Audio Embeddings API
+  description: Service for Sambanova agents
+  version: 0.0.1
+  termsOfService: https://sambanova.ai/cloud-end-user-license-agreement
+  contact:
+    email: info@sambanova.ai
+    name: SambaNova information
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- url: https://chat.sambanova.ai/api
+security:
+- api_key: []
+tags:
+- name: Embeddings
+paths:
+  /embeddings:
+    post:
+      operationId: createEmbedding
+      tags:
+      - Embeddings
+      summary: Create embeddings
+      security:
+      - api_key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmbeddingsRequest'
+        description: Texts to embed and parameters
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingsResponse'
+        '400':
+          description: Bad Request - Missing or invalid parameters
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 'Invalid request body:  - missing property ''model''"'
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/GeneralError'
+                - $ref: '#/components/schemas/SimpleError'
+              examples:
+                missing_model:
+                  summary: No model parameter provided
+                  value:
+                    error:
+                      message: you must provide a model parameter
+                      type: invalid_request_error
+                      param: null
+                      code: null
+                    request_id: a4fa849e
+                invalid_json:
+                  summary: Malformed JSON body
+                  value:
+                    error:
+                      code: null
+                      message: 'We could not parse the JSON body of your request. (HINT: This likely means you aren''t using your HTTP library correctly. A JSON payload is expected, but what was sent was not valid JSON.)'
+                      param: null
+                      type: invalid_request_error
+                    request_id: 3f7db127
+                simple:
+                  summary: Simple error (unhandled cases)
+                  value:
+                    error: Model name is required
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+              examples:
+                invalid_api_key:
+                  summary: Invalid API key provided
+                  value:
+                    error:
+                      message: 'Incorrect API key provided: *****. You can find your API key at https://cloud.sambanova.ai/apis.'
+                      type: invalid_request_error
+                      param: null
+                      code: invalid_api_key
+                    request_id: d79vcq57os633dverhi0
+                missing_api_key:
+                  summary: No API key provided
+                  value:
+                    error:
+                      message: 'You didn''t provide an API key. You need to provide your API key in an Authorization header using Bearer auth (i.e. Authorization: Bearer YOUR_KEY).'
+                      type: invalid_request_error
+                      param: null
+                      code: null
+                    request_id: d7a0dct7os633dvesi60
+        '404':
+          description: Not found - model does not exist or wrong endpoint called
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/GeneralError'
+                - $ref: '#/components/schemas/SimpleError'
+              examples:
+                model_not_found:
+                  summary: Model does not exist or is not accessible
+                  value:
+                    error:
+                      code: model_not_found
+                      message: The model `abc` does not exist or you do not have access to it.
+                      param: model
+                      type: invalid_request_error
+                    request_id: 887a8227
+                simple:
+                  summary: Simple error (unhandled cases e.g. wrong endpoint)
+                  value:
+                    error: Not found
+        '408':
+          description: Request timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleError'
+        '410':
+          description: Gone - model is no longer available (deprecated or removed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralError'
+        '500':
+          description: Internal Server Error. Unexpected issue on server side.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '503':
+          description: Service Temporarily Unavailable
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Service Temporarily Unavailable
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import SambaNova from 'sambanova';\n\nconst client = new SambaNova({\n  apiKey: process.env['SAMBANOVA_API_KEY'], // This is the default and can be omitted\n});\n\nconst embeddingsResponse = await client.embeddings.create({\n  input: ['text to embed number 1', 'text to embed number 2'],\n  model: 'E5-Mistral-7B-Instruct',\n});\n\nconsole.log(embeddingsResponse.data);"
+      - lang: Python
+        source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nembeddings_response = client.embeddings.create(\n    input=[\"text to embed number 1\", \"text to embed number 2\"],\n    model=\"E5-Mistral-7B-Instruct\",\n)\nprint(embeddings_response.data)"
+components:
+  schemas:
+    SimpleError:
+      title: SimpleError
+      type: object
+      description: other kind of simple schema errors
+      properties:
+        error:
+          title: error
+          type: string
+          description: error detail.
+          nullable: true
+      required:
+      - error
+    Usage:
+      title: Usage
+      type: object
+      description: Usage metrics for the completion, embeddings,transcription or translation request
+      additionalProperties: true
+      properties:
+        acceptance_rate:
+          title: Acceptance Rate
+          type: number
+          description: acceptance rate
+        completion_tokens:
+          title: Completion Tokens
+          type: integer
+          description: number of tokens generated in completion
+        completion_tokens_after_first_per_sec:
+          title: Completion Tokens After First Per Sec
+          type: number
+          description: completion tokens per second after first token generation
+        completion_tokens_after_first_per_sec_first_ten:
+          title: Completion Tokens After First Per Sec First Ten
+          type: number
+          description: completion tokens per second after first token generation first ten
+        completion_tokens_after_first_per_sec_graph:
+          title: Completion Tokens After First Per Sec Graph
+          type: number
+          description: completion tokens per second after first token generation
+        completion_tokens_per_sec:
+          title: Completion Tokens Per Sec
+          type: number
+          description: completion tokens per second
+        end_time:
+          title: End Time
+          type: number
+          description: The Unix timestamp (in seconds) of when the generation finished.
+        is_last_response:
+          title: Is Last Response
+          type: boolean
+          description: whether or not is last response, always true for non streaming response
+          const: true
+        prompt_tokens_details:
+          title: Prompt tokens details
+          type: object
+          description: Extra tokens details
+          additionalProperties: true
+          properties:
+            cached_tokens:
+              title: Cached tokens
+              description: amount of cached tokens
+              type: integer
+        prompt_tokens:
+          title: Prompt Tokens
+          type: integer
+          description: number of tokens used in the prompt sent
+        start_time:
+          title: Start Time
+          type: number
+          description: The Unix timestamp (in seconds) of when the generation started.
+        time_to_first_token:
+          title: Time To First Token
+          type: number
+          description: also TTF, time (in seconds) taken to generate the first token
+        time_to_first_token_graph:
+          title: Time To First Token Graph
+          type: number
+          description: Time (in seconds) to first token, adjusted for graph rendering. May differ slightly from time_to_first_token.
+        stop_reason:
+          title: Stop Reason
+          type: string
+          description: The reason generation stopped (e.g. "stop", "length"). Mirrors the choice-level finish_reason but reported at the usage level.
+          nullable: true
+        completion_tokens_details:
+          title: Completion Tokens Details
+          type: object
+          description: Breakdown of completion token consumption.
+          additionalProperties: true
+          properties:
+            reasoning_tokens:
+              title: Reasoning Tokens
+              type: integer
+              description: Number of tokens consumed by the model's internal reasoning process. Only present on reasoning-capable models.
+          nullable: true
+        total_latency:
+          title: Total Latency
+          type: number
+          description: total time (in seconds) taken to generate the full generation
+        total_tokens:
+          title: Total Tokens
+          type: integer
+          description: prompt tokens + completion tokens
+        total_tokens_per_sec:
+          title: Total Tokens Per Sec
+          type: number
+          description: tokens per second including prompt and completion
+      nullable: true
+      examples:
+      - completion_tokens: 260
+        completion_tokens_after_first_per_sec: 422.79282728043336
+        completion_tokens_after_first_per_sec_first_ten: 423.6108998455803
+        completion_tokens_after_first_per_sec_graph: 423.6108998455803
+        completion_tokens_per_sec: 314.53312043711406
+        completion_tokens_details:
+          reasoning_tokens: 55
+        end_time: 1776189309.02061
+        is_last_response: true
+        prompt_tokens: 90
+        prompt_tokens_details:
+          cached_tokens: 0
+        start_time: 1776189308.193988
+        stop_reason: stop
+        time_to_first_token: 0.21402883529663086
+        time_to_first_token_graph: 0.2102978229522705
+        total_latency: 0.8266220092773438
+        total_tokens: 350
+        total_tokens_per_sec: 423.40996981919204
+      - prompt_tokens: 43
+        total_tokens: 393
+    EmbeddingsRequest:
+      title: Embeddings Request
+      type: object
+      description: embeddings request object
+      additionalProperties: true
+      properties:
+        model:
+          title: Model
+          description: The model ID to use See available [models](https://docs.sambanova.ai/docs/en/models/sambacloud-models)
+          anyOf:
+          - type: string
+          - enum:
+            - E5-Mistral-7B-Instruct
+        input:
+          title: input
+          description: Input text to embed. to embed multiple inputs in a single request,  pass an array of strings. The input must not exceed the max input tokens for the model
+          oneOf:
+          - type: string
+            description: The string that will be turned into an embedding.
+          - type: array
+            description: The array of strings that will be turned into an embeddings.
+            minItems: 1
+            items:
+              type: string
+      required:
+      - model
+      - input
+      example:
+        input:
+        - text to embed number 1
+        - text to embed number 2
+        model: E5-Mistral-7B-Instruct
+    EmbeddingsResponse:
+      title: Embeddings Response
+      type: object
+      description: Embeddings response returned by the model
+      properties:
+        object:
+          title: object
+          type: string
+          description: The object type, which is always "list".
+          enum:
+          - list
+        model:
+          type: string
+          description: The name of the model used to generate the embedding.
+        usage:
+          $ref: '#/components/schemas/Usage'
+        data:
+          type: array
+          description: The list of embeddings generated by the model.
+          items:
+            $ref: '#/components/schemas/Embedding'
+      required:
+      - object
+      - model
+      - usage
+      - data
+      example:
+        data:
+        - index: 0
+          object: embedding
+          embedding:
+          - 0.024864232167601585
+          - -0.01452154759317636
+          - 0.008880083449184895
+        - index: 1
+          object: embedding
+          embedding:
+          - 0.010919672437012196
+          - 0.0016351072117686272
+          - 0.008019134402275085
+        model: E5-Mistral-7B-Instruct
+        object: list
+        usage:
+          prompt_tokens: 716
+          total_tokens: 716
+    Embedding:
+      type: object
+      title: Embedding
+      description: Represents an embedding vector returned by embeddings endpoint.
+      properties:
+        index:
+          type: integer
+          title: index
+          description: The index of the embedding in the list of embeddings.
+        object:
+          type: string
+          title: object
+          description: Object type, always embedding.
+          enum:
+          - embedding
+        embedding:
+          type: array
+          items:
+            type: number
+          title: embedding
+          description: List of floats containing the embedding vector.
+          nullable: true
+      required:
+      - index
+      - object
+      - embedding
+    GeneralError:
+      title: GeneralError
+      type: object
+      description: other kind of errors
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              title: code
+              type: string
+              description: error code
+              nullable: true
+            message:
+              title: message
+              type: string
+              description: error message
+            param:
+              title: param
+              type: string
+              description: error params
+              nullable: true
+            type:
+              title: type
+              type: string
+              description: error type
+            error_model_output:
+              title: Error Model Output
+              type: string
+              description: Raw model output that could not be parsed. Present on `server_error` responses when the model produced output that failed internal parsing (e.g. a malformed tool call JSON).
+              nullable: true
+        request_id:
+          title: request_id
+          type: string
+          description: unique request identifier for debugging
+          nullable: true
+      required:
+      - error
+  securitySchemes:
+    api_key:
+      type: http
+      description: SambaNova API Key
+      scheme: bearer
+      bearerFormat: apiKey
+externalDocs:
+  description: Find out more in the official SambaNova docs
+  url: https://docs.sambanova.ai/cloud/api-reference/overview
