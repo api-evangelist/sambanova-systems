@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/sambanova-systems-cloud-openapi-original.yml, https://docs.sambanova.ai/cloud/docs/features/openai-compatibility
+standards:
+  - id: openai-chat-completions
+    conforms: true
+    evidence: /chat/completions, /completions and /embeddings mirror the OpenAI API surface; docs confirm the OpenAI client works by setting base_url and api_key.
+  - id: openai-responses
+    conforms: true
+    evidence: POST /responses is documented as compatible with the OpenAI Responses API standard.
+  - id: anthropic-messages
+    conforms: true
+    evidence: POST /messages and /messages/count_tokens implement the Anthropic Messages API; accept x-api-key header and return the Anthropic error envelope.
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securityScheme; authentication is a bearer API key (Authorization header) or x-api-key header.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use the OpenAI error object shape (error.message/type/param/code + request_id), not application/problem+json.
+  - id: sse-streaming
+    conforms: true
+    evidence: Chat completions support stream=true returning server-sent event chunks.

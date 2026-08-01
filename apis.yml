@@ -1,27 +1,239 @@
 aid: sambanova-systems
 name: SambaNova Systems
-description: 'SambaNova Systems is a company surfaced as a portfolio company of gv and added to the API
-  Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  SambaNova Systems is an AI infrastructure company that builds custom Reconfigurable Dataflow Unit
+  (RDU) chips and the SambaCloud, SambaStack, and SambaRack platforms for fast, energy-efficient AI
+  inference. Its developer-facing product, SambaNova Cloud, exposes an OpenAI- and Anthropic-compatible
+  inference API (chat completions, completions, the Responses API, the Messages API, embeddings, and
+  audio transcription/translation) serving open models such as Meta Llama, DeepSeek, MiniMax, gpt-oss,
+  Gemma, and Mistral. A companion Agents Service provides coordinated coding, data-science, deep-research,
+  and financial-analysis agents. Official Python and TypeScript SDKs, tiered rate limits, prompt caching,
+  and dozens of framework integrations round out the platform.
 url: https://raw.githubusercontent.com/api-evangelist/sambanova-systems/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - gv
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enriched-from-stub
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://github.com/sambanova.png
 tags:
 - Company
 - Ai
-apis: []
+- Artificial Intelligence
+- Machine Learning
+- LLM
+- Inference
+- Generative AI
+- API
+- Agents
+- Embeddings
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: sambanova-systems:sambanova-systems-audio-api
+  name: SambaNova Systems Audio API
+  description: The Audio API from SambaNova Systems — 2 operation(s) for audio.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Audio
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-audio-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-chat-completions-api
+  name: SambaNova Systems Chat completions API
+  description: The Chat completions API from SambaNova Systems — 1 operation(s) for chat completions.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Chat completions
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-chat-completions-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-completions-api
+  name: SambaNova Systems Completions API
+  description: The Completions API from SambaNova Systems — 1 operation(s) for completions.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-completions-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-embeddings-api
+  name: SambaNova Systems Embeddings API
+  description: The Embeddings API from SambaNova Systems — 1 operation(s) for embeddings.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Embeddings
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-embeddings-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-file-management-api
+  name: SambaNova Systems File Management API
+  description: The File Management API from SambaNova Systems — 1 operation(s) for file management.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - File Management
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-file-management-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-main-agent-api
+  name: SambaNova Systems Main Agent API
+  description: The Main Agent API from SambaNova Systems — 1 operation(s) for main agent.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Main Agent
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-main-agent-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-main-agent-interactive-api
+  name: SambaNova Systems Main Agent Interactive API
+  description: >-
+    The Main Agent Interactive API from SambaNova Systems — 1 operation(s) for main agent interactive.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Main Agent Interactive
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-main-agent-interactive-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-messages-api
+  name: SambaNova Systems Messages API
+  description: The Messages API from SambaNova Systems — 2 operation(s) for messages.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-messages-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-models-api
+  name: SambaNova Systems Models API
+  description: The Models API from SambaNova Systems — 2 operation(s) for models.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Models
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-models-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-responses-api
+  name: SambaNova Systems Responses API
+  description: The Responses API from SambaNova Systems — 1 operation(s) for responses.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Responses
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-responses-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-subagents-api
+  name: SambaNova Systems Subagents API
+  description: The Subagents API from SambaNova Systems — 4 operation(s) for subagents.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Subagents
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-subagents-api-openapi.yml
+- aid: sambanova-systems:sambanova-systems-subagents-interactive-api
+  name: SambaNova Systems Subagents Interactive API
+  description: >-
+    The Subagents Interactive API from SambaNova Systems — 4 operation(s) for subagents interactive.
+  humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+  baseURL: https://api.sambanova.ai/v1
+  tags:
+  - Subagents Interactive
+  properties:
+  - type: OpenAPI
+    url: openapi/sambanova-systems-subagents-interactive-api-openapi.yml
 common:
 - type: Website
-  url: http://sambanovasystems.com
+  url: https://sambanova.ai
+- type: DeveloperPortal
+  url: https://cloud.sambanova.ai
+- type: Documentation
+  url: https://docs.sambanova.ai/cloud
+- type: APIReference
+  url: https://docs.sambanova.ai/cloud/docs/api-reference/overview
+- type: GettingStarted
+  url: https://docs.sambanova.ai/cloud/docs/get-started/quickstart
+- type: Support
+  url: https://sambanova.ai/support
+- type: Blog
+  url: https://sambanova.ai/blog
+- type: GitHubOrganization
+  url: https://github.com/sambanova
+- type: Pricing
+  url: https://cloud.sambanova.ai/plans/pricing
+- type: SignUp
+  url: https://cloud.sambanova.ai
+- type: TermsOfService
+  url: https://sambanova.ai/legal-agreements
+- type: PrivacyPolicy
+  url: https://sambanova.ai/privacy-policy
+- type: StatusPage
+  url: https://status.sambanova.ai
+- type: Deprecation
+  url: lifecycle/sambanova-systems-lifecycle.yml
+- type: ChangeLog
+  url: changelog/sambanova-systems-changelog.yml
+- type: Lifecycle
+  url: lifecycle/sambanova-systems-lifecycle.yml
+- type: Authentication
+  url: authentication/sambanova-systems-authentication.yml
+- type: DomainSecurity
+  url: security/sambanova-systems-domain-security.yml
+- type: Packages
+  url: packages/sambanova-systems-packages.yml
+- type: SDKs
+  url: packages/sambanova-systems-packages.yml
+- type: Conventions
+  url: conventions/sambanova-systems-conventions.yml
+- type: ErrorCatalog
+  url: errors/sambanova-systems-error-codes.yml
+- type: RateLimits
+  url: rate-limits/sambanova-systems-rate-limits.yml
+- type: Conformance
+  url: conformance/sambanova-systems-conformance.yml
+- type: MCPServer
+  url: mcp/sambanova-systems-mcp.yml
+- type: DataModel
+  url: data-model/sambanova-systems-data-model.yml
+- type: AgenticAccess
+  url: agentic-access/sambanova-systems-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/sambanova-systems-llms.txt
+- type: WellKnown
+  url: well-known/sambanova-systems-well-known.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1

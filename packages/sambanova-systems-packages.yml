@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sambanova.ai/cloud/docs/build/sn-sdk
+packages:
+  - language: python
+    registry: pypi
+    name: sambanova
+    url: https://pypi.org/project/sambanova/
+    install: pip install sambanova
+    version: 1.12.1
+    repository: https://github.com/sambanova/sambanova-python
+    official: true
+    description: The official Python library for the SambaNova API (Python 3.8+), with typed request/response models and sync + async usage.
+  - language: javascript
+    registry: npm
+    name: sambanova
+    url: https://www.npmjs.com/package/sambanova
+    install: npm install sambanova
+    version: 1.9.2
+    repository: https://github.com/sambanova/sambanova-typescript
+    official: true
+    description: The official TypeScript/JavaScript library for the SambaNova API, for server-side environments, with built-in type definitions.
+  - language: python
+    registry: pypi
+    name: openai
+    url: https://pypi.org/project/openai/
+    install: pip install openai
+    official: false
+    description: Third-party OpenAI client, usable against SambaNova's OpenAI-compatible endpoints by setting base_url=https://api.sambanova.ai/v1.

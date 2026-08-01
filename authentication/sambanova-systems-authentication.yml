@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/sambanova-systems-agents-openapi-original.yml, openapi/sambanova-systems-cloud-openapi-original.yml
+docs: https://docs.sambanova.ai/cloud/docs/get-started/api-keys-urls
+notes: >-
+  Authentication is a SambaNova API key generated in the SambaCloud portal (https://cloud.sambanova.ai/apis);
+  up to 25 keys per user. Sent as a bearer token (Authorization: Bearer <key>) on all OpenAI-compatible
+  routes, or as the x-api-key header on the Anthropic Messages API routes (/messages, /messages/count_tokens).
+  The credential value is identical across both transports. Keys cannot be viewed again after generation.
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: api_key
+  type: http
+  scheme: bearer
+  bearerFormat: apiKey
+  description: SambaNova API Key
+  sources:
+  - openapi/sambanova-systems-agents-openapi-original.yml
+  - openapi/sambanova-systems-cloud-openapi-original.yml
+- name: x_api_key
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  description: SambaNova API key, sent in the `x-api-key` header. Accepted on the Messages API
+    routes (`/messages`, `/messages/count_tokens`) so that callers can point the official Anthropic
+    SDK at SambaNova by swapping `base_url` — no code changes. The credential value is the same
+    as the bearer `api_key` scheme; only the transport differs.
+  sources:
+  - openapi/sambanova-systems-cloud-openapi-original.yml

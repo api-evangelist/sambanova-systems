@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sambanova.ai/cloud/docs/features/openai-compatibility, https://docs.sambanova.ai/cloud/docs/models/rate-limits, https://docs.sambanova.ai/cloud/docs/api-reference/using-the-api/api-error-codes
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <key>'
+  alt_header: 'x-api-key: <key>  (Messages API routes, for Anthropic SDK compatibility)'
+  base_url: https://api.sambanova.ai/v1
+  ref: authentication/sambanova-systems-authentication.yml
+idempotency:
+  supported: false
+  note: No idempotency-key header or parameter is documented or present in the OpenAPI; inference calls are non-idempotent by nature.
+pagination:
+  supported: false
+  note: Inference endpoints are single request/response; no list-pagination surface. GET /models returns a full list object.
+streaming:
+  supported: true
+  style: server-sent-events
+  param: stream=true
+  note: Streaming responses return chunks that may contain multiple tokens; count all tokens per chunk for TPS metrics.
+request_tracing:
+  field: request_id
+  note: Every error response (and completion id) carries a request_id / id for tracing; provide request_id to support when reporting issues.
+versioning:
+  scheme: uri-path
+  current: v1
+  ref: lifecycle/sambanova-systems-lifecycle.yml
+error_envelope:
+  shape: '{ "error": { "message", "type", "param", "code" }, "request_id" }'
+  format: openai-error-object
+  ref: errors/sambanova-systems-error-codes.yml
+rate_limit_signaling:
+  headers:
+    - x-ratelimit-limit-requests
+    - x-ratelimit-remaining-requests
+    - x-ratelimit-reset-requests
+    - x-ratelimit-limit-requests-day
+    - x-ratelimit-remaining-requests-day
+    - x-ratelimit-reset-requests-day
+  measured_in: [RPM, RPD, TPD]
+  ref: https://docs.sambanova.ai/cloud/docs/models/rate-limits
+compatibility:
+  openai: true
+  anthropic_messages: true
+  note: SambaNova inference APIs are drop-in compatible with the OpenAI client and the Anthropic Messages API.

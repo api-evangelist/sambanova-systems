@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: live probe of /.well-known/ discovery surface
+note: No .well-known discovery documents are published. api.sambanova.ai returns 405 (method not allowed) and chat.sambanova.ai returns 403 for all probed paths; the marketing/portal hosts return 404. Recorded negatives are valid data.
+hosts:
+  - host: https://api.sambanova.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 405}
+      - {path: /.well-known/openid-configuration, status: 405}
+      - {path: /.well-known/oauth-authorization-server, status: 405}
+      - {path: /.well-known/api-catalog, status: 405}
+      - {path: /.well-known/ai-plugin.json, status: 405}
+  - host: https://chat.sambanova.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 403}
+      - {path: /.well-known/openid-configuration, status: 403}
+      - {path: /.well-known/oauth-authorization-server, status: 403}
+      - {path: /.well-known/api-catalog, status: 403}
+      - {path: /.well-known/ai-plugin.json, status: 403}
+  - host: https://cloud.sambanova.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://sambanova.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}

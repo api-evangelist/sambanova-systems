@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sambanova.ai/cloud/docs/release-notes/sambacloud
+scheme: dated-release-notes
+current_version: '1.2.0'
+entries:
+  - version: July 2026
+    date: '2026-07-07'
+    highlights:
+      - Prompt caching introduced (MiniMax-M2.7); /v1/models pricing adds input_cache_read / input_cache_write, usage reports cached_tokens.
+      - New models Mistral-Large-3-675B-Instruct-2512 (production, function calling), MiniMax-M2.7 full 192K context, gemma-4-31B-it multi-frame video input.
+      - Streaming fix restores true incremental streaming for tool-call requests.
+      - Messages API fixes: stop_reason tool_use, disable_parallel_tool_use enforced, role:system accepted, Anthropic-standard auth error envelope.
+      - response_format fix uses reasoning-stripped text to avoid <think> tokens corrupting JSON on reasoning models.
+    breaking: false
+  - version: June 2026
+    date: '2026-06-09'
+    highlights:
+      - Preview model deprecations announced (gemma-3-12b-it, Llama-4-Maverick-17B-128E-Instruct -> gemma-4-31B-it).
+    breaking: true
+  - version: May 2026
+    date: '2026-05-18'
+    highlights:
+      - MiniMax-M2.5 moved to SambaStack/SambaManaged only; replacement MiniMax-M2.7.
+    breaking: true

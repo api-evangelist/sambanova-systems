@@ -1,0 +1,20 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/sambanova-systems-cloud-openapi-original.yml, openapi/sambanova-systems-agents-openapi-original.yml
+skills:
+  - file: sambanova-systems-chat-completion.md
+    name: Generate a chat completion with SambaNova
+    api: openapi/sambanova-systems-cloud-openapi-original.yml
+    operations: [createChatCompletion, getModelList]
+  - file: sambanova-systems-embeddings.md
+    name: Create embeddings with SambaNova
+    api: openapi/sambanova-systems-cloud-openapi-original.yml
+    operations: [createEmbedding, getModelList]
+  - file: sambanova-systems-transcribe-audio.md
+    name: Transcribe or translate audio with SambaNova
+    api: openapi/sambanova-systems-cloud-openapi-original.yml
+    operations: [createTranscription, createTranslation]
+  - file: sambanova-systems-deep-research-agent.md
+    name: Run the SambaNova deep research agent
+    api: openapi/sambanova-systems-agents-openapi-original.yml
+    operations: [deepresearch_agent_agent_deepresearch_post, download_agent_file_agent_files__file_id__get]

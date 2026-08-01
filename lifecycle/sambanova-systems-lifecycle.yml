@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sambanova.ai/cloud/docs/models/deprecations, https://docs.sambanova.ai/cloud/docs/release-notes/sambacloud
+versioning:
+  scheme: uri-path
+  current: v1
+  spec_version: 1.2.0
+  docs: https://docs.sambanova.ai/cloud/docs/get-started/api-keys-urls
+model_lifecycle:
+  tiers: [production, preview]
+  note: >-
+    Models are classified Production (meet SambaNova speed/quality bar, receive deprecation notice)
+    or Preview (evaluation only, may be removed at short notice or graduate to Production).
+deprecation:
+  policy_url: https://docs.sambanova.ai/cloud/docs/models/deprecations
+  scope: models
+  notice_production: at least two to three weeks
+  notice_preview: short notice
+  channels: [email, documentation]
+  http_signal: 410 Gone with error code model_deprecated when a deprecated/removed model is requested
+  contact: help@sambanova.ai
+status_page: https://status.sambanova.ai
+release_notes:
+  - https://docs.sambanova.ai/cloud/docs/release-notes/sambacloud
+  - https://docs.sambanova.ai/cloud/docs/release-notes/runtime
+  - https://docs.sambanova.ai/cloud/docs/release-notes/sambastack
+sla:
+  note: Rate-limit tiers (Free / Developer / Enterprise) documented; higher throughput SLAs handled via sales.
+  contact: https://sambanova.ai/contact

@@ -1,0 +1,51 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/sambanova-systems-cloud-openapi-original.yml
+note: >-
+  SambaNova Cloud is a stateless inference API — most operations are single request/response with
+  no persisted server-side resources. The only persistent-ish entity is Model (listable/retrievable);
+  ChatCompletion, Completion, Response, Message and Embedding are transient response objects. Agent
+  files (from the Agents service) are the one retrievable artifact.
+entities:
+  - name: Model
+    persistent: true
+    key: id
+    operations: [getModelList, getModel]
+    fields: [id, object, pricing, context_length]
+  - name: ChatCompletion
+    persistent: false
+    key: id
+    operations: [createChatCompletion]
+    fields: [id, choices, created, model, object, usage, system_fingerprint]
+    relationships:
+      - {type: belongs_to, target: Model, via: model}
+  - name: Completion
+    persistent: false
+    operations: [createCompletion]
+    relationships:
+      - {type: belongs_to, target: Model, via: model}
+  - name: Response
+    persistent: false
+    operations: [createResponse]
+    relationships:
+      - {type: belongs_to, target: Model, via: model}
+  - name: Message
+    persistent: false
+    operations: [createMessage, countMessageTokens]
+    relationships:
+      - {type: belongs_to, target: Model, via: model}
+  - name: Embedding
+    persistent: false
+    operations: [createEmbedding]
+    relationships:
+      - {type: belongs_to, target: Model, via: model}
+  - name: Transcription
+    persistent: false
+    operations: [createTranscription, createTranslation]
+    relationships:
+      - {type: belongs_to, target: Model, via: model}
+  - name: AgentFile
+    persistent: true
+    key: file_id
+    source: openapi/sambanova-systems-agents-openapi-original.yml
+    operations: [download_agent_file_agent_files__file_id__get]

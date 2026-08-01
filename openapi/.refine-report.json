@@ -1,0 +1,36 @@
+{
+  "provider": "sambanova-systems",
+  "sources": [
+    "sambanova-systems-audio-api-openapi.yml",
+    "sambanova-systems-chat-completions-api-openapi.yml",
+    "sambanova-systems-completions-api-openapi.yml",
+    "sambanova-systems-embeddings-api-openapi.yml",
+    "sambanova-systems-file-management-api-openapi.yml",
+    "sambanova-systems-main-agent-api-openapi.yml",
+    "sambanova-systems-main-agent-interactive-api-openapi.yml",
+    "sambanova-systems-messages-api-openapi.yml",
+    "sambanova-systems-models-api-openapi.yml",
+    "sambanova-systems-responses-api-openapi.yml",
+    "sambanova-systems-subagents-api-openapi.yml",
+    "sambanova-systems-subagents-interactive-api-openapi.yml"
+  ],
+  "outputs": [
+    "sambanova-systems-audio-api-openapi.yml",
+    "sambanova-systems-chat-completions-api-openapi.yml",
+    "sambanova-systems-completions-api-openapi.yml",
+    "sambanova-systems-embeddings-api-openapi.yml",
+    "sambanova-systems-file-management-api-openapi.yml",
+    "sambanova-systems-main-agent-api-openapi.yml",
+    "sambanova-systems-main-agent-interactive-api-openapi.yml",
+    "sambanova-systems-messages-api-openapi.yml",
+    "sambanova-systems-models-api-openapi.yml",
+    "sambanova-systems-responses-api-openapi.yml",
+    "sambanova-systems-subagents-api-openapi.yml",
+    "sambanova-systems-subagents-interactive-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

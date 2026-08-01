@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sambanova.ai/cloud/docs/models/rate-limits
+measured_in: [RPM, RPD, TPD]
+tiers:
+  - name: Free
+    condition: No payment method linked to the account
+    token_cap_per_day: 200000
+  - name: Developer
+    condition: A payment method is linked to the account
+    token_cap_per_day: 20000000
+  - name: Enterprise
+    condition: Higher limits arranged via SambaNova sales
+    contact: https://sambanova.ai/contact
+limits:
+  - {tier: Developer, model: MiniMax-M2.7, rpm: 60, rpd: 12000}
+  - {tier: Developer, model: DeepSeek-V3.1, rpm: 60, rpd: 12000}
+  - {tier: Developer, model: Meta-Llama-3.3-70B-Instruct, rpm: 240, rpd: 48000}
+  - {tier: Developer, model: gpt-oss-120b, rpm: 60, rpd: 12000}
+  - {tier: Developer, model: DeepSeek-V3.2, rpm: 60, rpd: 12000, class: preview}
+  - {tier: Developer, model: gemma-4-31B-it, rpm: 60, rpd: 12000, class: preview}
+  - {tier: Free, model: DeepSeek-V3.1, rpm: 20, rpd: 20, tpd: 200000}
+  - {tier: Free, model: Meta-Llama-3.3-70B-Instruct, rpm: 20, rpd: 20, tpd: 200000}
+  - {tier: Free, model: gpt-oss-120b, rpm: 20, rpd: 20, tpd: 200000}
+  - {tier: Free, model: DeepSeek-V3.2, rpm: 20, rpd: 20, tpd: 200000, class: preview}
+  - {tier: Free, model: gemma-4-31B-it, rpm: 20, rpd: 20, tpd: 200000, class: preview}
+response_headers:
+  - x-ratelimit-limit-requests
+  - x-ratelimit-remaining-requests
+  - x-ratelimit-reset-requests
+  - x-ratelimit-limit-requests-day
+  - x-ratelimit-remaining-requests-day
+  - x-ratelimit-reset-requests-day
+on_exceed: HTTP 429 with error code insufficient_quota (rate limit) or queue_full (too many in-flight)

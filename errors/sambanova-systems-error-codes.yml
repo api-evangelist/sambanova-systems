@@ -1,0 +1,35 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sambanova.ai/cloud/docs/api-reference/using-the-api/api-error-codes
+format: openai-error-object
+envelope:
+  shape: '{ "error": { "message", "type", "param", "code" }, "request_id" }'
+  fields:
+    - {field: error.message, description: Human-readable explanation of the error}
+    - {field: error.type, description: Category of the error (e.g. invalid_request_error)}
+    - {field: error.param, description: The request parameter that caused the error, if applicable}
+    - {field: error.code, description: Machine-readable error code for programmatic handling, if applicable}
+    - {field: request_id, description: Unique identifier for the request; provide to SambaNova support when reporting issues}
+categories:
+  - {status: 400, category: Bad request, description: Invalid syntax or input values, suggestion: Review the API request syntax and parameters.}
+  - {status: 401, category: Unauthorized, description: Authentication credentials are missing or invalid, suggestion: Ensure a valid API key/token is included.}
+  - {status: 408, category: Request timeout, description: Request terminated due to excessive processing time, suggestion: Retry the request with optimized payload.}
+  - {status: 410, category: Gone, description: The requested model is no longer available (deprecated or removed), suggestion: Use a currently supported model.}
+  - {status: 429, category: Too many requests, description: Rate limit exceeded for your subscription tier, suggestion: Implement rate limiting or upgrade tier.}
+  - {status: 429, category: Queue full, description: Too many requests currently in flight, suggestion: Retry after a short delay or reduce concurrency.}
+  - {status: 500, category: Something went wrong, description: A server-side error occurred, suggestion: Retry later or contact support if persistent.}
+  - {status: 503, category: Maintenance, description: The model is temporarily unavailable due to maintenance, suggestion: Try again after some time.}
+codes:
+  - {status: 400, code: context_length_exceeded, description: Input/output tokens exceed model context limits, action: Reduce prompt and response length.}
+  - {status: 400, code: invalid_type, description: Parameter type mismatch, action: Check expected parameter types and correct the input.}
+  - {status: 400, code: decimal_above_max_value, description: Decimal value exceeds the allowed maximum, action: Adjust the value into the allowed range.}
+  - {status: 400, code: decimal_below_min_value, description: Decimal value is below the allowed minimum, action: Increase the value to the minimum.}
+  - {status: 400, code: integer_above_max_value, description: Integer value exceeds the allowed maximum, action: Provide a smaller integer within range.}
+  - {status: 400, code: model_not_found, description: Provided model ID does not exist, action: Verify the model ID is available in your subscription.}
+  - {status: 401, code: invalid_authentication, description: Invalid or expired API key, action: Generate and use a valid API key from the SambaCloud portal.}
+  - {status: 408, code: request_timeout, description: Request timed out due to server load or latency, action: Retry with a smaller payload or upgrade tier.}
+  - {status: 410, code: model_deprecated, description: The requested model has been deprecated, action: Use a currently supported model.}
+  - {status: 429, code: insufficient_quota, description: Rate limit exceeded, action: Upgrade your plan for higher quota.}
+  - {status: 429, code: queue_full, description: Too many in-flight requests, action: Retry after a delay or reduce request frequency.}
+  - {status: 500, code: internal_server_error, description: An unexpected server-side error occurred, action: Retry later; contact support if persistent.}
+  - {status: 503, code: maintenance, description: Model temporarily unavailable due to maintenance, action: Try again after some time.}

@@ -1,0 +1,22 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for SambaNova cloud API
+  version: 1.0.0
+extends: openapi/sambanova-systems-cloud-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-21'
+      x-api-base-url: https://api.sambanova.ai/v1
+      x-openai-compatible: true
+      x-anthropic-messages-compatible: true
+      x-status-page: https://status.sambanova.ai
+      x-deprecation-policy: https://docs.sambanova.ai/cloud/docs/models/deprecations
+  - target: $.info
+    update:
+      x-artifacts:
+        authentication: authentication/sambanova-systems-authentication.yml
+        errors: errors/sambanova-systems-error-codes.yml
+        conventions: conventions/sambanova-systems-conventions.yml
+        lifecycle: lifecycle/sambanova-systems-lifecycle.yml
+        changelog: changelog/sambanova-systems-changelog.yml
