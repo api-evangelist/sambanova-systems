@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sambanova Agents Service Audio API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audio",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Transcribes audio into the input language.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/audio/transcriptions",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Transcribes audio into the input language."
+        },
+        {
+          "info": {
+            "name": "Translate audio into English.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/audio/translations",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Translate audio into English."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

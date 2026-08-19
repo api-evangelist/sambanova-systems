@@ -2,8 +2,7 @@ generated: '2026-07-21'
 method: derived
 status: candidate
 source: openapi/sambanova-systems-cloud-openapi-original.yml, openapi/sambanova-systems-agents-openapi-original.yml
-note: >-
-  No official first-party hosted/remote MCP server was found for SambaNova at time of enrichment.
+note: No official first-party hosted/remote MCP server was found for SambaNova at time of enrichment.
   SambaNova publishes a FastMCP integration guide (https://docs.sambanova.ai/cloud/docs/integrations/fastmcp)
   showing how to expose SambaNova models to MCP clients, but does not itself operate a public MCP endpoint.
   The tools below are a DERIVED candidate surface — one tool per OpenAPI operation — not a published server.
@@ -12,39 +11,45 @@ server:
   transport: http
   url: null
 tools:
-  - name: create_chat_completion
-    description: Create an OpenAI-compatible chat completion.
-    source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createChatCompletion
-  - name: create_completion
-    description: Create a legacy text completion.
-    source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createCompletion
-  - name: create_response
-    description: Create a model response (OpenAI Responses API compatible).
-    source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createResponse
-  - name: create_message
-    description: Create a message (Anthropic Messages API compatible).
-    source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createMessage
-  - name: count_message_tokens
-    description: Count tokens for a message request.
-    source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#countMessageTokens
-  - name: create_embedding
-    description: Create embeddings for input text.
-    source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createEmbedding
-  - name: create_transcription
-    description: Transcribe audio into the input language.
-    source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createTranscription
-  - name: create_translation
-    description: Translate audio into English.
-    source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createTranslation
-  - name: get_model_list
-    description: Get the environment's available model list metadata.
-    source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#getModelList
-  - name: get_model
-    description: Get metadata for a specific model.
-    source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#getModel
-  - name: run_main_agent
-    description: Run the general-purpose main agent (fire-and-forget).
-    source_operation: openapi/sambanova-systems-agents-openapi-original.yml#main_agent_agent_mainagent_post
-  - name: run_deepresearch_agent
-    description: Run the deep research agent to produce a comprehensive report.
-    source_operation: openapi/sambanova-systems-agents-openapi-original.yml#deepresearch_agent_agent_deepresearch_post
+- name: create_chat_completion
+  description: Create an OpenAI-compatible chat completion.
+  source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createChatCompletion
+- name: create_completion
+  description: Create a legacy text completion.
+  source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createCompletion
+- name: create_response
+  description: Create a model response (OpenAI Responses API compatible).
+  source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createResponse
+- name: create_message
+  description: Create a message (Anthropic Messages API compatible).
+  source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createMessage
+- name: count_message_tokens
+  description: Count tokens for a message request.
+  source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#countMessageTokens
+- name: create_embedding
+  description: Create embeddings for input text.
+  source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createEmbedding
+- name: create_transcription
+  description: Transcribe audio into the input language.
+  source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createTranscription
+- name: create_translation
+  description: Translate audio into English.
+  source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#createTranslation
+- name: get_model_list
+  description: Get the environment's available model list metadata.
+  source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#getModelList
+- name: get_model
+  description: Get metadata for a specific model.
+  source_operation: openapi/sambanova-systems-cloud-openapi-original.yml#getModel
+- name: run_main_agent
+  description: Run the general-purpose main agent (fire-and-forget).
+  source_operation: openapi/sambanova-systems-agents-openapi-original.yml#main_agent_agent_mainagent_post
+- name: run_deepresearch_agent
+  description: Run the deep research agent to produce a comprehensive report.
+  source_operation: openapi/sambanova-systems-agents-openapi-original.yml#deepresearch_agent_agent_deepresearch_post
+deployment:
+  mode: none
+  verified: derived
+  tools: 12
+  checked: '2026-08-12'
+  source: catalog MCP census

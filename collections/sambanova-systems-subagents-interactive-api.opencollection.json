@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sambanova Agents Service Audio Subagents Interactive API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subagents Interactive",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Coding Agent Interactive",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/agent/coding/interactive",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The coding agent executes Python code in a sandboxed environment, fixes errors, and returns results. This interactive endpoint supports multi-turn conversations for iterative code development.\n\nStep 1: Submit code with prompt, get thread_id and execution result.\nStep 2: Continue with thread_id and resume=true to iterate on code.\n"
+        },
+        {
+          "info": {
+            "name": "Datascience Interactive",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/agent/datascience/interactive",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The data science agent analyzes datasets, generates visualizations, and produces comprehensive reports. This interactive endpoint uses a two-step workflow:\n\n1. Submit a prompt and files to receive a thread_id and hypothesis for approval\n2. Submit a prompt with thread_id, file_ids_json, and resume=true to generate the final report\n"
+        },
+        {
+          "info": {
+            "name": "Deepresearch Interactive Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/agent/deepresearch/interactive",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Two-step interactive deep research API:\nStep 1: Submit prompt, get thread_id and research plan for approval.\nStep 2: Submit prompt with thread_id and resume=true to get the final report."
+        },
+        {
+          "info": {
+            "name": "Financial Analysis Agent Interactive",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/agent/financialanalysis/interactive",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The financial analysis agent analyzes stocks, companies, and market data. This interactive endpoint uses a two-step workflow:\n\n1. Submit a prompt to receive a thread_id and initial analysis\n2. Continue with thread_id and resume=true for follow-up questions\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

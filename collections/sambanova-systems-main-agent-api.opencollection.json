@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sambanova Agents Service Audio Main Agent API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Main Agent",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Main Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/agent/mainagent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The main agent is a general-purpose AI assistant that coordinates with specialized subagents (coding, financial analysis, deep research, and data science) to complete complex tasks. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

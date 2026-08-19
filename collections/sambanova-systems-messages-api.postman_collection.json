@@ -1,0 +1,1258 @@
+{
+  "item": [
+    {
+      "id": "629c8ca4-b3b8-4609-81af-37e97aaff54f",
+      "name": "Messages",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "524d8d21-de34-4fe4-a823-501ead765046",
+          "name": "Create a message",
+          "request": {
+            "name": "Create a message",
+            "description": {
+              "content": "Anthropic Messages API compatible endpoint. Generates a model response for the supplied conversation. Authentication accepts either the bearer `Authorization: Bearer <key>` header (SambaNova SDK default) or the `x-api-key` header (Anthropic SDK default); the same API key is used in both cases. When `stream: true` is set, the response is a sequence of Server-Sent Events whose payloads conform to `MessageStreamEvent`; otherwise the response is a single `Message` object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                "key": "anthropic-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\"\n  },\n  \"thinking\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"key_0\": \"string\"\n      },\n      \"cache_control\": {\n        \"type\": \"<string>\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"key_0\": 7509.158990366976\n        },\n        {\n          \"key_0\": false,\n          \"key_1\": 5834.424871818353,\n          \"key_2\": 784\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"key_0\": \"string\",\n        \"key_1\": 3317.15027840364,\n        \"key_2\": \"string\",\n        \"key_3\": 2365\n      },\n      \"cache_control\": {\n        \"type\": \"<string>\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"key_0\": 9413\n        },\n        {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": 3894\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"<string>\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"<string>\",\n  \"container\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "593ce5e4-4ef3-4c1f-a995-22e51d4b5e87",
+              "name": "Successful response. Returns a `Message` object (non-streaming), or a stream of Server-Sent Events whose payloads conform to `MessageStreamEvent` ending with a `message_stop` event (when `stream: true`).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"message\",\n  \"role\": \"assistant\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"string\",\n      \"citations\": [\n        {\n          \"key_0\": \"string\"\n        },\n        {\n          \"key_0\": 1173,\n          \"key_1\": 9325,\n          \"key_2\": 181.16132444113032\n        }\n      ]\n    },\n    {\n      \"type\": \"text\",\n      \"text\": \"string\",\n      \"citations\": [\n        {\n          \"key_0\": 1370.331296625683\n        },\n        {\n          \"key_0\": 6133,\n          \"key_1\": 3521.228506206768\n        }\n      ]\n    }\n  ],\n  \"model\": \"string\",\n  \"stop_reason\": \"model_context_window_exceeded\",\n  \"usage\": {\n    \"input_tokens\": 827,\n    \"output_tokens\": 6544,\n    \"cache_creation_input_tokens\": 8914,\n    \"cache_read_input_tokens\": 7581,\n    \"server_tool_use\": {\n      \"key_0\": 7855.02363588773,\n      \"key_1\": 7003,\n      \"key_2\": 6949.814684501271\n    },\n    \"service_tier\": \"string\",\n    \"cache_creation\": {\n      \"key_0\": 4986\n    },\n    \"inference_geo\": \"string\"\n  },\n  \"stop_sequence\": \"string\",\n  \"stop_details\": {\n    \"type\": \"refusal\",\n    \"category\": \"bio\"\n  },\n  \"container\": {\n    \"id\": \"string\",\n    \"expires_at\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "072a0494-daf7-4bdc-a75f-7c212963fa25",
+              "name": "Bad Request — `invalid_request_error`. Returned for missing or invalid parameters, unsupported feature flags (e.g. `thinking` with `type:\"enabled\"` or `\"adaptive\"`), unsupported tool types (`web_search`, `code_execution`, `bash`, `text_editor`, `memory`, `tool_search` variants), image source `type:\"url\"`, `document` content blocks, or non-object request bodies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1599fbf6-6780-402b-8958-e25a18fd1b7d",
+              "name": "Unauthorized — `authentication_error`. Invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48d67ead-05dc-48bd-af00-524b61447aa8",
+              "name": "Forbidden — `permission_error`. API key lacks access to the requested resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1e5bd66-b68e-4e14-9184-0e74f97807dd",
+              "name": "Not Found — `not_found_error`. Model does not exist or is not accessible.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e82de673-fc30-4ee8-8810-c755d8e68065",
+              "name": "Payload Too Large — `request_too_large`. Request exceeds the maximum allowed size.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2a33bec-677f-4a7a-a855-1a3f7041692e",
+              "name": "Too Many Requests — `rate_limit_error`. Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4af3346-13c2-4e88-9fda-561ed74c71bc",
+              "name": "Internal Server Error — `api_error`. Unexpected issue on the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b52bf68f-cf3f-4660-a06d-f4fc227eaa53",
+              "name": "Not Implemented — `not_implemented_error`. Currently returned when `stream: true` is set, until streaming support lands (PRD Phase 4).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0edc64e-011b-4ab2-8063-9e26052d931c",
+              "name": "Service Unavailable — `overloaded_error`. Backend is temporarily over capacity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "07c5577f-85a0-4e04-842e-f91dc3b5cc44",
+          "name": "Count tokens for a message request",
+          "request": {
+            "name": "Count tokens for a message request",
+            "description": {
+              "content": "Anthropic `count_tokens` compatible endpoint. Returns the number of input tokens that would be consumed by a `POST /messages` call with the same prompt content (system, messages, tools, tool_choice). Authentication accepts either the bearer `Authorization: Bearer <key>` header (SambaNova SDK default) or the `x-api-key` header (Anthropic SDK default); the same API key is used in both cases.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "messages",
+                "count_tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                "key": "anthropic-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"key_0\": 8389.778274038465,\n        \"key_1\": false\n      },\n      \"cache_control\": {\n        \"type\": \"<string>\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"key_0\": 9150\n        },\n        {\n          \"key_0\": 1943.3276771317164,\n          \"key_1\": 8310.413214372255\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"key_0\": 404,\n        \"key_1\": 1547,\n        \"key_2\": 2359\n      },\n      \"cache_control\": {\n        \"type\": \"<string>\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"key_0\": true\n        },\n        {\n          \"key_0\": 1196,\n          \"key_1\": 8685.386043144268\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"<string>\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8849e396-b387-4695-a18b-7dbae1757d7b",
+              "name": "Successful response. Returns the input token count.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "count_tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"input_tokens\": 3714\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f0c7736-e1e1-4c95-8551-37f86a2c797f",
+              "name": "Bad Request — `invalid_request_error`. Returned for missing or invalid parameters, unsupported feature flags, unsupported tool types, image source `type:\"url\"`, `document` content blocks, or non-object request bodies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "count_tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "591c7b1a-369b-486e-887c-71c63ed1cd00",
+              "name": "Unauthorized — `authentication_error`. Invalid or missing API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "count_tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41219c0b-ff0e-469b-adbd-88701725f4b0",
+              "name": "Forbidden — `permission_error`. API key lacks access to the requested resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "count_tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5db2b6f-8a9f-4d4b-bdc1-cf4bf13349e2",
+              "name": "Not Found — `not_found_error`. Model does not exist or is not accessible.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "count_tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90f7572f-288b-4caa-89ab-0d3bb20e073d",
+              "name": "Payload Too Large — `request_too_large`. Request exceeds the maximum allowed size.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "count_tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86ab2cf6-0f00-4782-b382-412e13c8b9ca",
+              "name": "Too Many Requests — `rate_limit_error`. Rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "count_tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8104b85a-b4da-4f84-9b57-ed523abff16d",
+              "name": "Internal Server Error — `api_error`. Unexpected issue on the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "count_tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bc81070-a6aa-40d8-9007-69c461bc027b",
+              "name": "Service Unavailable — `overloaded_error`. Backend is temporarily over capacity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    "count_tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "2023-06-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://chat.sambanova.ai/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f4f6eb37-aef9-46b5-99ea-669a1ae51296",
+    "name": "Sambanova Agents Service Audio Messages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Service for Sambanova agents\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
+      "type": "text/plain"
+    }
+  }
+}

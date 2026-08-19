@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sambanova Agents Service Audio Responses API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Responses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a model response",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/responses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a model response for the given input. Only `type: \"function\"` tools are supported; other tool types are filtered server-side. SambaNova is stateless, conversation history must be supplied in full via `input[]` on each request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

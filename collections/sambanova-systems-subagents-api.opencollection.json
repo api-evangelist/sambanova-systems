@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sambanova Agents Service Audio Subagents API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subagents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Coding Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/agent/coding",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The coding agent executes Python code in a sandboxed environment, fixes errors, and returns results. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.\n"
+        },
+        {
+          "info": {
+            "name": "Datascience Agent And Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/agent/datascience",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The data science agent analyzes datasets, generates visualizations, and produces comprehensive reports. This fire-and-forget endpoint submits a prompt and returns the final report in a single call.\n"
+        },
+        {
+          "info": {
+            "name": "Deepresearch Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/agent/deepresearch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The deep research agent conducts multi-iteration research and produces comprehensive reports. This interactive endpoint uses a two-step workflow:\n\n1. Submit a prompt to receive a thread_id and research plan for approval\n2. Submit a prompt with thread_id and resume=true to generate the final report\n"
+        },
+        {
+          "info": {
+            "name": "Financial Analysis Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/agent/financialanalysis",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The financial analysis agent analyzes stocks, companies, and market data. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

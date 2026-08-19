@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sambanova Agents Service Audio Messages API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/messages",
+            "headers": [
+              {
+                "name": "anthropic-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Anthropic Messages API compatible endpoint. Generates a model response for the supplied conversation. Authentication accepts either the bearer `Authorization: Bearer <key>` header (SambaNova SDK default) or the `x-api-key` header (Anthropic SDK default); the same API key is used in both cases. When `stream: true` is set, the response is a sequence of Server-Sent Events whose payloads conform to `MessageStreamEvent`; otherwise the response is a single `Message` object."
+        },
+        {
+          "info": {
+            "name": "Count tokens for a message request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://chat.sambanova.ai/api/messages/count_tokens",
+            "headers": [
+              {
+                "name": "anthropic-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Anthropic `count_tokens` compatible endpoint. Returns the number of input tokens that would be consumed by a `POST /messages` call with the same prompt content (system, messages, tools, tool_choice). Authentication accepts either the bearer `Authorization: Bearer <key>` header (SambaNova SDK default) or the `x-api-key` header (Anthropic SDK default); the same API key is used in both cases."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

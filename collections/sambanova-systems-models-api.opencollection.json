@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sambanova Agents Service Audio Models API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get environment's available model list metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://chat.sambanova.ai/api/models"
+          },
+          "docs": "Get environment's available model list metadata"
+        },
+        {
+          "info": {
+            "name": "Get environment's available model metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://chat.sambanova.ai/api/models/:model_id",
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get environment's available model metadata"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
