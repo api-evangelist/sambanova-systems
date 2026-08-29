@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Sambanova Agents Service Audio Messages API
-  description: Service for Sambanova agents
-  version: 0.0.1
+  title: SambaNova cloud Messages API
+  description: SambaNova cloud API Specification
+  version: 1.2.0
   termsOfService: https://sambanova.ai/cloud-end-user-license-agreement
   contact:
     email: info@sambanova.ai
@@ -11,7 +11,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-- url: https://chat.sambanova.ai/api
+- url: https://api.sambanova.ai/v1
 security:
 - api_key: []
 tags:
@@ -199,407 +199,53 @@ paths:
         source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nmessage_count_tokens_response = client.messages.count_tokens(\n    messages=[{\n        \"content\": \"Hello, Claude!\",\n        \"role\": \"user\",\n    }],\n    model=\"DeepSeek-V3.1\",\n)\nprint(message_count_tokens_response.input_tokens)"
 components:
   schemas:
-    MessageThinkingConfig:
-      title: Message Thinking Config
-      description: 'Controls Anthropic-style extended thinking. **In v1**: only `type:"disabled"` is silently accepted as a no-op; `type:"enabled"` and `type:"adaptive"` return a 400 `invalid_request_error` (`unsupported_parameter`).'
-      oneOf:
-      - $ref: '#/components/schemas/MessageThinkingDisabled'
-      - $ref: '#/components/schemas/MessageThinkingEnabled'
-      - $ref: '#/components/schemas/MessageThinkingAdaptive'
-      discriminator:
-        propertyName: type
-        mapping:
-          disabled: '#/components/schemas/MessageThinkingDisabled'
-          enabled: '#/components/schemas/MessageThinkingEnabled'
-          adaptive: '#/components/schemas/MessageThinkingAdaptive'
-    MessageThinkingDisabled:
-      title: Message Thinking Disabled
+    MessageInputSearchResultBlock:
+      title: Message Input Search Result Block
       type: object
-      description: 'Disables Anthropic-style extended thinking. **In v1**: silently accepted as a no-op'
+      description: Inline search result content. In v1 the `title`, `source`, and `content[]` text are extracted into a text block; citations are dropped.
       properties:
         type:
-          title: Type
           type: string
           enum:
-          - disabled
-          const: disabled
-      required:
-      - type
-    MessageCountTokensRequest:
-      title: Message Count Tokens Request
-      type: object
-      description: Request body for `POST /messages/count_tokens`. Returns the input token count for a prompt without generating output. Same prompt shape as `MessageCreateRequest` minus generation-time parameters (`max_tokens`, `stream`, sampling, `stop_sequences`, `metadata`, `service_tier`, etc.).
-      additionalProperties: true
-      properties:
-        model:
-          title: Model
+          - search_result
+          const: search_result
+        title:
           type: string
-          description: Model identifier.
-          example: gpt-oss-120b
-        messages:
-          title: Messages
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/MessageInputMessage'
-          description: Conversation turns.
-        system:
-          $ref: '#/components/schemas/MessageSystemPrompt'
-        thinking:
-          $ref: '#/components/schemas/MessageThinkingConfig'
-        tools:
-          title: Tools
+        source:
+          type: string
+        content:
           type: array
           items:
-            $ref: '#/components/schemas/MessageTool'
-          nullable: true
-          description: Tool definitions the model may call.
-        tool_choice:
-          allOf:
-          - $ref: '#/components/schemas/MessageToolChoice'
-          nullable: true
-          description: Controls how the model selects from `tools`.
-      required:
-      - model
-      - messages
-      example:
-        model: DeepSeek-V3.1
-        messages:
-        - role: user
-          content: Hello, Claude!
-    MessageOutputTextEditorCodeExecutionToolResultBlock:
-      title: Message Output Text Editor Code Execution Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side text-editor code execution. Never emitted in responses.
-      properties:
-        type:
-          type: string
-          enum:
-          - text_editor_code_execution_tool_result
-          const: text_editor_code_execution_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: object
-          additionalProperties: true
-      required:
-      - type
-      - tool_use_id
-      - content
-    MessageInputVideoSourceUrl:
-      title: Message Input Video Source (URL)
-      type: object
-      description: HTTPS URL pointing to a video.
-      properties:
-        type:
-          type: string
-          enum:
-          - url
-          const: url
-        url:
-          type: string
-          format: uri
-      required:
-      - type
-      - url
-    MessageOutputToolUseBlock:
-      title: Message Output Tool Use Block
-      type: object
-      description: Tool call generated by the model.
-      properties:
-        type:
-          type: string
-          enum:
-          - tool_use
-          const: tool_use
-        id:
-          type: string
-          description: Unique identifier for this tool call.
-        name:
-          type: string
-          description: Name of the tool being called.
-        input:
-          type: object
-          additionalProperties: true
-          description: Tool inputs as a JSON object.
-        caller:
-          type: object
-          additionalProperties: true
-          nullable: true
-          description: Anthropic routing metadata. Always `null` in SambaNova responses.
-      required:
-      - type
-      - id
-      - name
-      - input
-    MessageOutputCodeExecutionToolResultBlock:
-      title: Message Output Code Execution Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side `code_execution`. Never emitted in responses.
-      properties:
-        type:
-          type: string
-          enum:
-          - code_execution_tool_result
-          const: code_execution_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: object
-          additionalProperties: true
-      required:
-      - type
-      - tool_use_id
-      - content
-    MessageInputCodeExecutionToolResultBlock:
-      title: Message Input Code Execution Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side `code_execution`. Echo of a prior Anthropic-served `code_execution` tool call; accepted in conversation history but never originates from a SambaNova response. When present, only `stdout`, `stderr`, and `return_code` are extracted; image output is dropped.
-      properties:
-        type:
-          type: string
-          enum:
-          - code_execution_tool_result
-          const: code_execution_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: object
-          additionalProperties: true
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-      - tool_use_id
-      - content
-    MessageError:
-      title: Message Error
-      type: object
-      description: Inner error object carried inside a `MessageErrorResponse`. The `type` value follows Anthropic's published error taxonomy.
-      properties:
-        type:
-          title: Type
-          type: string
-          description: Error category. Values follow Anthropic's taxonomy.
-          enum:
-          - invalid_request_error
-          - authentication_error
-          - permission_error
-          - not_found_error
-          - request_too_large
-          - rate_limit_error
-          - api_error
-          - overloaded_error
-          - not_implemented_error
-        message:
-          title: Message
-          type: string
-          description: Human-readable explanation of the error.
-      required:
-      - type
-      - message
-    MessageInputTextBlock:
-      title: Message Input Text Block
-      type: object
-      description: Plain-text segment of a message.
-      properties:
-        type:
-          type: string
-          enum:
-          - text
-          const: text
-        text:
-          type: string
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
+            $ref: '#/components/schemas/MessageInputTextBlock'
         citations:
-          title: Citations
+          type: object
+          additionalProperties: true
+          nullable: true
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+    MessageOutputWebSearchToolResultBlock:
+      title: Message Output Web Search Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side `web_search`. Never emitted in responses.
+      properties:
+        type:
+          type: string
+          enum:
+          - web_search_tool_result
+          const: web_search_tool_result
+        tool_use_id:
+          type: string
+        content:
           type: array
           items:
             type: object
             additionalProperties: true
-          nullable: true
-      required:
-      - type
-      - text
-    MessageOutputRedactedThinkingBlock:
-      title: Message Output Redacted Thinking Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not produce encrypted thinking output. Never emitted in responses.
-      properties:
-        type:
-          type: string
-          enum:
-          - redacted_thinking
-          const: redacted_thinking
-        data:
-          type: string
-      required:
-      - type
-      - data
-    MessageThinkingEnabled:
-      title: Message Thinking Enabled
-      type: object
-      description: 'Enables Anthropic-style extended thinking with a fixed budget. **In v1**: returns a 400 `invalid_request_error` (`unsupported_parameter`).'
-      properties:
-        type:
-          title: Type
-          type: string
-          enum:
-          - enabled
-          const: enabled
-        budget_tokens:
-          title: Budget Tokens
-          type: integer
-          minimum: 1024
-          description: Maximum tokens the model may spend on extended thinking before producing the final answer.
-      required:
-      - type
-      - budget_tokens
-    MessageContentBlockStopEvent:
-      title: Content Block Stop Event
-      type: object
-      description: Closes the current content block.
-      properties:
-        type:
-          type: string
-          enum:
-          - content_block_stop
-          const: content_block_stop
-        index:
-          type: integer
-          description: Zero-based index of the block within `content[]`.
-      required:
-      - type
-      - index
-    MessageCacheControl:
-      title: Message Cache Control
-      type: object
-      description: 'Marks the preceding content block (or system text block) as a prompt- cache breakpoint. Marker positions are collected by the adapter; their wiring into the router''s longest-prefix matching **In v1**: position is recorded; the `ttl` value is ignored.'
-      properties:
-        type:
-          title: Type
-          type: string
-          enum:
-          - ephemeral
-          const: ephemeral
-          description: Cache breakpoint type. Only `ephemeral` is supported by Anthropic.
-        ttl:
-          title: TTL
-          type: string
-          description: Optional time-to-live hint (e.g. `"5m"`, `"1h"`). **Currently ignored** in v1
-          nullable: true
-      required:
-      - type
-    Message:
-      title: Message
-      type: object
-      description: Non-streaming response from `POST /messages`. Wire-compatible with the official Anthropic Messages API.
-      properties:
-        id:
-          type: string
-          description: Unique identifier for this message.
-        type:
-          type: string
-          enum:
-          - message
-          const: message
-        role:
-          type: string
-          enum:
-          - assistant
-          const: assistant
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageOutputContentBlock'
-        model:
-          type: string
-          description: Model that produced the response.
-        stop_reason:
-          allOf:
-          - $ref: '#/components/schemas/MessageStopReason'
-          nullable: true
-        stop_sequence:
-          type: string
-          nullable: true
-          description: The matched stop sequence that triggered termination. Present when `stop_reason` is `stop_sequence`; `null` otherwise.
-        stop_details:
-          allOf:
-          - $ref: '#/components/schemas/MessageStopDetails'
-          nullable: true
-        usage:
-          $ref: '#/components/schemas/MessageUsage'
-        container:
-          allOf:
-          - $ref: '#/components/schemas/MessageContainer'
-          nullable: true
-      required:
-      - id
-      - type
-      - role
-      - content
-      - model
-      - stop_reason
-      - usage
-    MessageOutputWebFetchToolResultBlock:
-      title: Message Output Web Fetch Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side `web_fetch`. Never emitted in responses.
-      properties:
-        type:
-          type: string
-          enum:
-          - web_fetch_tool_result
-          const: web_fetch_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: object
-          additionalProperties: true
       required:
       - type
       - tool_use_id
       - content
-    MessageInputServerToolUseBlock:
-      title: Message Input Server Tool Use Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side tools. A prior assistant turn that invoked an Anthropic-hosted tool (web_search, code_execution, etc.). Accepted in conversation history (e.g. replaying an Anthropic-served session) but never originates from a SambaNova response. New `server_tool_use`-type tool definitions on outgoing requests are rejected with 400 `unsupported_tool_type`.
-      properties:
-        type:
-          type: string
-          enum:
-          - server_tool_use
-          const: server_tool_use
-        id:
-          type: string
-        name:
-          type: string
-        input:
-          type: object
-          additionalProperties: true
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-      - id
-      - name
-      - input
-    MessageContentBlockTextDelta:
-      title: Content Block Text Delta
-      type: object
-      description: Incremental text chunk for an open text content block.
-      properties:
-        type:
-          type: string
-          enum:
-          - text_delta
-          const: text_delta
-        text:
-          type: string
-      required:
-      - type
-      - text
     MessageInputImageBlock:
       title: Message Input Image Block
       type: object
@@ -624,43 +270,40 @@ components:
       required:
       - type
       - source
-    MessageInputRedactedThinkingBlock:
-      title: Message Input Redacted Thinking Block
+    MessageContentBlockSignatureDelta:
+      title: Content Block Signature Delta
       type: object
-      description: Anthropic compatibility only — SambaNova does not produce encrypted thinking output. Echo of a prior Anthropic-served response where `thinking.display:"omitted"` was set. Accepted in conversation history but never originates from a SambaNova response. Silently dropped on input.
+      description: Signature for an open thinking block. Emitted at the end of a thinking stream (paired with the closing `content_block_stop`); the `signature` value may be an empty string when the backend has no signed payload to attach.
       properties:
         type:
           type: string
           enum:
-          - redacted_thinking
-          const: redacted_thinking
-        data:
+          - signature_delta
+          const: signature_delta
+        signature:
           type: string
       required:
       - type
-      - data
-    MessageOutputTextBlock:
-      title: Message Output Text Block
+      - signature
+    MessageContentBlockStartEvent:
+      title: Content Block Start Event
       type: object
-      description: Plain-text segment of the model's response.
+      description: Opens a new content block. One per block in `content[]`.
       properties:
         type:
           type: string
           enum:
-          - text
-          const: text
-        text:
-          type: string
-        citations:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-          nullable: true
-          description: Not emitted in v1.
+          - content_block_start
+          const: content_block_start
+        index:
+          type: integer
+          description: Zero-based index of the block within `content[]`.
+        content_block:
+          $ref: '#/components/schemas/MessageOutputContentBlock'
       required:
       - type
-      - text
+      - index
+      - content_block
     MessageOutputContainerUploadBlock:
       title: Message Output Container Upload Block
       type: object
@@ -676,164 +319,6 @@ components:
       required:
       - type
       - file_id
-    MessageContainer:
-      title: Message Container
-      type: object
-      description: Code-execution container reference. Anthropic compatibility only — SambaNova does not run server-side code execution, so this field is never emitted on responses.
-      properties:
-        id:
-          type: string
-        expires_at:
-          type: string
-          description: ISO-8601 timestamp.
-      required:
-      - id
-      - expires_at
-    MessageToolChoiceNone:
-      title: Message Tool Choice (None)
-      type: object
-      description: Forbid the model from calling any tool.
-      properties:
-        type:
-          type: string
-          enum:
-          - none
-          const: none
-      required:
-      - type
-    MessageStopEvent:
-      title: Message Stop Event
-      type: object
-      description: Final event of the stream. No fields beyond `type`.
-      properties:
-        type:
-          type: string
-          enum:
-          - message_stop
-          const: message_stop
-      required:
-      - type
-    MessageUsage:
-      title: Message Usage
-      type: object
-      description: Token accounting for the request.
-      properties:
-        input_tokens:
-          type: integer
-          description: Total tokens in the prompt (system + messages + tools).
-        output_tokens:
-          type: integer
-          description: Total tokens generated by the model.
-        cache_creation_input_tokens:
-          type: integer
-          nullable: true
-          description: Tokens written to prompt cache. Absent in v1; emitted once prompt caching wiring lands (CP-2897).
-        cache_read_input_tokens:
-          type: integer
-          nullable: true
-          description: Tokens read from prompt cache. Absent in v1; emitted once prompt caching wiring lands (CP-2897).
-        server_tool_use:
-          type: object
-          additionalProperties: true
-          nullable: true
-          description: Server-tool usage metrics (e.g. `web_search_requests`). Anthropic compatibility only — SambaNova does not run server tools, so this field is never emitted.
-        service_tier:
-          type: string
-          nullable: true
-          description: Service tier that processed the request. Anthropic compatibility only — SambaNova is single-tier and never emits this field.
-        cache_creation:
-          type: object
-          additionalProperties: true
-          nullable: true
-          description: Anthropic SDK alias for cache write metrics. Always `null` in SambaNova responses; use `cache_creation_input_tokens` instead.
-        inference_geo:
-          type: string
-          nullable: true
-          description: Geographic region that served the request. Anthropic compatibility only - SambaNova does not expose geo routing, always `null`.
-      required:
-      - input_tokens
-      - output_tokens
-    MessageOutputToolSearchToolResultBlock:
-      title: Message Output Tool Search Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side `tool_search`. Never emitted in responses.
-      properties:
-        type:
-          type: string
-          enum:
-          - tool_search_tool_result
-          const: tool_search_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: object
-          additionalProperties: true
-      required:
-      - type
-      - tool_use_id
-      - content
-    MessageInputToolSearchToolResultBlock:
-      title: Message Input Tool Search Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side `tool_search`. Echo of a prior Anthropic-served `tool_search` tool call; accepted in conversation history but never originates from a SambaNova response. When present, an empty string is emitted to the tool message (no plain-text fields).
-      properties:
-        type:
-          type: string
-          enum:
-          - tool_search_tool_result
-          const: tool_search_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: object
-          additionalProperties: true
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-      - tool_use_id
-      - content
-    MessageInputToolResultContent:
-      title: Message Input Tool Result Content
-      description: Content of a `tool_result` block. only text is forwarded.
-      oneOf:
-      - $ref: '#/components/schemas/MessageInputTextBlock'
-      - $ref: '#/components/schemas/MessageInputImageBlock'
-      discriminator:
-        propertyName: type
-        mapping:
-          text: '#/components/schemas/MessageInputTextBlock'
-          image: '#/components/schemas/MessageInputImageBlock'
-    MessageContentBlockInputJsonDelta:
-      title: Content Block Input JSON Delta
-      type: object
-      description: Incremental fragment of a tool_use block's `input` JSON. Concatenate successive `partial_json` strings to reconstruct the full input object.
-      properties:
-        type:
-          type: string
-          enum:
-          - input_json_delta
-          const: input_json_delta
-        partial_json:
-          type: string
-      required:
-      - type
-      - partial_json
-    MessageStartEvent:
-      title: Message Start Event
-      type: object
-      description: 'First event of a stream. Carries the initial Message envelope (empty `content[]`, `stop_reason: null`) and token usage from prompt processing.'
-      properties:
-        type:
-          type: string
-          enum:
-          - message_start
-          const: message_start
-        message:
-          $ref: '#/components/schemas/Message'
-      required:
-      - type
-      - message
     MessageErrorResponse:
       title: Message Error Response
       type: object
@@ -856,24 +341,6 @@ components:
       required:
       - type
       - error
-    MessageOutputThinkingBlock:
-      title: Message Output Thinking Block
-      type: object
-      description: Extended-reasoning trace from the model. Emitted by reasoning models.
-      properties:
-        type:
-          type: string
-          enum:
-          - thinking
-          const: thinking
-        thinking:
-          type: string
-        signature:
-          type: string
-          nullable: true
-      required:
-      - type
-      - thinking
     MessageTool:
       title: Message Tool
       type: object
@@ -929,17 +396,1003 @@ components:
           description: Silently dropped.
       required:
       - name
-    MessageMetadata:
-      title: Message Metadata
+    MessageInputRedactedThinkingBlock:
+      title: Message Input Redacted Thinking Block
       type: object
-      description: Free-form metadata attached to the request. Currently only `user_id` Additional fields are accepted but ignored.
+      description: Anthropic compatibility only — SambaNova does not produce encrypted thinking output. Echo of a prior Anthropic-served response where `thinking.display:"omitted"` was set. Accepted in conversation history but never originates from a SambaNova response. Silently dropped on input.
       properties:
-        user_id:
-          title: User Id
+        type:
           type: string
-          description: External identifier for the end-user making the request. Mapped internally to the Chat Completions `user` field.
+          enum:
+          - redacted_thinking
+          const: redacted_thinking
+        data:
+          type: string
+      required:
+      - type
+      - data
+    MessageContentBlockTextDelta:
+      title: Content Block Text Delta
+      type: object
+      description: Incremental text chunk for an open text content block.
+      properties:
+        type:
+          type: string
+          enum:
+          - text_delta
+          const: text_delta
+        text:
+          type: string
+      required:
+      - type
+      - text
+    MessageStreamErrorEvent:
+      title: Message Stream Error Event
+      type: object
+      description: Streamed error envelope. Terminates the stream.
+      properties:
+        type:
+          type: string
+          enum:
+          - error
+          const: error
+        error:
+          $ref: '#/components/schemas/MessageError'
+      required:
+      - type
+      - error
+    MessageContainer:
+      title: Message Container
+      type: object
+      description: Code-execution container reference. Anthropic compatibility only — SambaNova does not run server-side code execution, so this field is never emitted on responses.
+      properties:
+        id:
+          type: string
+        expires_at:
+          type: string
+          description: ISO-8601 timestamp.
+      required:
+      - id
+      - expires_at
+    MessageInputMessage:
+      title: Message Input Message
+      type: object
+      description: A turn in the conversation.
+      properties:
+        role:
+          type: string
+          enum:
+          - user
+          - assistant
+          description: Conversational role. `user` for the human-side turn, `assistant` for prior model output.
+        content:
+          anyOf:
+          - type: string
+          - title: Content Block Array
+            type: array
+            items:
+              $ref: '#/components/schemas/MessageInputContentBlock'
+      required:
+      - role
+      - content
+    MessageInputDocumentBlock:
+      title: Message Input Document Block
+      type: object
+      description: PDF or document content. **Returns 400** — no document-extraction pipeline available.
+      properties:
+        type:
+          type: string
+          enum:
+          - document
+          const: document
+        source:
+          type: object
+          additionalProperties: true
+        title:
+          type: string
           nullable: true
-      additionalProperties: true
+        context:
+          type: string
+          nullable: true
+        citations:
+          type: object
+          additionalProperties: true
+          nullable: true
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - source
+    MessageDeltaEvent:
+      title: Message Delta Event
+      type: object
+      description: Penultimate event of the stream. Carries the final `stop_reason`, optional `stop_sequence`, and final usage counts.
+      properties:
+        type:
+          type: string
+          enum:
+          - message_delta
+          const: message_delta
+        delta:
+          type: object
+          properties:
+            stop_reason:
+              $ref: '#/components/schemas/MessageStopReason'
+            stop_sequence:
+              type: string
+              nullable: true
+              description: Custom stop sequence that triggered termination. Field is emitted but value is always `null` in v1 (backend collapses `StopSequenceHit` and `EndOfText` into the same finish_reason).
+            stop_details:
+              allOf:
+              - $ref: '#/components/schemas/MessageStopDetails'
+              nullable: true
+              description: Refusal stop details. Field is emitted but value is always `null` in v1 — `refusal` is not produced as a stop_reason.
+          required:
+          - stop_reason
+        usage:
+          $ref: '#/components/schemas/MessageDeltaUsage'
+      required:
+      - type
+      - delta
+      - usage
+    MessageOutputBashCodeExecutionToolResultBlock:
+      title: Message Output Bash Code Execution Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side bash code execution. Never emitted in responses.
+      properties:
+        type:
+          type: string
+          enum:
+          - bash_code_execution_tool_result
+          const: bash_code_execution_tool_result
+        tool_use_id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+      required:
+      - type
+      - tool_use_id
+      - content
+    MessageContentBlockDelta:
+      title: Content Block Delta
+      description: Incremental update to an open content block.
+      oneOf:
+      - $ref: '#/components/schemas/MessageContentBlockTextDelta'
+      - $ref: '#/components/schemas/MessageContentBlockInputJsonDelta'
+      - $ref: '#/components/schemas/MessageContentBlockThinkingDelta'
+      - $ref: '#/components/schemas/MessageContentBlockSignatureDelta'
+      discriminator:
+        propertyName: type
+        mapping:
+          text_delta: '#/components/schemas/MessageContentBlockTextDelta'
+          input_json_delta: '#/components/schemas/MessageContentBlockInputJsonDelta'
+          thinking_delta: '#/components/schemas/MessageContentBlockThinkingDelta'
+          signature_delta: '#/components/schemas/MessageContentBlockSignatureDelta'
+    MessageThinkingEnabled:
+      title: Message Thinking Enabled
+      type: object
+      description: 'Enables Anthropic-style extended thinking with a fixed budget. **In v1**: returns a 400 `invalid_request_error` (`unsupported_parameter`).'
+      properties:
+        type:
+          title: Type
+          type: string
+          enum:
+          - enabled
+          const: enabled
+        budget_tokens:
+          title: Budget Tokens
+          type: integer
+          minimum: 1024
+          description: Maximum tokens the model may spend on extended thinking before producing the final answer.
+      required:
+      - type
+      - budget_tokens
+    MessageUsage:
+      title: Message Usage
+      type: object
+      description: Token accounting for the request.
+      properties:
+        input_tokens:
+          type: integer
+          description: Total tokens in the prompt (system + messages + tools).
+        output_tokens:
+          type: integer
+          description: Total tokens generated by the model.
+        cache_creation_input_tokens:
+          type: integer
+          nullable: true
+          description: Tokens written to prompt cache. Absent in v1; emitted once prompt caching wiring lands (CP-2897).
+        cache_read_input_tokens:
+          type: integer
+          nullable: true
+          description: Tokens read from prompt cache. Absent in v1; emitted once prompt caching wiring lands (CP-2897).
+        server_tool_use:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Server-tool usage metrics (e.g. `web_search_requests`). Anthropic compatibility only — SambaNova does not run server tools, so this field is never emitted.
+        service_tier:
+          type: string
+          nullable: true
+          description: Service tier that processed the request. Anthropic compatibility only — SambaNova is single-tier and never emits this field.
+        cache_creation:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Anthropic SDK alias for cache write metrics. Always `null` in SambaNova responses; use `cache_creation_input_tokens` instead.
+        inference_geo:
+          type: string
+          nullable: true
+          description: Geographic region that served the request. Anthropic compatibility only - SambaNova does not expose geo routing, always `null`.
+      required:
+      - input_tokens
+      - output_tokens
+    MessageInputServerToolUseBlock:
+      title: Message Input Server Tool Use Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side tools. A prior assistant turn that invoked an Anthropic-hosted tool (web_search, code_execution, etc.). Accepted in conversation history (e.g. replaying an Anthropic-served session) but never originates from a SambaNova response. New `server_tool_use`-type tool definitions on outgoing requests are rejected with 400 `unsupported_tool_type`.
+      properties:
+        type:
+          type: string
+          enum:
+          - server_tool_use
+          const: server_tool_use
+        id:
+          type: string
+        name:
+          type: string
+        input:
+          type: object
+          additionalProperties: true
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - id
+      - name
+      - input
+    MessageOutputToolUseBlock:
+      title: Message Output Tool Use Block
+      type: object
+      description: Tool call generated by the model.
+      properties:
+        type:
+          type: string
+          enum:
+          - tool_use
+          const: tool_use
+        id:
+          type: string
+          description: Unique identifier for this tool call.
+        name:
+          type: string
+          description: Name of the tool being called.
+        input:
+          type: object
+          additionalProperties: true
+          description: Tool inputs as a JSON object.
+        caller:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Anthropic routing metadata. Always `null` in SambaNova responses.
+      required:
+      - type
+      - id
+      - name
+      - input
+    MessageStopDetails:
+      title: Message Stop Details
+      type: object
+      description: Refusal stop details. Anthropic compatibility only — `refusal` is never emitted as a stop_reason by SambaNova (content filtering is not exposed at the API layer).
+      properties:
+        type:
+          type: string
+          enum:
+          - refusal
+          const: refusal
+        category:
+          type: string
+          enum:
+          - cyber
+          - bio
+      required:
+      - type
+    MessageInputToolSearchToolResultBlock:
+      title: Message Input Tool Search Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side `tool_search`. Echo of a prior Anthropic-served `tool_search` tool call; accepted in conversation history but never originates from a SambaNova response. When present, an empty string is emitted to the tool message (no plain-text fields).
+      properties:
+        type:
+          type: string
+          enum:
+          - tool_search_tool_result
+          const: tool_search_tool_result
+        tool_use_id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - tool_use_id
+      - content
+    MessageInputToolUseBlock:
+      title: Message Input Tool Use Block
+      type: object
+      description: A prior assistant turn that invoked a tool.
+      properties:
+        type:
+          type: string
+          enum:
+          - tool_use
+          const: tool_use
+        id:
+          type: string
+          description: Unique identifier for the tool call (used to correlate `tool_result`).
+        name:
+          type: string
+          description: Name of the tool being invoked.
+        input:
+          type: object
+          additionalProperties: true
+          description: Tool inputs as a JSON object.
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - id
+      - name
+      - input
+    MessageThinkingConfig:
+      title: Message Thinking Config
+      description: 'Controls Anthropic-style extended thinking. **In v1**: only `type:"disabled"` is silently accepted as a no-op; `type:"enabled"` and `type:"adaptive"` return a 400 `invalid_request_error` (`unsupported_parameter`).'
+      oneOf:
+      - $ref: '#/components/schemas/MessageThinkingDisabled'
+      - $ref: '#/components/schemas/MessageThinkingEnabled'
+      - $ref: '#/components/schemas/MessageThinkingAdaptive'
+      discriminator:
+        propertyName: type
+        mapping:
+          disabled: '#/components/schemas/MessageThinkingDisabled'
+          enabled: '#/components/schemas/MessageThinkingEnabled'
+          adaptive: '#/components/schemas/MessageThinkingAdaptive'
+    MessageStartEvent:
+      title: Message Start Event
+      type: object
+      description: 'First event of a stream. Carries the initial Message envelope (empty `content[]`, `stop_reason: null`) and token usage from prompt processing.'
+      properties:
+        type:
+          type: string
+          enum:
+          - message_start
+          const: message_start
+        message:
+          $ref: '#/components/schemas/Message'
+      required:
+      - type
+      - message
+    MessageOutputToolSearchToolResultBlock:
+      title: Message Output Tool Search Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side `tool_search`. Never emitted in responses.
+      properties:
+        type:
+          type: string
+          enum:
+          - tool_search_tool_result
+          const: tool_search_tool_result
+        tool_use_id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+      required:
+      - type
+      - tool_use_id
+      - content
+    MessageStreamEvent:
+      title: Message Stream Event
+      description: 'Discriminated union of SSE events emitted during a streaming `POST /messages` call. Event order: `message_start` -> (`content_block_start` -> `content_block_delta`×N -> `content_block_stop`) × blocks -> `message_delta` -> `message_stop`. A `ping` may appear at any point; an `error` event terminates the stream.'
+      oneOf:
+      - $ref: '#/components/schemas/MessageStartEvent'
+      - $ref: '#/components/schemas/MessageContentBlockStartEvent'
+      - $ref: '#/components/schemas/MessageContentBlockDeltaEvent'
+      - $ref: '#/components/schemas/MessageContentBlockStopEvent'
+      - $ref: '#/components/schemas/MessageDeltaEvent'
+      - $ref: '#/components/schemas/MessageStopEvent'
+      - $ref: '#/components/schemas/MessagePingEvent'
+      - $ref: '#/components/schemas/MessageStreamErrorEvent'
+      discriminator:
+        propertyName: type
+        mapping:
+          message_start: '#/components/schemas/MessageStartEvent'
+          content_block_start: '#/components/schemas/MessageContentBlockStartEvent'
+          content_block_delta: '#/components/schemas/MessageContentBlockDeltaEvent'
+          content_block_stop: '#/components/schemas/MessageContentBlockStopEvent'
+          message_delta: '#/components/schemas/MessageDeltaEvent'
+          message_stop: '#/components/schemas/MessageStopEvent'
+          ping: '#/components/schemas/MessagePingEvent'
+          error: '#/components/schemas/MessageStreamErrorEvent'
+    MessageInputCodeExecutionToolResultBlock:
+      title: Message Input Code Execution Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side `code_execution`. Echo of a prior Anthropic-served `code_execution` tool call; accepted in conversation history but never originates from a SambaNova response. When present, only `stdout`, `stderr`, and `return_code` are extracted; image output is dropped.
+      properties:
+        type:
+          type: string
+          enum:
+          - code_execution_tool_result
+          const: code_execution_tool_result
+        tool_use_id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - tool_use_id
+      - content
+    MessageThinkingDisabled:
+      title: Message Thinking Disabled
+      type: object
+      description: 'Disables Anthropic-style extended thinking. **In v1**: silently accepted as a no-op'
+      properties:
+        type:
+          title: Type
+          type: string
+          enum:
+          - disabled
+          const: disabled
+      required:
+      - type
+    MessageContentBlockThinkingDelta:
+      title: Content Block Thinking Delta
+      type: object
+      description: Incremental thinking chunk for an open thinking block. Emitted by reasoning models.
+      properties:
+        type:
+          type: string
+          enum:
+          - thinking_delta
+          const: thinking_delta
+        thinking:
+          type: string
+      required:
+      - type
+      - thinking
+    MessageContentBlockStopEvent:
+      title: Content Block Stop Event
+      type: object
+      description: Closes the current content block.
+      properties:
+        type:
+          type: string
+          enum:
+          - content_block_stop
+          const: content_block_stop
+        index:
+          type: integer
+          description: Zero-based index of the block within `content[]`.
+      required:
+      - type
+      - index
+    MessageOutputServerToolUseBlock:
+      title: Message Output Server Tool Use Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side tools. Never emitted in responses; defined for Anthropic SDK type-parity.
+      properties:
+        type:
+          type: string
+          enum:
+          - server_tool_use
+          const: server_tool_use
+        id:
+          type: string
+        name:
+          type: string
+        input:
+          type: object
+          additionalProperties: true
+      required:
+      - type
+      - id
+      - name
+      - input
+    MessageOutputTextEditorCodeExecutionToolResultBlock:
+      title: Message Output Text Editor Code Execution Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side text-editor code execution. Never emitted in responses.
+      properties:
+        type:
+          type: string
+          enum:
+          - text_editor_code_execution_tool_result
+          const: text_editor_code_execution_tool_result
+        tool_use_id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+      required:
+      - type
+      - tool_use_id
+      - content
+    MessageInputImageSourceUrl:
+      title: Message Input Image Source (URL)
+      type: object
+      description: HTTPS URL pointing to an image. **Returns 400 in v1** — URL fetching is blocked. Use `type:"base64"` instead.
+      properties:
+        type:
+          type: string
+          enum:
+          - url
+          const: url
+        url:
+          type: string
+          format: uri
+      required:
+      - type
+      - url
+    MessageOutputWebFetchToolResultBlock:
+      title: Message Output Web Fetch Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side `web_fetch`. Never emitted in responses.
+      properties:
+        type:
+          type: string
+          enum:
+          - web_fetch_tool_result
+          const: web_fetch_tool_result
+        tool_use_id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+      required:
+      - type
+      - tool_use_id
+      - content
+    MessageCountTokensResponse:
+      title: Message Count Tokens Response
+      type: object
+      description: Token count for the supplied prompt.
+      properties:
+        input_tokens:
+          type: integer
+          description: Total tokens in the prompt (system + messages + tools).
+      required:
+      - input_tokens
+    MessageOutputRedactedThinkingBlock:
+      title: Message Output Redacted Thinking Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not produce encrypted thinking output. Never emitted in responses.
+      properties:
+        type:
+          type: string
+          enum:
+          - redacted_thinking
+          const: redacted_thinking
+        data:
+          type: string
+      required:
+      - type
+      - data
+    MessageThinkingAdaptive:
+      title: Message Thinking Adaptive
+      type: object
+      description: 'Enables Anthropic-style adaptive extended thinking. **In v1**: returns a 400 `invalid_request_error` (`unsupported_parameter`).'
+      properties:
+        type:
+          title: Type
+          type: string
+          enum:
+          - adaptive
+          const: adaptive
+        budget_tokens:
+          title: Budget Tokens
+          type: integer
+          minimum: 1024
+          nullable: true
+          description: Optional upper bound on tokens spent on adaptive thinking. When omitted, the backend chooses based on prompt complexity.
+      required:
+      - type
+    Message:
+      title: Message
+      type: object
+      description: Non-streaming response from `POST /messages`. Wire-compatible with the official Anthropic Messages API.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this message.
+        type:
+          type: string
+          enum:
+          - message
+          const: message
+        role:
+          type: string
+          enum:
+          - assistant
+          const: assistant
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageOutputContentBlock'
+        model:
+          type: string
+          description: Model that produced the response.
+        stop_reason:
+          allOf:
+          - $ref: '#/components/schemas/MessageStopReason'
+          nullable: true
+        stop_sequence:
+          type: string
+          nullable: true
+          description: The matched stop sequence that triggered termination. Present when `stop_reason` is `stop_sequence`; `null` otherwise.
+        stop_details:
+          allOf:
+          - $ref: '#/components/schemas/MessageStopDetails'
+          nullable: true
+        usage:
+          $ref: '#/components/schemas/MessageUsage'
+        container:
+          allOf:
+          - $ref: '#/components/schemas/MessageContainer'
+          nullable: true
+      required:
+      - id
+      - type
+      - role
+      - content
+      - model
+      - stop_reason
+      - usage
+    MessageCacheControl:
+      title: Message Cache Control
+      type: object
+      description: 'Marks the preceding content block (or system text block) as a prompt- cache breakpoint. Marker positions are collected by the adapter; their wiring into the router''s longest-prefix matching **In v1**: position is recorded; the `ttl` value is ignored.'
+      properties:
+        type:
+          title: Type
+          type: string
+          enum:
+          - ephemeral
+          const: ephemeral
+          description: Cache breakpoint type. Only `ephemeral` is supported by Anthropic.
+        ttl:
+          title: TTL
+          type: string
+          description: Optional time-to-live hint (e.g. `"5m"`, `"1h"`). **Currently ignored** in v1
+          nullable: true
+      required:
+      - type
+    MessageContentBlockInputJsonDelta:
+      title: Content Block Input JSON Delta
+      type: object
+      description: Incremental fragment of a tool_use block's `input` JSON. Concatenate successive `partial_json` strings to reconstruct the full input object.
+      properties:
+        type:
+          type: string
+          enum:
+          - input_json_delta
+          const: input_json_delta
+        partial_json:
+          type: string
+      required:
+      - type
+      - partial_json
+    MessageSystemPrompt:
+      title: Message System Prompt
+      description: 'System prompt for the conversation. Accepts either a single string (most common) or an array of text blocks (used when individual segments need `cache_control` markers). Multiple text blocks are joined with newlines and prepended to the conversation as a `role: system` message.'
+      anyOf:
+      - type: string
+      - title: System Text Block Array
+        type: array
+        items:
+          $ref: '#/components/schemas/MessageSystemTextBlock'
+    MessageDeltaUsage:
+      title: Message Delta Usage
+      type: object
+      description: Final token accounting emitted in the closing `message_delta` event of a stream.
+      properties:
+        output_tokens:
+          type: integer
+          description: Total tokens generated (final count).
+        input_tokens:
+          type: integer
+          nullable: true
+          description: Total tokens in the prompt (echoed from `message_start`).
+        cache_creation_input_tokens:
+          type: integer
+          nullable: true
+          description: Tokens written to prompt cache. Absent in v1;
+        cache_read_input_tokens:
+          type: integer
+          nullable: true
+          description: Tokens read from prompt cache. Absent in v1;
+        server_tool_use:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Server-tool usage metrics. Anthropic compatibility only — SambaNova does not run server tools, so this field is never emitted.
+      required:
+      - output_tokens
+    MessageStopEvent:
+      title: Message Stop Event
+      type: object
+      description: Final event of the stream. No fields beyond `type`.
+      properties:
+        type:
+          type: string
+          enum:
+          - message_stop
+          const: message_stop
+      required:
+      - type
+    MessageInputWebFetchToolResultBlock:
+      title: Message Input Web Fetch Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side `web_fetch`. Echo of a prior Anthropic-served `web_fetch` tool call; accepted in conversation history but never originates from a SambaNova response. When present, only the text content is extracted.
+      properties:
+        type:
+          type: string
+          enum:
+          - web_fetch_tool_result
+          const: web_fetch_tool_result
+        tool_use_id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - tool_use_id
+      - content
+    MessageInputVideoBlock:
+      title: Message Input Video Block
+      type: object
+      description: Video content.
+      properties:
+        type:
+          type: string
+          enum:
+          - video
+          const: video
+        source:
+          oneOf:
+          - $ref: '#/components/schemas/MessageInputVideoSourceBase64'
+          - $ref: '#/components/schemas/MessageInputVideoSourceUrl'
+          discriminator:
+            propertyName: type
+            mapping:
+              base64: '#/components/schemas/MessageInputVideoSourceBase64'
+              url: '#/components/schemas/MessageInputVideoSourceUrl'
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - source
+    MessageOutputCodeExecutionToolResultBlock:
+      title: Message Output Code Execution Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side `code_execution`. Never emitted in responses.
+      properties:
+        type:
+          type: string
+          enum:
+          - code_execution_tool_result
+          const: code_execution_tool_result
+        tool_use_id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+      required:
+      - type
+      - tool_use_id
+      - content
+    MessageSystemTextBlock:
+      title: Message System Text Block
+      type: object
+      description: 'A text segment within a structured `system` prompt array. Multiple text blocks are concatenated (with newlines) and prepended to the conversation as a `role: system` message at the chat-completions layer.'
+      properties:
+        type:
+          title: Type
+          type: string
+          enum:
+          - text
+          const: text
+        text:
+          title: Text
+          type: string
+          description: Plain-text content of the system prompt segment.
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+        citations:
+          title: Citations
+          type: array
+          description: 'Optional citations. **In v1**: silently dropped'
+          items:
+            type: object
+            additionalProperties: true
+          nullable: true
+      required:
+      - type
+      - text
+    MessagePingEvent:
+      title: Message Ping Event
+      type: object
+      description: Keepalive heartbeat. May appear at any point in the stream.
+      properties:
+        type:
+          type: string
+          enum:
+          - ping
+          const: ping
+      required:
+      - type
+    MessageOutputTextBlock:
+      title: Message Output Text Block
+      type: object
+      description: Plain-text segment of the model's response.
+      properties:
+        type:
+          type: string
+          enum:
+          - text
+          const: text
+        text:
+          type: string
+        citations:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          nullable: true
+          description: Not emitted in v1.
+      required:
+      - type
+      - text
+    MessageOutputThinkingBlock:
+      title: Message Output Thinking Block
+      type: object
+      description: Extended-reasoning trace from the model. Emitted by reasoning models.
+      properties:
+        type:
+          type: string
+          enum:
+          - thinking
+          const: thinking
+        thinking:
+          type: string
+        signature:
+          type: string
+          nullable: true
+      required:
+      - type
+      - thinking
+    MessageToolChoiceTool:
+      title: Message Tool Choice (Tool)
+      type: object
+      description: Force the model to call a specific tool by name.
+      properties:
+        type:
+          type: string
+          enum:
+          - tool
+          const: tool
+        name:
+          type: string
+          description: Name of the required tool.
+        disable_parallel_tool_use:
+          type: boolean
+          nullable: true
+          description: Silently dropped.
+      required:
+      - type
+      - name
+    MessageInputVideoSourceUrl:
+      title: Message Input Video Source (URL)
+      type: object
+      description: HTTPS URL pointing to a video.
+      properties:
+        type:
+          type: string
+          enum:
+          - url
+          const: url
+        url:
+          type: string
+          format: uri
+      required:
+      - type
+      - url
+    MessageInputThinkingBlock:
+      title: Message Input Thinking Block
+      type: object
+      description: Extended-reasoning trace from a prior assistant turn.
+      properties:
+        type:
+          type: string
+          enum:
+          - thinking
+          const: thinking
+        thinking:
+          type: string
+        signature:
+          type: string
+      required:
+      - type
+      - thinking
+      - signature
+    MessageInputContentBlock:
+      title: Message Input Content Block
+      description: Typed content block inside a message's `content` array.
+      oneOf:
+      - $ref: '#/components/schemas/MessageInputTextBlock'
+      - $ref: '#/components/schemas/MessageInputImageBlock'
+      - $ref: '#/components/schemas/MessageInputVideoBlock'
+      - $ref: '#/components/schemas/MessageInputToolUseBlock'
+      - $ref: '#/components/schemas/MessageInputToolResultBlock'
+      - $ref: '#/components/schemas/MessageInputServerToolUseBlock'
+      - $ref: '#/components/schemas/MessageInputSearchResultBlock'
+      - $ref: '#/components/schemas/MessageInputWebSearchToolResultBlock'
+      - $ref: '#/components/schemas/MessageInputWebFetchToolResultBlock'
+      - $ref: '#/components/schemas/MessageInputCodeExecutionToolResultBlock'
+      - $ref: '#/components/schemas/MessageInputBashCodeExecutionToolResultBlock'
+      - $ref: '#/components/schemas/MessageInputTextEditorCodeExecutionToolResultBlock'
+      - $ref: '#/components/schemas/MessageInputToolSearchToolResultBlock'
+      - $ref: '#/components/schemas/MessageInputThinkingBlock'
+      - $ref: '#/components/schemas/MessageInputRedactedThinkingBlock'
+      - $ref: '#/components/schemas/MessageInputContainerUploadBlock'
+      - $ref: '#/components/schemas/MessageInputDocumentBlock'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/MessageInputTextBlock'
+          image: '#/components/schemas/MessageInputImageBlock'
+          video: '#/components/schemas/MessageInputVideoBlock'
+          tool_use: '#/components/schemas/MessageInputToolUseBlock'
+          tool_result: '#/components/schemas/MessageInputToolResultBlock'
+          server_tool_use: '#/components/schemas/MessageInputServerToolUseBlock'
+          search_result: '#/components/schemas/MessageInputSearchResultBlock'
+          web_search_tool_result: '#/components/schemas/MessageInputWebSearchToolResultBlock'
+          web_fetch_tool_result: '#/components/schemas/MessageInputWebFetchToolResultBlock'
+          code_execution_tool_result: '#/components/schemas/MessageInputCodeExecutionToolResultBlock'
+          bash_code_execution_tool_result: '#/components/schemas/MessageInputBashCodeExecutionToolResultBlock'
+          text_editor_code_execution_tool_result: '#/components/schemas/MessageInputTextEditorCodeExecutionToolResultBlock'
+          tool_search_tool_result: '#/components/schemas/MessageInputToolSearchToolResultBlock'
+          thinking: '#/components/schemas/MessageInputThinkingBlock'
+          redacted_thinking: '#/components/schemas/MessageInputRedactedThinkingBlock'
+          container_upload: '#/components/schemas/MessageInputContainerUploadBlock'
+          document: '#/components/schemas/MessageInputDocumentBlock'
+    MessageContentBlockDeltaEvent:
+      title: Content Block Delta Event
+      type: object
+      description: Incremental update to the currently open content block.
+      properties:
+        type:
+          type: string
+          enum:
+          - content_block_delta
+          const: content_block_delta
+        index:
+          type: integer
+          description: Zero-based index of the block within `content[]`.
+        delta:
+          $ref: '#/components/schemas/MessageContentBlockDelta'
+      required:
+      - type
+      - index
+      - delta
     MessageCreateRequest:
       title: Message Create Request
       type: object
@@ -1071,6 +1524,162 @@ components:
         messages:
         - role: user
           content: Hello, Claude!
+    MessageToolChoice:
+      title: Message Tool Choice
+      description: How the model should choose from the provided tools.
+      oneOf:
+      - $ref: '#/components/schemas/MessageToolChoiceAuto'
+      - $ref: '#/components/schemas/MessageToolChoiceAny'
+      - $ref: '#/components/schemas/MessageToolChoiceNone'
+      - $ref: '#/components/schemas/MessageToolChoiceTool'
+      discriminator:
+        propertyName: type
+        mapping:
+          auto: '#/components/schemas/MessageToolChoiceAuto'
+          any: '#/components/schemas/MessageToolChoiceAny'
+          none: '#/components/schemas/MessageToolChoiceNone'
+          tool: '#/components/schemas/MessageToolChoiceTool'
+    MessageInputTextBlock:
+      title: Message Input Text Block
+      type: object
+      description: Plain-text segment of a message.
+      properties:
+        type:
+          type: string
+          enum:
+          - text
+          const: text
+        text:
+          type: string
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+        citations:
+          title: Citations
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          nullable: true
+      required:
+      - type
+      - text
+    MessageInputToolResultBlock:
+      title: Message Input Tool Result Block
+      type: object
+      description: Result of a prior tool call.
+      properties:
+        type:
+          type: string
+          enum:
+          - tool_result
+          const: tool_result
+        tool_use_id:
+          type: string
+          description: ID of the `tool_use` block this result corresponds to.
+        content:
+          anyOf:
+          - type: string
+          - title: Tool Result Content Array
+            type: array
+            items:
+              $ref: '#/components/schemas/MessageInputToolResultContent'
+        is_error:
+          type: boolean
+          nullable: true
+          description: Silently dropped in v1.
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - tool_use_id
+    MessageInputBashCodeExecutionToolResultBlock:
+      title: Message Input Bash Code Execution Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side bash code execution. Echo of a prior Anthropic-served bash tool call; accepted in conversation history but never originates from a SambaNova response. Same lossy extraction as `code_execution_tool_result`.
+      properties:
+        type:
+          type: string
+          enum:
+          - bash_code_execution_tool_result
+          const: bash_code_execution_tool_result
+        tool_use_id:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - tool_use_id
+      - content
+    MessageInputWebSearchToolResultBlock:
+      title: Message Input Web Search Tool Result Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not run server-side `web_search`. Echo of a prior Anthropic-served `web_search` tool call; accepted in conversation history but never originates from a SambaNova response. When present, only `title` (`url`) per result is extracted into a tool message.
+      properties:
+        type:
+          type: string
+          enum:
+          - web_search_tool_result
+          const: web_search_tool_result
+        tool_use_id:
+          type: string
+        content:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - tool_use_id
+      - content
+    MessageMetadata:
+      title: Message Metadata
+      type: object
+      description: Free-form metadata attached to the request. Currently only `user_id` Additional fields are accepted but ignored.
+      properties:
+        user_id:
+          title: User Id
+          type: string
+          description: External identifier for the end-user making the request. Mapped internally to the Chat Completions `user` field.
+          nullable: true
+      additionalProperties: true
+    MessageToolChoiceAuto:
+      title: Message Tool Choice (Auto)
+      type: object
+      description: Let the model decide whether and which tool to use.
+      properties:
+        type:
+          type: string
+          enum:
+          - auto
+          const: auto
+        disable_parallel_tool_use:
+          type: boolean
+          nullable: true
+          description: Silently dropped.
+      required:
+      - type
+    MessageInputContainerUploadBlock:
+      title: Message Input Container Upload Block
+      type: object
+      description: Anthropic compatibility only — SambaNova does not produce container_upload blocks (these come from Anthropic's server-side `code_execution` tool). Accepted in conversation history but never originates from a SambaNova response. Silently dropped on input.
+      properties:
+        type:
+          type: string
+          enum:
+          - container_upload
+          const: container_upload
+        file_id:
+          type: string
+        cache_control:
+          $ref: '#/components/schemas/MessageCacheControl'
+      required:
+      - type
+      - file_id
     MessageInputVideoSourceBase64:
       title: Message Input Video Source (Base64)
       type: object
@@ -1093,22 +1702,48 @@ components:
       - type
       - media_type
       - data
-    MessageInputImageSourceUrl:
-      title: Message Input Image Source (URL)
+    MessageToolChoiceAny:
+      title: Message Tool Choice (Any)
       type: object
-      description: HTTPS URL pointing to an image. **Returns 400 in v1** — URL fetching is blocked. Use `type:"base64"` instead.
+      description: Require the model to call one of the provided tools.
       properties:
         type:
           type: string
           enum:
-          - url
-          const: url
-        url:
-          type: string
-          format: uri
+          - any
+          const: any
+        disable_parallel_tool_use:
+          type: boolean
+          nullable: true
+          description: Silently dropped.
       required:
       - type
-      - url
+    MessageError:
+      title: Message Error
+      type: object
+      description: Inner error object carried inside a `MessageErrorResponse`. The `type` value follows Anthropic's published error taxonomy.
+      properties:
+        type:
+          title: Type
+          type: string
+          description: Error category. Values follow Anthropic's taxonomy.
+          enum:
+          - invalid_request_error
+          - authentication_error
+          - permission_error
+          - not_found_error
+          - request_too_large
+          - rate_limit_error
+          - api_error
+          - overloaded_error
+          - not_implemented_error
+        message:
+          title: Message
+          type: string
+          description: Human-readable explanation of the error.
+      required:
+      - type
+      - message
     MessageOutputContentBlock:
       title: Message Output Content Block
       description: Typed content block in the model's response.
@@ -1140,280 +1775,6 @@ components:
           text_editor_code_execution_tool_result: '#/components/schemas/MessageOutputTextEditorCodeExecutionToolResultBlock'
           tool_search_tool_result: '#/components/schemas/MessageOutputToolSearchToolResultBlock'
           container_upload: '#/components/schemas/MessageOutputContainerUploadBlock'
-    MessageInputDocumentBlock:
-      title: Message Input Document Block
-      type: object
-      description: PDF or document content. **Returns 400** — no document-extraction pipeline available.
-      properties:
-        type:
-          type: string
-          enum:
-          - document
-          const: document
-        source:
-          type: object
-          additionalProperties: true
-        title:
-          type: string
-          nullable: true
-        context:
-          type: string
-          nullable: true
-        citations:
-          type: object
-          additionalProperties: true
-          nullable: true
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-      - source
-    MessageStreamEvent:
-      title: Message Stream Event
-      description: 'Discriminated union of SSE events emitted during a streaming `POST /messages` call. Event order: `message_start` -> (`content_block_start` -> `content_block_delta`×N -> `content_block_stop`) × blocks -> `message_delta` -> `message_stop`. A `ping` may appear at any point; an `error` event terminates the stream.'
-      oneOf:
-      - $ref: '#/components/schemas/MessageStartEvent'
-      - $ref: '#/components/schemas/MessageContentBlockStartEvent'
-      - $ref: '#/components/schemas/MessageContentBlockDeltaEvent'
-      - $ref: '#/components/schemas/MessageContentBlockStopEvent'
-      - $ref: '#/components/schemas/MessageDeltaEvent'
-      - $ref: '#/components/schemas/MessageStopEvent'
-      - $ref: '#/components/schemas/MessagePingEvent'
-      - $ref: '#/components/schemas/MessageStreamErrorEvent'
-      discriminator:
-        propertyName: type
-        mapping:
-          message_start: '#/components/schemas/MessageStartEvent'
-          content_block_start: '#/components/schemas/MessageContentBlockStartEvent'
-          content_block_delta: '#/components/schemas/MessageContentBlockDeltaEvent'
-          content_block_stop: '#/components/schemas/MessageContentBlockStopEvent'
-          message_delta: '#/components/schemas/MessageDeltaEvent'
-          message_stop: '#/components/schemas/MessageStopEvent'
-          ping: '#/components/schemas/MessagePingEvent'
-          error: '#/components/schemas/MessageStreamErrorEvent'
-    MessageContentBlockThinkingDelta:
-      title: Content Block Thinking Delta
-      type: object
-      description: Incremental thinking chunk for an open thinking block. Emitted by reasoning models.
-      properties:
-        type:
-          type: string
-          enum:
-          - thinking_delta
-          const: thinking_delta
-        thinking:
-          type: string
-      required:
-      - type
-      - thinking
-    MessagePingEvent:
-      title: Message Ping Event
-      type: object
-      description: Keepalive heartbeat. May appear at any point in the stream.
-      properties:
-        type:
-          type: string
-          enum:
-          - ping
-          const: ping
-      required:
-      - type
-    MessageSystemPrompt:
-      title: Message System Prompt
-      description: 'System prompt for the conversation. Accepts either a single string (most common) or an array of text blocks (used when individual segments need `cache_control` markers). Multiple text blocks are joined with newlines and prepended to the conversation as a `role: system` message.'
-      anyOf:
-      - type: string
-      - title: System Text Block Array
-        type: array
-        items:
-          $ref: '#/components/schemas/MessageSystemTextBlock'
-    MessageDeltaUsage:
-      title: Message Delta Usage
-      type: object
-      description: Final token accounting emitted in the closing `message_delta` event of a stream.
-      properties:
-        output_tokens:
-          type: integer
-          description: Total tokens generated (final count).
-        input_tokens:
-          type: integer
-          nullable: true
-          description: Total tokens in the prompt (echoed from `message_start`).
-        cache_creation_input_tokens:
-          type: integer
-          nullable: true
-          description: Tokens written to prompt cache. Absent in v1;
-        cache_read_input_tokens:
-          type: integer
-          nullable: true
-          description: Tokens read from prompt cache. Absent in v1;
-        server_tool_use:
-          type: object
-          additionalProperties: true
-          nullable: true
-          description: Server-tool usage metrics. Anthropic compatibility only — SambaNova does not run server tools, so this field is never emitted.
-      required:
-      - output_tokens
-    MessageOutputServerToolUseBlock:
-      title: Message Output Server Tool Use Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side tools. Never emitted in responses; defined for Anthropic SDK type-parity.
-      properties:
-        type:
-          type: string
-          enum:
-          - server_tool_use
-          const: server_tool_use
-        id:
-          type: string
-        name:
-          type: string
-        input:
-          type: object
-          additionalProperties: true
-      required:
-      - type
-      - id
-      - name
-      - input
-    MessageDeltaEvent:
-      title: Message Delta Event
-      type: object
-      description: Penultimate event of the stream. Carries the final `stop_reason`, optional `stop_sequence`, and final usage counts.
-      properties:
-        type:
-          type: string
-          enum:
-          - message_delta
-          const: message_delta
-        delta:
-          type: object
-          properties:
-            stop_reason:
-              $ref: '#/components/schemas/MessageStopReason'
-            stop_sequence:
-              type: string
-              nullable: true
-              description: Custom stop sequence that triggered termination. Field is emitted but value is always `null` in v1 (backend collapses `StopSequenceHit` and `EndOfText` into the same finish_reason).
-            stop_details:
-              allOf:
-              - $ref: '#/components/schemas/MessageStopDetails'
-              nullable: true
-              description: Refusal stop details. Field is emitted but value is always `null` in v1 — `refusal` is not produced as a stop_reason.
-          required:
-          - stop_reason
-        usage:
-          $ref: '#/components/schemas/MessageDeltaUsage'
-      required:
-      - type
-      - delta
-      - usage
-    MessageOutputWebSearchToolResultBlock:
-      title: Message Output Web Search Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side `web_search`. Never emitted in responses.
-      properties:
-        type:
-          type: string
-          enum:
-          - web_search_tool_result
-          const: web_search_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-      required:
-      - type
-      - tool_use_id
-      - content
-    MessageStopDetails:
-      title: Message Stop Details
-      type: object
-      description: Refusal stop details. Anthropic compatibility only — `refusal` is never emitted as a stop_reason by SambaNova (content filtering is not exposed at the API layer).
-      properties:
-        type:
-          type: string
-          enum:
-          - refusal
-          const: refusal
-        category:
-          type: string
-          enum:
-          - cyber
-          - bio
-      required:
-      - type
-    MessageInputMessage:
-      title: Message Input Message
-      type: object
-      description: A turn in the conversation.
-      properties:
-        role:
-          type: string
-          enum:
-          - user
-          - assistant
-          description: Conversational role. `user` for the human-side turn, `assistant` for prior model output.
-        content:
-          anyOf:
-          - type: string
-          - title: Content Block Array
-            type: array
-            items:
-              $ref: '#/components/schemas/MessageInputContentBlock'
-      required:
-      - role
-      - content
-    MessageInputSearchResultBlock:
-      title: Message Input Search Result Block
-      type: object
-      description: Inline search result content. In v1 the `title`, `source`, and `content[]` text are extracted into a text block; citations are dropped.
-      properties:
-        type:
-          type: string
-          enum:
-          - search_result
-          const: search_result
-        title:
-          type: string
-        source:
-          type: string
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageInputTextBlock'
-        citations:
-          type: object
-          additionalProperties: true
-          nullable: true
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-    MessageInputBashCodeExecutionToolResultBlock:
-      title: Message Input Bash Code Execution Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side bash code execution. Echo of a prior Anthropic-served bash tool call; accepted in conversation history but never originates from a SambaNova response. Same lossy extraction as `code_execution_tool_result`.
-      properties:
-        type:
-          type: string
-          enum:
-          - bash_code_execution_tool_result
-          const: bash_code_execution_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: object
-          additionalProperties: true
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-      - tool_use_id
-      - content
     MessageInputImageSourceBase64:
       title: Message Input Image Source (Base64)
       type: object
@@ -1438,415 +1799,18 @@ components:
       - type
       - media_type
       - data
-    MessageInputThinkingBlock:
-      title: Message Input Thinking Block
+    MessageToolChoiceNone:
+      title: Message Tool Choice (None)
       type: object
-      description: Extended-reasoning trace from a prior assistant turn.
+      description: Forbid the model from calling any tool.
       properties:
         type:
           type: string
           enum:
-          - thinking
-          const: thinking
-        thinking:
-          type: string
-        signature:
-          type: string
+          - none
+          const: none
       required:
       - type
-      - thinking
-      - signature
-    MessageInputWebFetchToolResultBlock:
-      title: Message Input Web Fetch Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side `web_fetch`. Echo of a prior Anthropic-served `web_fetch` tool call; accepted in conversation history but never originates from a SambaNova response. When present, only the text content is extracted.
-      properties:
-        type:
-          type: string
-          enum:
-          - web_fetch_tool_result
-          const: web_fetch_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: object
-          additionalProperties: true
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-      - tool_use_id
-      - content
-    MessageToolChoiceAny:
-      title: Message Tool Choice (Any)
-      type: object
-      description: Require the model to call one of the provided tools.
-      properties:
-        type:
-          type: string
-          enum:
-          - any
-          const: any
-        disable_parallel_tool_use:
-          type: boolean
-          nullable: true
-          description: Silently dropped.
-      required:
-      - type
-    MessageInputVideoBlock:
-      title: Message Input Video Block
-      type: object
-      description: Video content.
-      properties:
-        type:
-          type: string
-          enum:
-          - video
-          const: video
-        source:
-          oneOf:
-          - $ref: '#/components/schemas/MessageInputVideoSourceBase64'
-          - $ref: '#/components/schemas/MessageInputVideoSourceUrl'
-          discriminator:
-            propertyName: type
-            mapping:
-              base64: '#/components/schemas/MessageInputVideoSourceBase64'
-              url: '#/components/schemas/MessageInputVideoSourceUrl'
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-      - source
-    MessageInputWebSearchToolResultBlock:
-      title: Message Input Web Search Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side `web_search`. Echo of a prior Anthropic-served `web_search` tool call; accepted in conversation history but never originates from a SambaNova response. When present, only `title` (`url`) per result is extracted into a tool message.
-      properties:
-        type:
-          type: string
-          enum:
-          - web_search_tool_result
-          const: web_search_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-      - tool_use_id
-      - content
-    MessageToolChoice:
-      title: Message Tool Choice
-      description: How the model should choose from the provided tools.
-      oneOf:
-      - $ref: '#/components/schemas/MessageToolChoiceAuto'
-      - $ref: '#/components/schemas/MessageToolChoiceAny'
-      - $ref: '#/components/schemas/MessageToolChoiceNone'
-      - $ref: '#/components/schemas/MessageToolChoiceTool'
-      discriminator:
-        propertyName: type
-        mapping:
-          auto: '#/components/schemas/MessageToolChoiceAuto'
-          any: '#/components/schemas/MessageToolChoiceAny'
-          none: '#/components/schemas/MessageToolChoiceNone'
-          tool: '#/components/schemas/MessageToolChoiceTool'
-    MessageStreamErrorEvent:
-      title: Message Stream Error Event
-      type: object
-      description: Streamed error envelope. Terminates the stream.
-      properties:
-        type:
-          type: string
-          enum:
-          - error
-          const: error
-        error:
-          $ref: '#/components/schemas/MessageError'
-      required:
-      - type
-      - error
-    MessageContentBlockSignatureDelta:
-      title: Content Block Signature Delta
-      type: object
-      description: Signature for an open thinking block. Emitted at the end of a thinking stream (paired with the closing `content_block_stop`); the `signature` value may be an empty string when the backend has no signed payload to attach.
-      properties:
-        type:
-          type: string
-          enum:
-          - signature_delta
-          const: signature_delta
-        signature:
-          type: string
-      required:
-      - type
-      - signature
-    MessageSystemTextBlock:
-      title: Message System Text Block
-      type: object
-      description: 'A text segment within a structured `system` prompt array. Multiple text blocks are concatenated (with newlines) and prepended to the conversation as a `role: system` message at the chat-completions layer.'
-      properties:
-        type:
-          title: Type
-          type: string
-          enum:
-          - text
-          const: text
-        text:
-          title: Text
-          type: string
-          description: Plain-text content of the system prompt segment.
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-        citations:
-          title: Citations
-          type: array
-          description: 'Optional citations. **In v1**: silently dropped'
-          items:
-            type: object
-            additionalProperties: true
-          nullable: true
-      required:
-      - type
-      - text
-    MessageInputContainerUploadBlock:
-      title: Message Input Container Upload Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not produce container_upload blocks (these come from Anthropic's server-side `code_execution` tool). Accepted in conversation history but never originates from a SambaNova response. Silently dropped on input.
-      properties:
-        type:
-          type: string
-          enum:
-          - container_upload
-          const: container_upload
-        file_id:
-          type: string
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-      - file_id
-    MessageStopReason:
-      title: Message Stop Reason
-      type: string
-      description: 'Reason the model stopped generating. SambaNova emits `end_turn`, `max_tokens`, `tool_use`, and `stop_sequence`. The remaining values are defined for Anthropic SDK type-parity but never returned: `pause_turn` (server-tool loop limit, not produced); `refusal` (content filter, not exposed); `model_context_window_exceeded` (folded to `max_tokens`).'
-      enum:
-      - end_turn
-      - max_tokens
-      - tool_use
-      - pause_turn
-      - refusal
-      - stop_sequence
-      - model_context_window_exceeded
-    MessageToolChoiceAuto:
-      title: Message Tool Choice (Auto)
-      type: object
-      description: Let the model decide whether and which tool to use.
-      properties:
-        type:
-          type: string
-          enum:
-          - auto
-          const: auto
-        disable_parallel_tool_use:
-          type: boolean
-          nullable: true
-          description: Silently dropped.
-      required:
-      - type
-    MessageThinkingAdaptive:
-      title: Message Thinking Adaptive
-      type: object
-      description: 'Enables Anthropic-style adaptive extended thinking. **In v1**: returns a 400 `invalid_request_error` (`unsupported_parameter`).'
-      properties:
-        type:
-          title: Type
-          type: string
-          enum:
-          - adaptive
-          const: adaptive
-        budget_tokens:
-          title: Budget Tokens
-          type: integer
-          minimum: 1024
-          nullable: true
-          description: Optional upper bound on tokens spent on adaptive thinking. When omitted, the backend chooses based on prompt complexity.
-      required:
-      - type
-    MessageContentBlockDelta:
-      title: Content Block Delta
-      description: Incremental update to an open content block.
-      oneOf:
-      - $ref: '#/components/schemas/MessageContentBlockTextDelta'
-      - $ref: '#/components/schemas/MessageContentBlockInputJsonDelta'
-      - $ref: '#/components/schemas/MessageContentBlockThinkingDelta'
-      - $ref: '#/components/schemas/MessageContentBlockSignatureDelta'
-      discriminator:
-        propertyName: type
-        mapping:
-          text_delta: '#/components/schemas/MessageContentBlockTextDelta'
-          input_json_delta: '#/components/schemas/MessageContentBlockInputJsonDelta'
-          thinking_delta: '#/components/schemas/MessageContentBlockThinkingDelta'
-          signature_delta: '#/components/schemas/MessageContentBlockSignatureDelta'
-    MessageOutputBashCodeExecutionToolResultBlock:
-      title: Message Output Bash Code Execution Tool Result Block
-      type: object
-      description: Anthropic compatibility only — SambaNova does not run server-side bash code execution. Never emitted in responses.
-      properties:
-        type:
-          type: string
-          enum:
-          - bash_code_execution_tool_result
-          const: bash_code_execution_tool_result
-        tool_use_id:
-          type: string
-        content:
-          type: object
-          additionalProperties: true
-      required:
-      - type
-      - tool_use_id
-      - content
-    MessageToolChoiceTool:
-      title: Message Tool Choice (Tool)
-      type: object
-      description: Force the model to call a specific tool by name.
-      properties:
-        type:
-          type: string
-          enum:
-          - tool
-          const: tool
-        name:
-          type: string
-          description: Name of the required tool.
-        disable_parallel_tool_use:
-          type: boolean
-          nullable: true
-          description: Silently dropped.
-      required:
-      - type
-      - name
-    MessageInputContentBlock:
-      title: Message Input Content Block
-      description: Typed content block inside a message's `content` array.
-      oneOf:
-      - $ref: '#/components/schemas/MessageInputTextBlock'
-      - $ref: '#/components/schemas/MessageInputImageBlock'
-      - $ref: '#/components/schemas/MessageInputVideoBlock'
-      - $ref: '#/components/schemas/MessageInputToolUseBlock'
-      - $ref: '#/components/schemas/MessageInputToolResultBlock'
-      - $ref: '#/components/schemas/MessageInputServerToolUseBlock'
-      - $ref: '#/components/schemas/MessageInputSearchResultBlock'
-      - $ref: '#/components/schemas/MessageInputWebSearchToolResultBlock'
-      - $ref: '#/components/schemas/MessageInputWebFetchToolResultBlock'
-      - $ref: '#/components/schemas/MessageInputCodeExecutionToolResultBlock'
-      - $ref: '#/components/schemas/MessageInputBashCodeExecutionToolResultBlock'
-      - $ref: '#/components/schemas/MessageInputTextEditorCodeExecutionToolResultBlock'
-      - $ref: '#/components/schemas/MessageInputToolSearchToolResultBlock'
-      - $ref: '#/components/schemas/MessageInputThinkingBlock'
-      - $ref: '#/components/schemas/MessageInputRedactedThinkingBlock'
-      - $ref: '#/components/schemas/MessageInputContainerUploadBlock'
-      - $ref: '#/components/schemas/MessageInputDocumentBlock'
-      discriminator:
-        propertyName: type
-        mapping:
-          text: '#/components/schemas/MessageInputTextBlock'
-          image: '#/components/schemas/MessageInputImageBlock'
-          video: '#/components/schemas/MessageInputVideoBlock'
-          tool_use: '#/components/schemas/MessageInputToolUseBlock'
-          tool_result: '#/components/schemas/MessageInputToolResultBlock'
-          server_tool_use: '#/components/schemas/MessageInputServerToolUseBlock'
-          search_result: '#/components/schemas/MessageInputSearchResultBlock'
-          web_search_tool_result: '#/components/schemas/MessageInputWebSearchToolResultBlock'
-          web_fetch_tool_result: '#/components/schemas/MessageInputWebFetchToolResultBlock'
-          code_execution_tool_result: '#/components/schemas/MessageInputCodeExecutionToolResultBlock'
-          bash_code_execution_tool_result: '#/components/schemas/MessageInputBashCodeExecutionToolResultBlock'
-          text_editor_code_execution_tool_result: '#/components/schemas/MessageInputTextEditorCodeExecutionToolResultBlock'
-          tool_search_tool_result: '#/components/schemas/MessageInputToolSearchToolResultBlock'
-          thinking: '#/components/schemas/MessageInputThinkingBlock'
-          redacted_thinking: '#/components/schemas/MessageInputRedactedThinkingBlock'
-          container_upload: '#/components/schemas/MessageInputContainerUploadBlock'
-          document: '#/components/schemas/MessageInputDocumentBlock'
-    MessageInputToolUseBlock:
-      title: Message Input Tool Use Block
-      type: object
-      description: A prior assistant turn that invoked a tool.
-      properties:
-        type:
-          type: string
-          enum:
-          - tool_use
-          const: tool_use
-        id:
-          type: string
-          description: Unique identifier for the tool call (used to correlate `tool_result`).
-        name:
-          type: string
-          description: Name of the tool being invoked.
-        input:
-          type: object
-          additionalProperties: true
-          description: Tool inputs as a JSON object.
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
-      required:
-      - type
-      - id
-      - name
-      - input
-    MessageContentBlockDeltaEvent:
-      title: Content Block Delta Event
-      type: object
-      description: Incremental update to the currently open content block.
-      properties:
-        type:
-          type: string
-          enum:
-          - content_block_delta
-          const: content_block_delta
-        index:
-          type: integer
-          description: Zero-based index of the block within `content[]`.
-        delta:
-          $ref: '#/components/schemas/MessageContentBlockDelta'
-      required:
-      - type
-      - index
-      - delta
-    MessageContentBlockStartEvent:
-      title: Content Block Start Event
-      type: object
-      description: Opens a new content block. One per block in `content[]`.
-      properties:
-        type:
-          type: string
-          enum:
-          - content_block_start
-          const: content_block_start
-        index:
-          type: integer
-          description: Zero-based index of the block within `content[]`.
-        content_block:
-          $ref: '#/components/schemas/MessageOutputContentBlock'
-      required:
-      - type
-      - index
-      - content_block
-    MessageCountTokensResponse:
-      title: Message Count Tokens Response
-      type: object
-      description: Token count for the supplied prompt.
-      properties:
-        input_tokens:
-          type: integer
-          description: Total tokens in the prompt (system + messages + tools).
-      required:
-      - input_tokens
     MessageInputTextEditorCodeExecutionToolResultBlock:
       title: Message Input Text Editor Code Execution Tool Result Block
       type: object
@@ -1868,41 +1832,82 @@ components:
       - type
       - tool_use_id
       - content
-    MessageInputToolResultBlock:
-      title: Message Input Tool Result Block
+    MessageCountTokensRequest:
+      title: Message Count Tokens Request
       type: object
-      description: Result of a prior tool call.
+      description: Request body for `POST /messages/count_tokens`. Returns the input token count for a prompt without generating output. Same prompt shape as `MessageCreateRequest` minus generation-time parameters (`max_tokens`, `stream`, sampling, `stop_sequences`, `metadata`, `service_tier`, etc.).
+      additionalProperties: true
       properties:
-        type:
+        model:
+          title: Model
           type: string
-          enum:
-          - tool_result
-          const: tool_result
-        tool_use_id:
-          type: string
-          description: ID of the `tool_use` block this result corresponds to.
-        content:
-          anyOf:
-          - type: string
-          - title: Tool Result Content Array
-            type: array
-            items:
-              $ref: '#/components/schemas/MessageInputToolResultContent'
-        is_error:
-          type: boolean
+          description: Model identifier.
+          example: gpt-oss-120b
+        messages:
+          title: Messages
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/MessageInputMessage'
+          description: Conversation turns.
+        system:
+          $ref: '#/components/schemas/MessageSystemPrompt'
+        thinking:
+          $ref: '#/components/schemas/MessageThinkingConfig'
+        tools:
+          title: Tools
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageTool'
           nullable: true
-          description: Silently dropped in v1.
-        cache_control:
-          $ref: '#/components/schemas/MessageCacheControl'
+          description: Tool definitions the model may call.
+        tool_choice:
+          allOf:
+          - $ref: '#/components/schemas/MessageToolChoice'
+          nullable: true
+          description: Controls how the model selects from `tools`.
       required:
-      - type
-      - tool_use_id
+      - model
+      - messages
+      example:
+        model: DeepSeek-V3.1
+        messages:
+        - role: user
+          content: Hello, Claude!
+    MessageInputToolResultContent:
+      title: Message Input Tool Result Content
+      description: Content of a `tool_result` block. only text is forwarded.
+      oneOf:
+      - $ref: '#/components/schemas/MessageInputTextBlock'
+      - $ref: '#/components/schemas/MessageInputImageBlock'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/MessageInputTextBlock'
+          image: '#/components/schemas/MessageInputImageBlock'
+    MessageStopReason:
+      title: Message Stop Reason
+      type: string
+      description: 'Reason the model stopped generating. SambaNova emits `end_turn`, `max_tokens`, `tool_use`, and `stop_sequence`. The remaining values are defined for Anthropic SDK type-parity but never returned: `pause_turn` (server-tool loop limit, not produced); `refusal` (content filter, not exposed); `model_context_window_exceeded` (folded to `max_tokens`).'
+      enum:
+      - end_turn
+      - max_tokens
+      - tool_use
+      - pause_turn
+      - refusal
+      - stop_sequence
+      - model_context_window_exceeded
   securitySchemes:
     api_key:
       type: http
-      description: SambaNova API Key
+      description: 'SambaNova API key, sent as a bearer token in the `Authorization` header (`Authorization: Bearer <key>`). Default authentication scheme used by the SambaNova SDK across every OpenAI compatible endpoint.'
       scheme: bearer
       bearerFormat: apiKey
+    x_api_key:
+      type: apiKey
+      description: SambaNova API key, sent in the `x-api-key` header. Accepted on the Messages API routes (`/messages`, `/messages/count_tokens`) so that callers can point the official Anthropic SDK at SambaNova by swapping `base_url` — no code changes. The credential value is the same as the bearer `api_key` scheme; only the transport differs.
+      in: header
+      name: x-api-key
 externalDocs:
   description: Find out more in the official SambaNova docs
-  url: https://docs.sambanova.ai/cloud/api-reference/overview
+  url: https://docs.sambanova.ai/docs/en/api-reference/overview

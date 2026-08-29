@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Sambanova Agents Service Audio Subagents Interactive API
+  title: Sambanova Agents Service Subagents Interactive API
   description: Service for Sambanova agents
   version: 0.0.1
   termsOfService: https://sambanova.ai/cloud-end-user-license-agreement
@@ -185,6 +185,76 @@ components:
       - prompt: approve
         thread_id: thread-abc123
         resume: true
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+    FinancialAnalysisInteractiveRequest:
+      title: FinancialAnalysisInteractiveRequest
+      type: object
+      description: Request for financial interactive agent json object
+      additionalProperties: false
+      properties:
+        prompt:
+          title: Prompt
+          description: The main prompt for the financial interactive agent
+          type: string
+        resume:
+          default: false
+          title: Resume
+          description: Whether to describe the results or not
+          type: boolean
+        thread_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thread Id
+          description: thread id for persistent context
+      required:
+      - prompt
+      examples:
+      - prompt: Perform a financial analysis of Apple
+    CodingAgentInteractiveRequest:
+      title: CodingAgentInteractiveRequest
+      type: object
+      description: Request for coding interactive agent json object
+      additionalProperties: false
+      properties:
+        code:
+          title: Code
+          description: Code to run
+          type: string
+        prompt:
+          title: Prompt
+          description: The main prompt for the coding interactive agent
+          type: string
+        resume:
+          default: false
+          title: Resume
+          description: Whether to describe the results or not
+          type: boolean
+        thread_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thread Id
+          description: thread id for persistent context
+      required:
+      - prompt
+      - code
+      examples:
+      - prompt: Create a function to calculate fibonacci
+        code: "def fib(n):\n  return fib(n-1) + fib(n-2)\n"
+        resume: false
+      - prompt: Fix the base case issue
+        code: "def fib(n):\n  if n <= 1:\n      return n\n  return fib(n-1) + fib(n-2)\n"
+        thread_id: thread-abc123
+        resume: true
     AgentResponse:
       type: object
       title: Agent Response Object
@@ -239,6 +309,27 @@ components:
       example:
         status: interrupt
         thread_id: thread-a
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
     DatascienceAgentInteractiveRequest:
       title: DatascienceAgentInteractiveRequest
       type: object
@@ -287,72 +378,6 @@ components:
         - file-id-1
         - file-id-2
         resume: true
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    CodingAgentInteractiveRequest:
-      title: CodingAgentInteractiveRequest
-      type: object
-      description: Request for coding interactive agent json object
-      additionalProperties: false
-      properties:
-        code:
-          title: Code
-          description: Code to run
-          type: string
-        prompt:
-          title: Prompt
-          description: The main prompt for the coding interactive agent
-          type: string
-        resume:
-          default: false
-          title: Resume
-          description: Whether to describe the results or not
-          type: boolean
-        thread_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Thread Id
-          description: thread id for persistent context
-      required:
-      - prompt
-      - code
-      examples:
-      - prompt: Create a function to calculate fibonacci
-        code: "def fib(n):\n  return fib(n-1) + fib(n-2)\n"
-        resume: false
-      - prompt: Fix the base case issue
-        code: "def fib(n):\n  if n <= 1:\n      return n\n  return fib(n-1) + fib(n-2)\n"
-        thread_id: thread-abc123
-        resume: true
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
     BaseAgentResponse:
       type: object
       title: Base agent response object
@@ -389,31 +414,6 @@ components:
         artifacts:
         - file-id-123
         thread_id: thread-abc
-    FinancialAnalysisInteractiveRequest:
-      title: FinancialAnalysisInteractiveRequest
-      type: object
-      description: Request for financial interactive agent json object
-      additionalProperties: false
-      properties:
-        prompt:
-          title: Prompt
-          description: The main prompt for the financial interactive agent
-          type: string
-        resume:
-          default: false
-          title: Resume
-          description: Whether to describe the results or not
-          type: boolean
-        thread_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Thread Id
-          description: thread id for persistent context
-      required:
-      - prompt
-      examples:
-      - prompt: Perform a financial analysis of Apple
   securitySchemes:
     api_key:
       type: http

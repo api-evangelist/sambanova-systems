@@ -1,36 +1,55 @@
 {
   "provider": "sambanova-systems",
   "sources": [
-    "sambanova-systems-audio-api-openapi.yml",
-    "sambanova-systems-chat-completions-api-openapi.yml",
-    "sambanova-systems-completions-api-openapi.yml",
-    "sambanova-systems-embeddings-api-openapi.yml",
-    "sambanova-systems-file-management-api-openapi.yml",
-    "sambanova-systems-main-agent-api-openapi.yml",
-    "sambanova-systems-main-agent-interactive-api-openapi.yml",
-    "sambanova-systems-messages-api-openapi.yml",
-    "sambanova-systems-models-api-openapi.yml",
-    "sambanova-systems-responses-api-openapi.yml",
-    "sambanova-systems-subagents-api-openapi.yml",
-    "sambanova-systems-subagents-interactive-api-openapi.yml"
+    "_original/sambanova-systems-agents-openapi-original.yml",
+    "_original/sambanova-systems-cloud-openapi-original.yml"
   ],
   "outputs": [
+    "sambanova-systems-file-management-api-openapi.yml",
+    "sambanova-systems-main-agent-api-openapi.yml",
+    "sambanova-systems-main-agent-interactive-api-openapi.yml",
+    "sambanova-systems-subagents-api-openapi.yml",
+    "sambanova-systems-subagents-interactive-api-openapi.yml",
     "sambanova-systems-audio-api-openapi.yml",
     "sambanova-systems-chat-completions-api-openapi.yml",
     "sambanova-systems-completions-api-openapi.yml",
     "sambanova-systems-embeddings-api-openapi.yml",
-    "sambanova-systems-file-management-api-openapi.yml",
-    "sambanova-systems-main-agent-api-openapi.yml",
-    "sambanova-systems-main-agent-interactive-api-openapi.yml",
     "sambanova-systems-messages-api-openapi.yml",
     "sambanova-systems-models-api-openapi.yml",
-    "sambanova-systems-responses-api-openapi.yml",
-    "sambanova-systems-subagents-api-openapi.yml",
-    "sambanova-systems-subagents-interactive-api-openapi.yml"
+    "sambanova-systems-responses-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sambanova-systems-agents-openapi-original.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sambanova-systems-agents-openapi-original.yml: declared missing tag: File Management",
+    "sambanova-systems-agents-openapi-original.yml: declared missing tag: Main Agent",
+    "sambanova-systems-agents-openapi-original.yml: declared missing tag: Main Agent Interactive",
+    "sambanova-systems-agents-openapi-original.yml: declared missing tag: Subagents",
+    "sambanova-systems-agents-openapi-original.yml: declared missing tag: Subagents Interactive",
+    "sambanova-systems-cloud-openapi-original.yml: upgraded openapi 3.1.1 -> OpenAPI 3.2.0",
+    "sambanova-systems-cloud-openapi-original.yml: declared missing tag: Audio",
+    "sambanova-systems-cloud-openapi-original.yml: declared missing tag: Chat completions",
+    "sambanova-systems-cloud-openapi-original.yml: declared missing tag: Completions",
+    "sambanova-systems-cloud-openapi-original.yml: declared missing tag: Embeddings",
+    "sambanova-systems-cloud-openapi-original.yml: declared missing tag: Messages",
+    "sambanova-systems-cloud-openapi-original.yml: declared missing tag: Models",
+    "sambanova-systems-cloud-openapi-original.yml: declared missing tag: Responses"
+  ],
+  "skipped": [
+    "sambanova-systems-audio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-chat-completions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-completions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-embeddings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-file-management-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-main-agent-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-main-agent-interactive-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-responses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-subagents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sambanova-systems-subagents-interactive-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
