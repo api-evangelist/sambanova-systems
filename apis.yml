@@ -86,7 +86,7 @@ apis:
   humanURL: https://docs.sambanova.ai/cloud/docs/api-reference/overview
   baseURL: https://api.sambanova.ai/v1
   tags:
-  - Chat Completions
+  - Chat completions
   tags_raw:
   - Chat completions
   properties:
