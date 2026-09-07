@@ -267,3 +267,5 @@ x-enrichment:
   status: enriched
   artifacts_added: 23
   pass: local-v1
+x-parent: sambanova
+x-relationship: product
