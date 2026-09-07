@@ -199,6 +199,18 @@ apis:
   - type: OpenAPI
     url: openapi/sambanova-systems-subagents-interactive-api-openapi.yml
 common:
+- type: TrustCenter
+  url: security/sambanova-systems-trust-center.yml
+- type: Community
+  url: https://community.sambanova.ai
+- type: StarterKits
+  url: https://github.com/sambanova/ai-starter-kit
+- type: Hardware
+  url: https://sambanova.ai/products/sn50-rdu
+- type: LinkedIn
+  url: https://www.linkedin.com/company/sambanova-systems
+- type: Twitter
+  url: https://twitter.com/SambaNovaAI
 - type: Overlay
   url: overlays/sambanova-systems-agents-overlay.yaml
 - type: Website
@@ -267,5 +279,3 @@ x-enrichment:
   status: enriched
   artifacts_added: 23
   pass: local-v1
-x-parent: sambanova
-x-relationship: product
