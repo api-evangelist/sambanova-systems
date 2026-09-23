@@ -27,9 +27,7 @@ paths:
 
         Step 1: Submit code with prompt, get thread_id and execution result.
 
-        Step 2: Continue with thread_id and resume=true to iterate on code.
-
-        '
+        Step 2: Continue with thread_id and resume=true to iterate on code.'
       operationId: coding_agent_interactive_agent_coding_interactive_post
       security:
       - api_key: []
@@ -61,9 +59,7 @@ paths:
 
         1. Submit a prompt and files to receive a thread_id and hypothesis for approval
 
-        2. Submit a prompt with thread_id, file_ids_json, and resume=true to generate the final report
-
-        '
+        2. Submit a prompt with thread_id, file_ids_json, and resume=true to generate the final report'
       operationId: datascience_interactive_agent_datascience_interactive_post
       security:
       - api_key: []
@@ -129,9 +125,7 @@ paths:
 
         1. Submit a prompt to receive a thread_id and initial analysis
 
-        2. Continue with thread_id and resume=true for follow-up questions
-
-        '
+        2. Continue with thread_id and resume=true for follow-up questions'
       operationId: financial_analysis_agent_interactive_agent_financialanalysis_interactive_post
       security:
       - api_key: []
@@ -156,69 +150,27 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    DeepResearchInteractiveRequest:
-      title: DeepResearchInteractiveRequest
-      type: object
-      description: Request for deep research interactive agent json object
-      additionalProperties: false
+    ValidationError:
       properties:
-        prompt:
-          title: Prompt
-          description: The main prompt for the deep research interactive agent
-          type: string
-        resume:
-          default: false
-          title: Resume
-          description: Whether to describe the results or not
-          type: boolean
-        thread_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Thread Id
-          description: thread id for persistent context
-      required:
-      - prompt
-      examples:
-      - prompt: Research AI accelerator market
-        resume: false
-      - prompt: approve
-        thread_id: thread-abc123
-        resume: true
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
           type: array
-    FinancialAnalysisInteractiveRequest:
-      title: FinancialAnalysisInteractiveRequest
-      type: object
-      description: Request for financial interactive agent json object
-      additionalProperties: false
-      properties:
-        prompt:
-          title: Prompt
-          description: The main prompt for the financial interactive agent
+        msg:
+          title: Message
           type: string
-        resume:
-          default: false
-          title: Resume
-          description: Whether to describe the results or not
-          type: boolean
-        thread_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Thread Id
-          description: thread id for persistent context
+        type:
+          title: Error Type
+          type: string
       required:
-      - prompt
-      examples:
-      - prompt: Perform a financial analysis of Apple
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
     CodingAgentInteractiveRequest:
       title: CodingAgentInteractiveRequest
       type: object
@@ -309,27 +261,105 @@ components:
       example:
         status: interrupt
         thread_id: thread-a
-    ValidationError:
+    FinancialAnalysisInteractiveRequest:
+      title: FinancialAnalysisInteractiveRequest
+      type: object
+      description: Request for financial interactive agent json object
+      additionalProperties: false
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
+        prompt:
+          title: Prompt
+          description: The main prompt for the financial interactive agent
           type: string
-        type:
-          title: Error Type
+        resume:
+          default: false
+          title: Resume
+          description: Whether to describe the results or not
+          type: boolean
+        thread_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thread Id
+          description: thread id for persistent context
+      required:
+      - prompt
+      examples:
+      - prompt: Perform a financial analysis of Apple
+    BaseAgentResponse:
+      type: object
+      title: Base agent response object
+      description: Base agent response object
+      additionalProperties: false
+      properties:
+        status:
+          title: status
+          description: status of agent gereneration
+          type: string
+        result:
+          title: result
+          description: results description
+          type: string
+        artifacts:
+          title: artifacts
+          description: generated artifacts
+          type: array
+          items:
+            type: string
+            description: id of generated artifact
+        thread_id:
+          title: thread_id
+          description: thread id for persistent context
           type: string
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - status
+      - result
+      - artifacts
+      - thread_id
+      example:
+        status: success
+        result: I've created the bar chart...
+        artifacts:
+        - file-id-123
+        thread_id: thread-abc
+    DeepResearchInteractiveRequest:
+      title: DeepResearchInteractiveRequest
       type: object
+      description: Request for deep research interactive agent json object
+      additionalProperties: false
+      properties:
+        prompt:
+          title: Prompt
+          description: The main prompt for the deep research interactive agent
+          type: string
+        resume:
+          default: false
+          title: Resume
+          description: Whether to describe the results or not
+          type: boolean
+        thread_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Thread Id
+          description: thread id for persistent context
+      required:
+      - prompt
+      examples:
+      - prompt: Research AI accelerator market
+        resume: false
+      - prompt: approve
+        thread_id: thread-abc123
+        resume: true
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
     DatascienceAgentInteractiveRequest:
       title: DatascienceAgentInteractiveRequest
       type: object
@@ -378,42 +408,6 @@ components:
         - file-id-1
         - file-id-2
         resume: true
-    BaseAgentResponse:
-      type: object
-      title: Base agent response object
-      description: Base agent response object
-      additionalProperties: false
-      properties:
-        status:
-          title: status
-          description: status of agent gereneration
-          type: string
-        result:
-          title: result
-          description: results description
-          type: string
-        artifacts:
-          title: artifacts
-          description: generated artifacts
-          type: array
-          items:
-            type: string
-            description: id of generated artifact
-        thread_id:
-          title: thread_id
-          description: thread id for persistent context
-          type: string
-      required:
-      - status
-      - result
-      - artifacts
-      - thread_id
-      example:
-        status: success
-        result: I've created the bar chart...
-        artifacts:
-        - file-id-123
-        thread_id: thread-abc
   securitySchemes:
     api_key:
       type: http

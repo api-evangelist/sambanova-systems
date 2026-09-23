@@ -69,27 +69,6 @@ paths:
         source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nmodel_response = client.models.retrieve(\n    \"model_id\",\n)\nprint(model_response.id)"
 components:
   schemas:
-    ModelMetadataList:
-      title: Model Metadata List
-      type: object
-      description: object containing available models and metadata
-      additionalProperties: true
-      properties:
-        data:
-          title: Data
-          type: array
-          description: array of model metadata list
-          items:
-            $ref: '#/components/schemas/ModelMetadata'
-        object:
-          title: Object
-          type: string
-          const: list
-          default: list
-          enum:
-          - list
-      required:
-      - data
     SimpleError:
       title: SimpleError
       type: object
@@ -157,6 +136,27 @@ components:
               nullable: true
       required:
       - id
+    ModelMetadataList:
+      title: Model Metadata List
+      type: object
+      description: object containing available models and metadata
+      additionalProperties: true
+      properties:
+        data:
+          title: Data
+          type: array
+          description: array of model metadata list
+          items:
+            $ref: '#/components/schemas/ModelMetadata'
+        object:
+          title: Object
+          type: string
+          const: list
+          default: list
+          enum:
+          - list
+      required:
+      - data
   securitySchemes:
     api_key:
       type: http

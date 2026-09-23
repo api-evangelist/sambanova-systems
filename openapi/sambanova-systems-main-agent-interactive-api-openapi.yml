@@ -27,9 +27,7 @@ paths:
 
         Step 1: Submit prompt, get thread_id and initial response.
 
-        Step 2: Continue conversation with thread_id and resume=true.
-
-        '
+        Step 2: Continue conversation with thread_id and resume=true.'
       operationId: main_agent_interactive_agent_mainagent_interactive_post
       security:
       - api_key: []
@@ -54,6 +52,27 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
     MainAgentInteractiveRequest:
       title: MainAgentInteractiveRequest
       type: object
@@ -83,36 +102,6 @@ components:
       - prompt: Now create a pie chart showing the distribution
         resume: true
         thread_id: thread-abc
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
     BaseAgentResponse:
       type: object
       title: Base agent response object
@@ -149,6 +138,15 @@ components:
         artifacts:
         - file-id-123
         thread_id: thread-abc
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
   securitySchemes:
     api_key:
       type: http

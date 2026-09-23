@@ -161,171 +161,6 @@ paths:
         source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nfor completion in client.completions.create(\n    model=\"gpt-oss-120b\",\n    prompt=\"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n):\n  print(completion)"
 components:
   schemas:
-    Usage:
-      title: Usage
-      type: object
-      description: Usage metrics for the completion, embeddings,transcription or translation request
-      additionalProperties: true
-      properties:
-        acceptance_rate:
-          title: Acceptance Rate
-          type: number
-          description: acceptance rate
-        completion_tokens:
-          title: Completion Tokens
-          type: integer
-          description: number of tokens generated in completion
-        completion_tokens_after_first_per_sec:
-          title: Completion Tokens After First Per Sec
-          type: number
-          description: completion tokens per second after first token generation
-        completion_tokens_after_first_per_sec_first_ten:
-          title: Completion Tokens After First Per Sec First Ten
-          type: number
-          description: completion tokens per second after first token generation first ten
-        completion_tokens_after_first_per_sec_graph:
-          title: Completion Tokens After First Per Sec Graph
-          type: number
-          description: completion tokens per second after first token generation
-        completion_tokens_per_sec:
-          title: Completion Tokens Per Sec
-          type: number
-          description: completion tokens per second
-        end_time:
-          title: End Time
-          type: number
-          description: The Unix timestamp (in seconds) of when the generation finished.
-        is_last_response:
-          title: Is Last Response
-          type: boolean
-          description: whether or not is last response, always true for non streaming response
-          const: true
-        prompt_tokens_details:
-          title: Prompt tokens details
-          type: object
-          description: Extra tokens details
-          additionalProperties: true
-          properties:
-            cached_tokens:
-              title: Cached tokens
-              description: amount of cached tokens
-              type: integer
-        prompt_tokens:
-          title: Prompt Tokens
-          type: integer
-          description: number of tokens used in the prompt sent
-        start_time:
-          title: Start Time
-          type: number
-          description: The Unix timestamp (in seconds) of when the generation started.
-        time_to_first_token:
-          title: Time To First Token
-          type: number
-          description: also TTF, time (in seconds) taken to generate the first token
-        time_to_first_token_graph:
-          title: Time To First Token Graph
-          type: number
-          description: Time (in seconds) to first token, adjusted for graph rendering. May differ slightly from time_to_first_token.
-        stop_reason:
-          title: Stop Reason
-          type: string
-          description: The reason generation stopped (e.g. "stop", "length"). Mirrors the choice-level finish_reason but reported at the usage level.
-          nullable: true
-        completion_tokens_details:
-          title: Completion Tokens Details
-          type: object
-          description: Breakdown of completion token consumption.
-          additionalProperties: true
-          properties:
-            reasoning_tokens:
-              title: Reasoning Tokens
-              type: integer
-              description: Number of tokens consumed by the model's internal reasoning process. Only present on reasoning-capable models.
-          nullable: true
-        total_latency:
-          title: Total Latency
-          type: number
-          description: total time (in seconds) taken to generate the full generation
-        total_tokens:
-          title: Total Tokens
-          type: integer
-          description: prompt tokens + completion tokens
-        total_tokens_per_sec:
-          title: Total Tokens Per Sec
-          type: number
-          description: tokens per second including prompt and completion
-      nullable: true
-      examples:
-      - completion_tokens: 260
-        completion_tokens_after_first_per_sec: 422.79282728043336
-        completion_tokens_after_first_per_sec_first_ten: 423.6108998455803
-        completion_tokens_after_first_per_sec_graph: 423.6108998455803
-        completion_tokens_per_sec: 314.53312043711406
-        completion_tokens_details:
-          reasoning_tokens: 55
-        end_time: 1776189309.02061
-        is_last_response: true
-        prompt_tokens: 90
-        prompt_tokens_details:
-          cached_tokens: 0
-        start_time: 1776189308.193988
-        stop_reason: stop
-        time_to_first_token: 0.21402883529663086
-        time_to_first_token_graph: 0.2102978229522705
-        total_latency: 0.8266220092773438
-        total_tokens: 350
-        total_tokens_per_sec: 423.40996981919204
-      - prompt_tokens: 43
-        total_tokens: 393
-    LogProbsContent:
-      title: Log Probs Content
-      additionalProperties: true
-      properties:
-        bytes:
-          title: Bytes
-          anyOf:
-          - items:
-              type: integer
-            type: array
-          nullable: true
-        logprob:
-          title: Logprob
-          type: number
-        token:
-          title: Token
-          type: string
-        top_logprobs:
-          $ref: '#/components/schemas/TopLogProbs'
-      required:
-      - token
-      - logprob
-      - top_logprobs
-      examples:
-      - token: ' Hello'
-        logprob: -0.00012340000000000002
-        bytes:
-        - 32
-        - 72
-        - 101
-        - 108
-        - 108
-        - 111
-        top_logprobs:
-        - token: ' Hello'
-          logprob: -0.00012340000000000002
-          bytes:
-          - 32
-          - 72
-          - 101
-          - 108
-          - 108
-          - 111
-        - token: ' Hi'
-          logprob: -8.243
-          bytes:
-          - 32
-          - 72
-          - 105
     CompletionStreamResponse:
       title: Completion Stream Response
       type: object
@@ -431,6 +266,82 @@ components:
           total_latency: 0.4589838186899821
           total_tokens: 143
           total_tokens_per_sec: 311.55782443081836
+    AssistantToolCall:
+      title: AssistantToolCall
+      type: object
+      additionalProperties: true
+      properties:
+        function:
+          $ref: '#/components/schemas/AssistantToolCallFunction'
+        id:
+          title: Id
+          type: string
+          description: ID of the tool call.
+          nullable: true
+        type:
+          title: Type
+          type: string
+          description: type of the tool cal. only `function` is supported.
+          enum:
+          - function
+          const: function
+          nullable: true
+        index:
+          title: index
+          description: index of tool call chunk only used when using streaming
+          type: integer
+          nullable: true
+      required:
+      - function
+    LogProbsContent:
+      title: Log Probs Content
+      additionalProperties: true
+      properties:
+        bytes:
+          title: Bytes
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          nullable: true
+        logprob:
+          title: Logprob
+          type: number
+        token:
+          title: Token
+          type: string
+        top_logprobs:
+          $ref: '#/components/schemas/TopLogProbs'
+      required:
+      - token
+      - logprob
+      - top_logprobs
+      examples:
+      - token: ' Hello'
+        logprob: -0.00012340000000000002
+        bytes:
+        - 32
+        - 72
+        - 101
+        - 108
+        - 108
+        - 111
+        top_logprobs:
+        - token: ' Hello'
+          logprob: -0.00012340000000000002
+          bytes:
+          - 32
+          - 72
+          - 101
+          - 108
+          - 108
+          - 111
+        - token: ' Hi'
+          logprob: -8.243
+          bytes:
+          - 32
+          - 72
+          - 105
     CompletionRequest:
       title: Completion Request
       type: object
@@ -621,35 +532,6 @@ components:
         stream: false
         temperature: 0.7
         top_p: 1
-    CompletionChunkChoice:
-      title: Completion Chunk Choice
-      type: object
-      additionalProperties: true
-      properties:
-        text:
-          title: Text
-          type: string
-          description: model generation response
-        finish_reason:
-          title: Finish Reason
-          type: string
-          description: The reason the model stopped generating tokens.  Will be `stop` if the model hit a natural stop point or a provided stop sequence,  `length` if the maximum number of tokens specified in the request was reached,  `tool_calls` if the model called a tool.
-          enum:
-          - stop
-          - length
-          nullable: true
-        index:
-          title: Index
-          type: integer
-          description: The index of the choice in the list of choices
-        logprobs:
-          title: Logprobs
-          anyOf:
-          - $ref: '#/components/schemas/LogProbs'
-          description: currently not supported in completions API, always null will be returned
-          nullable: true
-      required:
-      - text
     CompletionChoice:
       title: Completion Choice
       type: object
@@ -683,18 +565,22 @@ components:
       - finish_reason
       - index
       - text
-    SimpleError:
-      title: SimpleError
+    AssistantToolCallFunction:
+      title: AssistantToolCallFunction
       type: object
-      description: other kind of simple schema errors
+      description: The tool that the model called.
+      additionalProperties: true
       properties:
-        error:
-          title: error
+        name:
+          title: Name
           type: string
-          description: error detail.
+          description: The name of the function to call.
           nullable: true
-      required:
-      - error
+        arguments:
+          title: Arguments
+          type: string
+          description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
+          nullable: true
     GeneralError:
       title: GeneralError
       type: object
@@ -733,63 +619,200 @@ components:
           nullable: true
       required:
       - error
-    AssistantToolCall:
-      title: AssistantToolCall
+    CompletionChunkChoice:
+      title: Completion Chunk Choice
       type: object
       additionalProperties: true
       properties:
-        function:
-          $ref: '#/components/schemas/AssistantToolCallFunction'
-        id:
-          title: Id
+        text:
+          title: Text
           type: string
-          description: ID of the tool call.
-          nullable: true
-        type:
-          title: Type
+          description: model generation response
+        finish_reason:
+          title: Finish Reason
           type: string
-          description: type of the tool cal. only `function` is supported.
+          description: The reason the model stopped generating tokens.  Will be `stop` if the model hit a natural stop point or a provided stop sequence,  `length` if the maximum number of tokens specified in the request was reached,  `tool_calls` if the model called a tool.
           enum:
-          - function
-          const: function
+          - stop
+          - length
           nullable: true
         index:
-          title: index
-          description: index of tool call chunk only used when using streaming
+          title: Index
           type: integer
+          description: The index of the choice in the list of choices
+        logprobs:
+          title: Logprobs
+          anyOf:
+          - $ref: '#/components/schemas/LogProbs'
+          description: currently not supported in completions API, always null will be returned
           nullable: true
       required:
-      - function
-    CompletionResponseMessage:
-      title: Completion Response Message
+      - text
+    Usage:
+      title: Usage
       type: object
-      description: completion response message object
+      description: Usage metrics for the completion, embeddings,transcription or translation request
       additionalProperties: true
       properties:
-        role:
-          title: Role
+        acceptance_rate:
+          title: Acceptance Rate
+          type: number
+          description: acceptance rate
+        completion_tokens:
+          title: Completion Tokens
+          type: integer
+          description: number of tokens generated in completion
+        completion_tokens_after_first_per_sec:
+          title: Completion Tokens After First Per Sec
+          type: number
+          description: completion tokens per second after first token generation
+        completion_tokens_after_first_per_sec_first_ten:
+          title: Completion Tokens After First Per Sec First Ten
+          type: number
+          description: completion tokens per second after first token generation first ten
+        completion_tokens_after_first_per_sec_graph:
+          title: Completion Tokens After First Per Sec Graph
+          type: number
+          description: completion tokens per second after first token generation
+        completion_tokens_per_sec:
+          title: Completion Tokens Per Sec
+          type: number
+          description: completion tokens per second
+        end_time:
+          title: End Time
+          type: number
+          description: The Unix timestamp (in seconds) of when the generation finished.
+        is_last_response:
+          title: Is Last Response
+          type: boolean
+          description: whether or not is last response, always true for non streaming response
+          const: true
+        prompt_tokens_details:
+          title: Prompt tokens details
+          type: object
+          description: Extra tokens details
+          additionalProperties: true
+          properties:
+            cached_tokens:
+              title: Cached tokens
+              description: amount of cached tokens
+              type: integer
+        prompt_tokens:
+          title: Prompt Tokens
+          type: integer
+          description: number of tokens used in the prompt sent
+        start_time:
+          title: Start Time
+          type: number
+          description: The Unix timestamp (in seconds) of when the generation started.
+        time_to_first_token:
+          title: Time To First Token
+          type: number
+          description: also TTF, time (in seconds) taken to generate the first token
+        time_to_first_token_graph:
+          title: Time To First Token Graph
+          type: number
+          description: Time (in seconds) to first token, adjusted for graph rendering. May differ slightly from time_to_first_token.
+        stop_reason:
+          title: Stop Reason
           type: string
-          description: The role of the messages author
-          enum:
-          - assistant
-          - user
-          - system
-          - tool
-        content:
-          title: Content
-          type: string
-          description: The contents of the assistant message.
+          description: The reason generation stopped (e.g. "stop", "length"). Mirrors the choice-level finish_reason but reported at the usage level.
           nullable: true
-        tool_calls:
-          title: Tool Calls
-          type: array
-          items:
-            $ref: '#/components/schemas/AssistantToolCall'
-          description: The tool calls generated by the model.
+        completion_tokens_details:
+          title: Completion Tokens Details
+          type: object
+          description: Breakdown of completion token consumption.
+          additionalProperties: true
+          properties:
+            reasoning_tokens:
+              title: Reasoning Tokens
+              type: integer
+              description: Number of tokens consumed by the model's internal reasoning process. Only present on reasoning-capable models.
+          nullable: true
+        total_latency:
+          title: Total Latency
+          type: number
+          description: total time (in seconds) taken to generate the full generation
+        total_tokens:
+          title: Total Tokens
+          type: integer
+          description: prompt tokens + completion tokens
+        total_tokens_per_sec:
+          title: Total Tokens Per Sec
+          type: number
+          description: tokens per second including prompt and completion
+      nullable: true
+      examples:
+      - completion_tokens: 260
+        completion_tokens_after_first_per_sec: 422.79282728043336
+        completion_tokens_after_first_per_sec_first_ten: 423.6108998455803
+        completion_tokens_after_first_per_sec_graph: 423.6108998455803
+        completion_tokens_per_sec: 314.53312043711406
+        completion_tokens_details:
+          reasoning_tokens: 55
+        end_time: 1776189309.02061
+        is_last_response: true
+        prompt_tokens: 90
+        prompt_tokens_details:
+          cached_tokens: 0
+        start_time: 1776189308.193988
+        stop_reason: stop
+        time_to_first_token: 0.21402883529663086
+        time_to_first_token_graph: 0.2102978229522705
+        total_latency: 0.8266220092773438
+        total_tokens: 350
+        total_tokens_per_sec: 423.40996981919204
+      - prompt_tokens: 43
+        total_tokens: 393
+    SimpleError:
+      title: SimpleError
+      type: object
+      description: other kind of simple schema errors
+      properties:
+        error:
+          title: error
+          type: string
+          description: error detail.
           nullable: true
       required:
-      - role
-      - content
+      - error
+    TopLogProbs:
+      title: TopLogProbs
+      type: object
+      additionalProperties: true
+      properties:
+        bytes:
+          title: Bytes
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+        logprob:
+          title: Logprob
+          type: number
+        token:
+          title: Token
+          type: string
+      required:
+      - token
+      - logprob
+      examples:
+      - token: ' Hello'
+        logprob: -0.00012340000000000002
+        bytes:
+        - 32
+        - 72
+        - 101
+        - 108
+        - 108
+        - 111
+      - token: ' Hi'
+        logprob: -8.243
+        bytes:
+        - 32
+        - 72
+        - 105
     LogProbs:
       title: Completion Log Probs
       type: object
@@ -840,22 +863,36 @@ components:
             logprob: -6.712
             bytes:
             - 44
-    AssistantToolCallFunction:
-      title: AssistantToolCallFunction
+    CompletionResponseMessage:
+      title: Completion Response Message
       type: object
-      description: The tool that the model called.
+      description: completion response message object
       additionalProperties: true
       properties:
-        name:
-          title: Name
+        role:
+          title: Role
           type: string
-          description: The name of the function to call.
-          nullable: true
-        arguments:
-          title: Arguments
+          description: The role of the messages author
+          enum:
+          - assistant
+          - user
+          - system
+          - tool
+        content:
+          title: Content
           type: string
-          description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
+          description: The contents of the assistant message.
           nullable: true
+        tool_calls:
+          title: Tool Calls
+          type: array
+          items:
+            $ref: '#/components/schemas/AssistantToolCall'
+          description: The tool calls generated by the model.
+          nullable: true
+      required:
+      - role
+      - content
     CompletionResponse:
       title: Completion Response
       type: object
@@ -924,43 +961,6 @@ components:
           total_latency: 1.4649275719174653
           total_tokens: 393
           total_tokens_per_sec: 268.27264878740493
-    TopLogProbs:
-      title: TopLogProbs
-      type: object
-      additionalProperties: true
-      properties:
-        bytes:
-          title: Bytes
-          anyOf:
-          - items:
-              type: integer
-            type: array
-          - type: 'null'
-        logprob:
-          title: Logprob
-          type: number
-        token:
-          title: Token
-          type: string
-      required:
-      - token
-      - logprob
-      examples:
-      - token: ' Hello'
-        logprob: -0.00012340000000000002
-        bytes:
-        - 32
-        - 72
-        - 101
-        - 108
-        - 108
-        - 111
-      - token: ' Hi'
-        logprob: -8.243
-        bytes:
-        - 32
-        - 72
-        - 105
   securitySchemes:
     api_key:
       type: http

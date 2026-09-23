@@ -15,13 +15,13 @@ servers:
 security:
 - api_key: []
 tags:
-- name: Chat completions
+- name: Chat Completions
 paths:
   /chat/completions:
     post:
       operationId: createChatCompletion
       tags:
-      - Chat completions
+      - Chat Completions
       summary: Create chat-based completion
       security:
       - api_key: []
@@ -188,40 +188,39 @@ paths:
         source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nfor completion in client.chat.completions.create(\n    messages=[{\n        \"content\": \"create a poem using palindromes\",\n        \"role\": \"user\",\n    }],\n    model=\"gpt-oss-120b\",\n):\n  print(completion)"
 components:
   schemas:
-    ImageContent:
-      title: Image Content
+    TextContent:
+      title: Text Content
       type: object
       additionalProperties: true
       properties:
         type:
           title: Type
           type: string
-          description: type of content to send. in this case `image_url`.
+          description: type of content to send. in this case `text`.
           enum:
-          - image_url
-          const: image_url
-        image_url:
-          title: Image Url
-          type: object
-          properties:
-            url:
-              title: Url
-              type: string
-              description: Either a URL of the image or the base64 encoded image data.  currently only base64 encoded image supported
+          - text
+          const: text
+        text:
+          title: Text
+          type: string
+          description: string content of the message
       required:
       - type
-      - image_url
-    ChatCompletionResponse:
-      title: Chat Completion Response
+      - text
+    ChatCompletionStreamResponse:
+      title: Chat Completion Stream Response
       type: object
-      description: chat completion response returned by the model
+      description: streamed chunk of a chat completion response returned by the model
+      additionalProperties: true
       properties:
         choices:
           title: Choices
           type: array
+          description: A list of chat completion choices.
           items:
-            $ref: '#/components/schemas/ChatCompletionChoice'
-          minItems: 1
+            $ref: '#/components/schemas/ChatCompletionChunkChoice'
+          minItems: 0
+          nullable: true
         created:
           title: Created
           type: number
@@ -237,10 +236,10 @@ components:
         object:
           title: Object
           type: string
-          description: The object type, always `chat.completion`.
+          description: The object type, always `chat.completion.chunk`.
           enum:
-          - chat.completion
-          const: chat.completion
+          - chat.completion.chunk
+          const: chat.completion.chunk
         system_fingerprint:
           title: System fingerprint
           type: string
@@ -254,39 +253,70 @@ components:
       - model
       - object
       - system_fingerprint
-      - usage
       examples:
       - choices:
-        - finish_reason: stop
-          index: 0
-          message:
-            content: 'In madam moon''s silver glow,  Aha, a palindrome to know,  Radar spins, a circular tale,  Level heads prevail, without fail.  A man, a plan, a canal, Panama!  Able was I ere I saw Elba,  A Santa at NASA, a curious sight,  Do geese see God, in the pale moonlight?  Mr. Owl ate my metal worm,  Do nine men interpret? Nine men, I nod,  Never odd or even, a palindrome''s might,  Madam, in Eden, I''m Adam.  Aibohphobia, a fear to confess,  A palindrome''s symmetry, I must address,  Refer, a word that reads the same,  A palindrome''s beauty, in its circular game.  In the stillness of the night,  Ava, a palindrome, shining bright,  Hannah, a name that reads the same,  A palindrome''s magic, in its circular flame.  Note: Please keep in mind that creating a poem using palindromes can be a challenging task,  and the resulting poem may not be as cohesive or flowing as one that doesn''t rely on palindromes.  However, I hope you enjoy the attempt!'
+        - delta:
             role: assistant
-        created: 1737583288.6076705
-        id: 83a7809d-e18f-44f9-9ab7-2bc494c6c661
+            content: ''
+          index: 0
+          finish_reason: null
+          logprobs: null
+        created: 1737642515.6076705
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
         model: gpt-oss-120b
-        object: chat.completion
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+      - choices:
+        - delta:
+            role: assistant
+            content: in
+          index: 0
+          finish_reason: null
+          logprobs: null
+        created: 1737642515.6076705
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: gpt-oss-120b
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+      - choices:
+        - delta:
+            content: ''
+          index: 0
+          finish_reason: length
+          logprobs: null
+        created: 1737642515.6076705
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: gpt-oss-120b
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+      - choices: []
+        created: 1737642515.6076705
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: gpt-oss-120b
+        object: chat.completion.chunk
         system_fingerprint: fastcoe
         usage:
-          acceptance_rate: 4.058139324188232
-          completion_tokens: 350
-          completion_tokens_after_first_per_sec: 248.09314856382406
-          completion_tokens_after_first_per_sec_first_ten: 249.67922929952655
-          completion_tokens_per_sec: 238.91966176995348
-          end_time: 1737583289.7345645
+          acceptance_rate: 3
+          completion_tokens: 100
+          completion_tokens_after_first_per_sec: 262.2771255106759
+          completion_tokens_after_first_per_sec_first_ten: 266.98193514986144
+          completion_tokens_after_first_per_sec_graph: 266.98193514986144
+          completion_tokens_per_sec: 217.87260449707574
+          end_time: 1737642515.9077535
           is_last_response: true
           prompt_tokens: 43
-          start_time: 1737583288.264706
-          time_to_first_token: 0.06312894821166992
-          total_latency: 1.4649275719174653
-          total_tokens: 393
-          total_tokens_per_sec: 268.27264878740493
+          prompt_tokens_details:
+            cached_tokens: 0
+          start_time: 1737642515.4458635
+          time_to_first_token: 0.0844266414642334
+          total_latency: 0.4589838186899821
+          total_tokens: 143
+          total_tokens_per_sec: 311.55782443081836
       - choices:
-        - finish_reason: stop
+        - delta:
+            content: ' Hello'
           index: 0
-          message:
-            content: Hello! How can I assist you today?
-            role: assistant
+          finish_reason: null
           logprobs:
             content:
             - token: ' Hello'
@@ -314,55 +344,212 @@ components:
                 - 32
                 - 72
                 - 105
-            - token: '!'
-              logprob: -0.0023456
-              bytes:
-              - 33
-              top_logprobs:
-              - token: '!'
-                logprob: -0.0023456
-                bytes:
-                - 33
-              - token: ','
-                logprob: -6.712
-                bytes:
-                - 44
-        created: 1737583290.1234567
-        id: 94b8910e-f29a-55a0-0bc8-3cd505d7d772
+        created: 1737642516.1076705
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30c
         model: gpt-oss-120b
-        object: chat.completion
+        object: chat.completion.chunk
         system_fingerprint: fastcoe
-        usage:
-          acceptance_rate: 3.5
-          completion_tokens: 9
-          completion_tokens_after_first_per_sec: 245.3
-          completion_tokens_per_sec: 230.1
-          end_time: 1737583290.2345679
-          is_last_response: true
-          prompt_tokens: 15
-          start_time: 1737583290.1234567
-          time_to_first_token: 0.058
-          total_latency: 0.111
-          total_tokens: 24
-          total_tokens_per_sec: 216.2
-    FunctionObject:
-      title: Function Object
-      additionalProperties: true
+    Tool:
+      title: Tool
       type: object
+      additionalProperties: true
       properties:
-        name:
-          title: Name
+        function:
+          $ref: '#/components/schemas/FunctionObject'
+        type:
+          title: Type
           type: string
-          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes.
-        description:
-          title: Description
-          type: string
-          description: A description of what the function does, used by the model to choose when and how to call the function.
-          nullable: true
-        parameters:
-          $ref: '#/components/schemas/FunctionParameters'
+          description: The type of the tool. Currently, only `function` is supported.
       required:
-      - name
+      - type
+      - function
+    AudioContent:
+      title: Audio Content
+      type: object
+      additionalProperties: true
+      properties:
+        type:
+          title: Type
+          type: string
+          description: type of content to send. in this case `audio_content`.
+          enum:
+          - audio_content
+          const: audio_content
+        audio_content:
+          title: Audio Content
+          type: object
+          properties:
+            content:
+              title: Content
+              type: string
+              description: the base64 encoded audio data.
+      required:
+      - type
+      - audio_content
+    Usage:
+      title: Usage
+      type: object
+      description: Usage metrics for the completion, embeddings,transcription or translation request
+      additionalProperties: true
+      properties:
+        acceptance_rate:
+          title: Acceptance Rate
+          type: number
+          description: acceptance rate
+        completion_tokens:
+          title: Completion Tokens
+          type: integer
+          description: number of tokens generated in completion
+        completion_tokens_after_first_per_sec:
+          title: Completion Tokens After First Per Sec
+          type: number
+          description: completion tokens per second after first token generation
+        completion_tokens_after_first_per_sec_first_ten:
+          title: Completion Tokens After First Per Sec First Ten
+          type: number
+          description: completion tokens per second after first token generation first ten
+        completion_tokens_after_first_per_sec_graph:
+          title: Completion Tokens After First Per Sec Graph
+          type: number
+          description: completion tokens per second after first token generation
+        completion_tokens_per_sec:
+          title: Completion Tokens Per Sec
+          type: number
+          description: completion tokens per second
+        end_time:
+          title: End Time
+          type: number
+          description: The Unix timestamp (in seconds) of when the generation finished.
+        is_last_response:
+          title: Is Last Response
+          type: boolean
+          description: whether or not is last response, always true for non streaming response
+          const: true
+        prompt_tokens_details:
+          title: Prompt tokens details
+          type: object
+          description: Extra tokens details
+          additionalProperties: true
+          properties:
+            cached_tokens:
+              title: Cached tokens
+              description: amount of cached tokens
+              type: integer
+        prompt_tokens:
+          title: Prompt Tokens
+          type: integer
+          description: number of tokens used in the prompt sent
+        start_time:
+          title: Start Time
+          type: number
+          description: The Unix timestamp (in seconds) of when the generation started.
+        time_to_first_token:
+          title: Time To First Token
+          type: number
+          description: also TTF, time (in seconds) taken to generate the first token
+        time_to_first_token_graph:
+          title: Time To First Token Graph
+          type: number
+          description: Time (in seconds) to first token, adjusted for graph rendering. May differ slightly from time_to_first_token.
+        stop_reason:
+          title: Stop Reason
+          type: string
+          description: The reason generation stopped (e.g. "stop", "length"). Mirrors the choice-level finish_reason but reported at the usage level.
+          nullable: true
+        completion_tokens_details:
+          title: Completion Tokens Details
+          type: object
+          description: Breakdown of completion token consumption.
+          additionalProperties: true
+          properties:
+            reasoning_tokens:
+              title: Reasoning Tokens
+              type: integer
+              description: Number of tokens consumed by the model's internal reasoning process. Only present on reasoning-capable models.
+          nullable: true
+        total_latency:
+          title: Total Latency
+          type: number
+          description: total time (in seconds) taken to generate the full generation
+        total_tokens:
+          title: Total Tokens
+          type: integer
+          description: prompt tokens + completion tokens
+        total_tokens_per_sec:
+          title: Total Tokens Per Sec
+          type: number
+          description: tokens per second including prompt and completion
+      nullable: true
+      examples:
+      - completion_tokens: 260
+        completion_tokens_after_first_per_sec: 422.79282728043336
+        completion_tokens_after_first_per_sec_first_ten: 423.6108998455803
+        completion_tokens_after_first_per_sec_graph: 423.6108998455803
+        completion_tokens_per_sec: 314.53312043711406
+        completion_tokens_details:
+          reasoning_tokens: 55
+        end_time: 1776189309.02061
+        is_last_response: true
+        prompt_tokens: 90
+        prompt_tokens_details:
+          cached_tokens: 0
+        start_time: 1776189308.193988
+        stop_reason: stop
+        time_to_first_token: 0.21402883529663086
+        time_to_first_token_graph: 0.2102978229522705
+        total_latency: 0.8266220092773438
+        total_tokens: 350
+        total_tokens_per_sec: 423.40996981919204
+      - prompt_tokens: 43
+        total_tokens: 393
+    ResponseFormatText:
+      title: ResponseFormatText
+      type: object
+      description: Specifies that the model should produce output as plain text. This value is not supported yet in the chat compeltions api, if this behavior is desired do not set response format.
+      additionalProperties: true
+      properties:
+        type:
+          const: text
+          enum:
+          - text
+          title: Type
+          type: string
+      required:
+      - type
+    EnableThinking:
+      title: Enable Thinking
+      type: boolean
+      description: Enables the model's internal reasoning or "thinking" mode,  if supported by the chat template (deepseek models).
+      example: true
+    UserMessage:
+      title: User Message
+      type: object
+      additionalProperties: true
+      properties:
+        role:
+          title: Role
+          type: string
+          description: The role of the messages author, in this case `user`.
+          enum:
+          - user
+          const: user
+        content:
+          title: Content
+          description: The contents of the user message.
+          anyOf:
+          - type: string
+          - title: Multicontent Part Array
+            type: array
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/TextContent'
+              - $ref: '#/components/schemas/ImageContent'
+              - $ref: '#/components/schemas/AudioContent'
+              - $ref: '#/components/schemas/VideoContent'
+          nullable: true
+      required:
+      - role
+      - content
     ChatCompletionRequest:
       title: Chat Completion Request
       type: object
@@ -621,148 +808,35 @@ components:
         stream: false
         temperature: 0.7
         top_p: 1
-    ChatCompletionStreamResponse:
-      title: Chat Completion Stream Response
+    ChatCompletionChoice:
+      title: Chat Completion Choice
       type: object
-      description: streamed chunk of a chat completion response returned by the model
       additionalProperties: true
       properties:
-        choices:
-          title: Choices
-          type: array
-          description: A list of chat completion choices.
-          items:
-            $ref: '#/components/schemas/ChatCompletionChunkChoice'
-          minItems: 0
-          nullable: true
-        created:
-          title: Created
-          type: number
-          description: The Unix timestamp (in seconds) of when the chat completion was created.
-        id:
-          title: Id
+        message:
+          $ref: '#/components/schemas/CompletionResponseMessage'
+        finish_reason:
+          title: Finish Reason
           type: string
-          description: A unique identifier for the chat completion.
-        model:
-          title: Model
-          description: The model used for the chat completion.
-          type: string
-        object:
-          title: Object
-          type: string
-          description: The object type, always `chat.completion.chunk`.
+          description: The reason the model stopped generating tokens.  Will be `stop` if the model hit a natural stop point or a provided stop sequence,  `length` if the maximum number of tokens specified in the request was reached,  `tool_calls` if the model called a tool.
           enum:
-          - chat.completion.chunk
-          const: chat.completion.chunk
-        system_fingerprint:
-          title: System fingerprint
-          type: string
-          description: Backend configuration that the model runs with.
-        usage:
-          $ref: '#/components/schemas/Usage'
+          - stop
+          - length
+          - tool_calls
+        index:
+          title: Index
+          type: integer
+          description: The index of the choice in the list of choices
+        logprobs:
+          title: Logprobs
+          anyOf:
+          - $ref: '#/components/schemas/LogProbs'
+          description: Returns the log probability of each generated token, indicating the model's confidence.  Setting logprobs=true and top_logprobs (up to 5) reveals the likelihood of chosen tokens
+          nullable: true
       required:
-      - choices
-      - created
-      - id
-      - model
-      - object
-      - system_fingerprint
-      examples:
-      - choices:
-        - delta:
-            role: assistant
-            content: ''
-          index: 0
-          finish_reason: null
-          logprobs: null
-        created: 1737642515.6076705
-        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
-        model: gpt-oss-120b
-        object: chat.completion.chunk
-        system_fingerprint: fastcoe
-      - choices:
-        - delta:
-            role: assistant
-            content: in
-          index: 0
-          finish_reason: null
-          logprobs: null
-        created: 1737642515.6076705
-        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
-        model: gpt-oss-120b
-        object: chat.completion.chunk
-        system_fingerprint: fastcoe
-      - choices:
-        - delta:
-            content: ''
-          index: 0
-          finish_reason: length
-          logprobs: null
-        created: 1737642515.6076705
-        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
-        model: gpt-oss-120b
-        object: chat.completion.chunk
-        system_fingerprint: fastcoe
-      - choices: []
-        created: 1737642515.6076705
-        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
-        model: gpt-oss-120b
-        object: chat.completion.chunk
-        system_fingerprint: fastcoe
-        usage:
-          acceptance_rate: 3
-          completion_tokens: 100
-          completion_tokens_after_first_per_sec: 262.2771255106759
-          completion_tokens_after_first_per_sec_first_ten: 266.98193514986144
-          completion_tokens_after_first_per_sec_graph: 266.98193514986144
-          completion_tokens_per_sec: 217.87260449707574
-          end_time: 1737642515.9077535
-          is_last_response: true
-          prompt_tokens: 43
-          prompt_tokens_details:
-            cached_tokens: 0
-          start_time: 1737642515.4458635
-          time_to_first_token: 0.0844266414642334
-          total_latency: 0.4589838186899821
-          total_tokens: 143
-          total_tokens_per_sec: 311.55782443081836
-      - choices:
-        - delta:
-            content: ' Hello'
-          index: 0
-          finish_reason: null
-          logprobs:
-            content:
-            - token: ' Hello'
-              logprob: -0.00012340000000000002
-              bytes:
-              - 32
-              - 72
-              - 101
-              - 108
-              - 108
-              - 111
-              top_logprobs:
-              - token: ' Hello'
-                logprob: -0.00012340000000000002
-                bytes:
-                - 32
-                - 72
-                - 101
-                - 108
-                - 108
-                - 111
-              - token: ' Hi'
-                logprob: -8.243
-                bytes:
-                - 32
-                - 72
-                - 105
-        created: 1737642516.1076705
-        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30c
-        model: gpt-oss-120b
-        object: chat.completion.chunk
-        system_fingerprint: fastcoe
+      - finish_reason
+      - index
+      - message
     ResponseFormatJSONSchema:
       title: ResponseFormatJSONSchema
       type: object
@@ -798,67 +872,6 @@ components:
             required:
             - id
             - name
-    TopLogProbs:
-      title: TopLogProbs
-      type: object
-      additionalProperties: true
-      properties:
-        bytes:
-          title: Bytes
-          anyOf:
-          - items:
-              type: integer
-            type: array
-          - type: 'null'
-        logprob:
-          title: Logprob
-          type: number
-        token:
-          title: Token
-          type: string
-      required:
-      - token
-      - logprob
-      examples:
-      - token: ' Hello'
-        logprob: -0.00012340000000000002
-        bytes:
-        - 32
-        - 72
-        - 101
-        - 108
-        - 108
-        - 111
-      - token: ' Hi'
-        logprob: -8.243
-        bytes:
-        - 32
-        - 72
-        - 105
-    ToolMessage:
-      title: Tool Message
-      type: object
-      additionalProperties: true
-      properties:
-        role:
-          title: Role
-          type: string
-          description: The role of the messages author, in this case `tool`.
-          enum:
-          - tool
-          const: tool
-        content:
-          title: Content
-          description: The contents of the tool message.
-          anyOf:
-          - type: string
-          - title: Text Content Part Array
-            type: array
-            items:
-              $ref: '#/components/schemas/TextContent'
-      required:
-      - content
-      - role
     SystemMessage:
       title: System Message
       type: object
@@ -884,6 +897,29 @@ components:
       required:
       - role
       - content
+    ImageContent:
+      title: Image Content
+      type: object
+      additionalProperties: true
+      properties:
+        type:
+          title: Type
+          type: string
+          description: type of content to send. in this case `image_url`.
+          enum:
+          - image_url
+          const: image_url
+        image_url:
+          title: Image Url
+          type: object
+          properties:
+            url:
+              title: Url
+              type: string
+              description: Either a URL of the image or the base64 encoded image data.  currently only base64 encoded image supported
+      required:
+      - type
+      - image_url
     LogProbs:
       title: Completion Log Probs
       type: object
@@ -934,6 +970,145 @@ components:
             logprob: -6.712
             bytes:
             - 44
+    AssistantToolCall:
+      title: AssistantToolCall
+      type: object
+      additionalProperties: true
+      properties:
+        function:
+          $ref: '#/components/schemas/AssistantToolCallFunction'
+        id:
+          title: Id
+          type: string
+          description: ID of the tool call.
+          nullable: true
+        type:
+          title: Type
+          type: string
+          description: type of the tool cal. only `function` is supported.
+          enum:
+          - function
+          const: function
+          nullable: true
+        index:
+          title: index
+          description: index of tool call chunk only used when using streaming
+          type: integer
+          nullable: true
+      required:
+      - function
+    FunctionObject:
+      title: Function Object
+      additionalProperties: true
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes.
+        description:
+          title: Description
+          type: string
+          description: A description of what the function does, used by the model to choose when and how to call the function.
+          nullable: true
+        parameters:
+          $ref: '#/components/schemas/FunctionParameters'
+      required:
+      - name
+    AssistantMessage:
+      title: Assistant Message
+      type: object
+      additionalProperties: true
+      properties:
+        role:
+          title: Role
+          type: string
+          description: The role of the messages author, in this case `assistant`.
+          enum:
+          - assistant
+          const: assistant
+        content:
+          title: Content
+          anyOf:
+          - type: string
+          - title: Text Content Part Array
+            type: array
+            items:
+              $ref: '#/components/schemas/TextContent'
+          description: The contents of the assistant message.
+          nullable: true
+        reasoning:
+          title: Reasoning
+          type: string
+          description: Reasoning (returned by reasoning models like gpt oss)
+          nullable: true
+        channel:
+          title: Channel
+          type: string
+          description: Channel (returned by reasoning models like gpt oss)
+          nullable: true
+        tool_calls:
+          title: Tool Calls
+          type: array
+          items:
+            $ref: '#/components/schemas/AssistantToolCall'
+          description: The tool calls generated by the model.
+          nullable: true
+      required:
+      - role
+      - content
+    VideoContent:
+      title: Video Content
+      type: object
+      additionalProperties: true
+      properties:
+        type:
+          title: Type
+          type: string
+          description: type of content to send. in this case `video_url`.
+          enum:
+          - video_url
+          const: video_url
+        video_url:
+          title: Video Url
+          type: object
+          properties:
+            url:
+              title: Url
+              type: string
+              description: Either a URL of the video or the base64 encoded video data.
+      required:
+      - type
+      - video_url
+    ChatCompletionChunkChoice:
+      title: Chat Completion Chunk Choice
+      type: object
+      additionalProperties: true
+      properties:
+        delta:
+          $ref: '#/components/schemas/CompletionResponseDelta'
+        finish_reason:
+          title: Finish Reason
+          type: string
+          description: The reason the model stopped generating tokens.  Will be `stop` if the model hit a natural stop point or a provided stop sequence,  `length` if the maximum number of tokens specified in the request was reached,  `tool_calls` if the model called a tool.
+          enum:
+          - stop
+          - length
+          - tool_calls
+          nullable: true
+        index:
+          title: Index
+          type: integer
+          description: The index of the choice in the list of choices
+        logprobs:
+          title: Logprobs
+          anyOf:
+          - $ref: '#/components/schemas/LogProbs'
+          description: Returns the log probability of each generated token, indicating the model's confidence.  Setting logprobs=true and top_logprobs (up to 5) reveals the likelihood of chosen tokens
+          nullable: true
+      required:
+      - index
+      - delta
     AssistantToolCallFunction:
       title: AssistantToolCallFunction
       type: object
@@ -950,6 +1125,43 @@ components:
           type: string
           description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
           nullable: true
+    TopLogProbs:
+      title: TopLogProbs
+      type: object
+      additionalProperties: true
+      properties:
+        bytes:
+          title: Bytes
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+        logprob:
+          title: Logprob
+          type: number
+        token:
+          title: Token
+          type: string
+      required:
+      - token
+      - logprob
+      examples:
+      - token: ' Hello'
+        logprob: -0.00012340000000000002
+        bytes:
+        - 32
+        - 72
+        - 101
+        - 108
+        - 108
+        - 111
+      - token: ' Hi'
+        logprob: -8.243
+        bytes:
+        - 32
+        - 72
+        - 105
     JSONSchema:
       title: JSONSchema
       type: object
@@ -978,44 +1190,6 @@ components:
           default: false
       required:
       - name
-    CompletionResponseDelta:
-      title: Completion Response Delta
-      type: object
-      description: completion response delta chunk generated by streamed model responses.
-      additionalProperties: true
-      properties:
-        role:
-          title: Role
-          type: string
-          description: The role of the messages author
-          enum:
-          - assistant
-          - user
-          - system
-          - tool
-          nullable: true
-        content:
-          title: Content
-          type: string
-          description: The contents of the assistant message.
-          nullable: true
-        reasoning:
-          title: Reasoning
-          type: string
-          description: Reasoning (returned by reasoning models like gpt oss)
-          nullable: true
-        channel:
-          title: Channel
-          type: string
-          description: Channel (returned by reasoning models like gpt oss)
-          nullable: true
-        tool_calls:
-          title: Tool Calls
-          type: array
-          items:
-            $ref: '#/components/schemas/AssistantToolCall'
-          description: The tool calls generated by the model.
-          nullable: true
     LogProbsContent:
       title: Log Probs Content
       additionalProperties: true
@@ -1065,145 +1239,156 @@ components:
           - 32
           - 72
           - 105
-    UserMessage:
-      title: User Message
+    ChatCompletionResponse:
+      title: Chat Completion Response
       type: object
-      additionalProperties: true
+      description: chat completion response returned by the model
       properties:
-        role:
-          title: Role
+        choices:
+          title: Choices
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatCompletionChoice'
+          minItems: 1
+        created:
+          title: Created
+          type: number
+          description: The Unix timestamp (in seconds) of when the chat completion was created.
+        id:
+          title: Id
           type: string
-          description: The role of the messages author, in this case `user`.
+          description: A unique identifier for the chat completion.
+        model:
+          title: Model
+          description: The model used for the chat completion.
+          type: string
+        object:
+          title: Object
+          type: string
+          description: The object type, always `chat.completion`.
           enum:
-          - user
-          const: user
-        content:
-          title: Content
-          description: The contents of the user message.
-          anyOf:
-          - type: string
-          - title: Multicontent Part Array
-            type: array
-            items:
-              anyOf:
-              - $ref: '#/components/schemas/TextContent'
-              - $ref: '#/components/schemas/ImageContent'
-              - $ref: '#/components/schemas/AudioContent'
-              - $ref: '#/components/schemas/VideoContent'
-          nullable: true
+          - chat.completion
+          const: chat.completion
+        system_fingerprint:
+          title: System fingerprint
+          type: string
+          description: Backend configuration that the model runs with.
+        usage:
+          $ref: '#/components/schemas/Usage'
       required:
-      - role
-      - content
-    EnableThinking:
-      title: Enable Thinking
-      type: boolean
-      description: Enables the model's internal reasoning or "thinking" mode,  if supported by the chat template (deepseek models).
-      example: true
-    TextContent:
-      title: Text Content
+      - choices
+      - created
+      - id
+      - model
+      - object
+      - system_fingerprint
+      - usage
+      examples:
+      - choices:
+        - finish_reason: stop
+          index: 0
+          message:
+            content: 'In madam moon''s silver glow,  Aha, a palindrome to know,  Radar spins, a circular tale,  Level heads prevail, without fail.  A man, a plan, a canal, Panama!  Able was I ere I saw Elba,  A Santa at NASA, a curious sight,  Do geese see God, in the pale moonlight?  Mr. Owl ate my metal worm,  Do nine men interpret? Nine men, I nod,  Never odd or even, a palindrome''s might,  Madam, in Eden, I''m Adam.  Aibohphobia, a fear to confess,  A palindrome''s symmetry, I must address,  Refer, a word that reads the same,  A palindrome''s beauty, in its circular game.  In the stillness of the night,  Ava, a palindrome, shining bright,  Hannah, a name that reads the same,  A palindrome''s magic, in its circular flame.  Note: Please keep in mind that creating a poem using palindromes can be a challenging task,  and the resulting poem may not be as cohesive or flowing as one that doesn''t rely on palindromes.  However, I hope you enjoy the attempt!'
+            role: assistant
+        created: 1737583288.6076705
+        id: 83a7809d-e18f-44f9-9ab7-2bc494c6c661
+        model: gpt-oss-120b
+        object: chat.completion
+        system_fingerprint: fastcoe
+        usage:
+          acceptance_rate: 4.058139324188232
+          completion_tokens: 350
+          completion_tokens_after_first_per_sec: 248.09314856382406
+          completion_tokens_after_first_per_sec_first_ten: 249.67922929952655
+          completion_tokens_per_sec: 238.91966176995348
+          end_time: 1737583289.7345645
+          is_last_response: true
+          prompt_tokens: 43
+          start_time: 1737583288.264706
+          time_to_first_token: 0.06312894821166992
+          total_latency: 1.4649275719174653
+          total_tokens: 393
+          total_tokens_per_sec: 268.27264878740493
+      - choices:
+        - finish_reason: stop
+          index: 0
+          message:
+            content: Hello! How can I assist you today?
+            role: assistant
+          logprobs:
+            content:
+            - token: ' Hello'
+              logprob: -0.00012340000000000002
+              bytes:
+              - 32
+              - 72
+              - 101
+              - 108
+              - 108
+              - 111
+              top_logprobs:
+              - token: ' Hello'
+                logprob: -0.00012340000000000002
+                bytes:
+                - 32
+                - 72
+                - 101
+                - 108
+                - 108
+                - 111
+              - token: ' Hi'
+                logprob: -8.243
+                bytes:
+                - 32
+                - 72
+                - 105
+            - token: '!'
+              logprob: -0.0023456
+              bytes:
+              - 33
+              top_logprobs:
+              - token: '!'
+                logprob: -0.0023456
+                bytes:
+                - 33
+              - token: ','
+                logprob: -6.712
+                bytes:
+                - 44
+        created: 1737583290.1234567
+        id: 94b8910e-f29a-55a0-0bc8-3cd505d7d772
+        model: gpt-oss-120b
+        object: chat.completion
+        system_fingerprint: fastcoe
+        usage:
+          acceptance_rate: 3.5
+          completion_tokens: 9
+          completion_tokens_after_first_per_sec: 245.3
+          completion_tokens_per_sec: 230.1
+          end_time: 1737583290.2345679
+          is_last_response: true
+          prompt_tokens: 15
+          start_time: 1737583290.1234567
+          time_to_first_token: 0.058
+          total_latency: 0.111
+          total_tokens: 24
+          total_tokens_per_sec: 216.2
+    ResponseFormatJSONObject:
+      title: ResponseFormatJSONObject
       type: object
+      description: Specifies that the model should produce output as a raw JSON object.
       additionalProperties: true
       properties:
         type:
-          title: Type
-          type: string
-          description: type of content to send. in this case `text`.
+          const: json_object
           enum:
-          - text
-          const: text
-        text:
-          title: Text
-          type: string
-          description: string content of the message
-      required:
-      - type
-      - text
-    CompletionResponseMessage:
-      title: Completion Response Message
-      type: object
-      description: completion response message object
-      additionalProperties: true
-      properties:
-        role:
-          title: Role
-          type: string
-          description: The role of the messages author
-          enum:
-          - assistant
-          - user
-          - system
-          - tool
-        content:
-          title: Content
-          type: string
-          description: The contents of the assistant message.
-          nullable: true
-        tool_calls:
-          title: Tool Calls
-          type: array
-          items:
-            $ref: '#/components/schemas/AssistantToolCall'
-          description: The tool calls generated by the model.
-          nullable: true
-      required:
-      - role
-      - content
-    ResponseFormatText:
-      title: ResponseFormatText
-      type: object
-      description: Specifies that the model should produce output as plain text. This value is not supported yet in the chat compeltions api, if this behavior is desired do not set response format.
-      additionalProperties: true
-      properties:
-        type:
-          const: text
-          enum:
-          - text
+          - json_object
           title: Type
           type: string
       required:
       - type
-    AssistantMessage:
-      title: Assistant Message
-      type: object
-      additionalProperties: true
-      properties:
-        role:
-          title: Role
-          type: string
-          description: The role of the messages author, in this case `assistant`.
-          enum:
-          - assistant
-          const: assistant
-        content:
-          title: Content
-          anyOf:
-          - type: string
-          - title: Text Content Part Array
-            type: array
-            items:
-              $ref: '#/components/schemas/TextContent'
-          description: The contents of the assistant message.
-          nullable: true
-        reasoning:
-          title: Reasoning
-          type: string
-          description: Reasoning (returned by reasoning models like gpt oss)
-          nullable: true
-        channel:
-          title: Channel
-          type: string
-          description: Channel (returned by reasoning models like gpt oss)
-          nullable: true
-        tool_calls:
-          title: Tool Calls
-          type: array
-          items:
-            $ref: '#/components/schemas/AssistantToolCall'
-          description: The tool calls generated by the model.
-          nullable: true
-      required:
-      - role
-      - content
+      example:
+        type: json_object
     ToolChoiceObject:
       title: ToolChoiceObject
       type: object
@@ -1229,182 +1414,6 @@ components:
       required:
       - function
       - type
-    Usage:
-      title: Usage
-      type: object
-      description: Usage metrics for the completion, embeddings,transcription or translation request
-      additionalProperties: true
-      properties:
-        acceptance_rate:
-          title: Acceptance Rate
-          type: number
-          description: acceptance rate
-        completion_tokens:
-          title: Completion Tokens
-          type: integer
-          description: number of tokens generated in completion
-        completion_tokens_after_first_per_sec:
-          title: Completion Tokens After First Per Sec
-          type: number
-          description: completion tokens per second after first token generation
-        completion_tokens_after_first_per_sec_first_ten:
-          title: Completion Tokens After First Per Sec First Ten
-          type: number
-          description: completion tokens per second after first token generation first ten
-        completion_tokens_after_first_per_sec_graph:
-          title: Completion Tokens After First Per Sec Graph
-          type: number
-          description: completion tokens per second after first token generation
-        completion_tokens_per_sec:
-          title: Completion Tokens Per Sec
-          type: number
-          description: completion tokens per second
-        end_time:
-          title: End Time
-          type: number
-          description: The Unix timestamp (in seconds) of when the generation finished.
-        is_last_response:
-          title: Is Last Response
-          type: boolean
-          description: whether or not is last response, always true for non streaming response
-          const: true
-        prompt_tokens_details:
-          title: Prompt tokens details
-          type: object
-          description: Extra tokens details
-          additionalProperties: true
-          properties:
-            cached_tokens:
-              title: Cached tokens
-              description: amount of cached tokens
-              type: integer
-        prompt_tokens:
-          title: Prompt Tokens
-          type: integer
-          description: number of tokens used in the prompt sent
-        start_time:
-          title: Start Time
-          type: number
-          description: The Unix timestamp (in seconds) of when the generation started.
-        time_to_first_token:
-          title: Time To First Token
-          type: number
-          description: also TTF, time (in seconds) taken to generate the first token
-        time_to_first_token_graph:
-          title: Time To First Token Graph
-          type: number
-          description: Time (in seconds) to first token, adjusted for graph rendering. May differ slightly from time_to_first_token.
-        stop_reason:
-          title: Stop Reason
-          type: string
-          description: The reason generation stopped (e.g. "stop", "length"). Mirrors the choice-level finish_reason but reported at the usage level.
-          nullable: true
-        completion_tokens_details:
-          title: Completion Tokens Details
-          type: object
-          description: Breakdown of completion token consumption.
-          additionalProperties: true
-          properties:
-            reasoning_tokens:
-              title: Reasoning Tokens
-              type: integer
-              description: Number of tokens consumed by the model's internal reasoning process. Only present on reasoning-capable models.
-          nullable: true
-        total_latency:
-          title: Total Latency
-          type: number
-          description: total time (in seconds) taken to generate the full generation
-        total_tokens:
-          title: Total Tokens
-          type: integer
-          description: prompt tokens + completion tokens
-        total_tokens_per_sec:
-          title: Total Tokens Per Sec
-          type: number
-          description: tokens per second including prompt and completion
-      nullable: true
-      examples:
-      - completion_tokens: 260
-        completion_tokens_after_first_per_sec: 422.79282728043336
-        completion_tokens_after_first_per_sec_first_ten: 423.6108998455803
-        completion_tokens_after_first_per_sec_graph: 423.6108998455803
-        completion_tokens_per_sec: 314.53312043711406
-        completion_tokens_details:
-          reasoning_tokens: 55
-        end_time: 1776189309.02061
-        is_last_response: true
-        prompt_tokens: 90
-        prompt_tokens_details:
-          cached_tokens: 0
-        start_time: 1776189308.193988
-        stop_reason: stop
-        time_to_first_token: 0.21402883529663086
-        time_to_first_token_graph: 0.2102978229522705
-        total_latency: 0.8266220092773438
-        total_tokens: 350
-        total_tokens_per_sec: 423.40996981919204
-      - prompt_tokens: 43
-        total_tokens: 393
-    Tool:
-      title: Tool
-      type: object
-      additionalProperties: true
-      properties:
-        function:
-          $ref: '#/components/schemas/FunctionObject'
-        type:
-          title: Type
-          type: string
-          description: The type of the tool. Currently, only `function` is supported.
-      required:
-      - type
-      - function
-    AudioContent:
-      title: Audio Content
-      type: object
-      additionalProperties: true
-      properties:
-        type:
-          title: Type
-          type: string
-          description: type of content to send. in this case `audio_content`.
-          enum:
-          - audio_content
-          const: audio_content
-        audio_content:
-          title: Audio Content
-          type: object
-          properties:
-            content:
-              title: Content
-              type: string
-              description: the base64 encoded audio data.
-      required:
-      - type
-      - audio_content
-    VideoContent:
-      title: Video Content
-      type: object
-      additionalProperties: true
-      properties:
-        type:
-          title: Type
-          type: string
-          description: type of content to send. in this case `video_url`.
-          enum:
-          - video_url
-          const: video_url
-        video_url:
-          title: Video Url
-          type: object
-          properties:
-            url:
-              title: Url
-              type: string
-              description: Either a URL of the video or the base64 encoded video data.
-      required:
-      - type
-      - video_url
     GeneralError:
       title: GeneralError
       type: object
@@ -1443,6 +1452,11 @@ components:
           nullable: true
       required:
       - error
+    FunctionParameters:
+      title: Function Parameters
+      type: object
+      additionalProperties: true
+      description: The parameters the functions accepts, described as a JSON Schema object. see the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format.  Omitting `parameters` defines a function with an empty parameter list.
     SimpleError:
       title: SimpleError
       type: object
@@ -1455,112 +1469,98 @@ components:
           nullable: true
       required:
       - error
-    AssistantToolCall:
-      title: AssistantToolCall
+    CompletionResponseDelta:
+      title: Completion Response Delta
       type: object
+      description: completion response delta chunk generated by streamed model responses.
       additionalProperties: true
       properties:
-        function:
-          $ref: '#/components/schemas/AssistantToolCallFunction'
-        id:
-          title: Id
+        role:
+          title: Role
           type: string
-          description: ID of the tool call.
-          nullable: true
-        type:
-          title: Type
-          type: string
-          description: type of the tool cal. only `function` is supported.
+          description: The role of the messages author
           enum:
-          - function
-          const: function
+          - assistant
+          - user
+          - system
+          - tool
           nullable: true
-        index:
-          title: index
-          description: index of tool call chunk only used when using streaming
-          type: integer
+        content:
+          title: Content
+          type: string
+          description: The contents of the assistant message.
+          nullable: true
+        reasoning:
+          title: Reasoning
+          type: string
+          description: Reasoning (returned by reasoning models like gpt oss)
+          nullable: true
+        channel:
+          title: Channel
+          type: string
+          description: Channel (returned by reasoning models like gpt oss)
+          nullable: true
+        tool_calls:
+          title: Tool Calls
+          type: array
+          items:
+            $ref: '#/components/schemas/AssistantToolCall'
+          description: The tool calls generated by the model.
+          nullable: true
+    CompletionResponseMessage:
+      title: Completion Response Message
+      type: object
+      description: completion response message object
+      additionalProperties: true
+      properties:
+        role:
+          title: Role
+          type: string
+          description: The role of the messages author
+          enum:
+          - assistant
+          - user
+          - system
+          - tool
+        content:
+          title: Content
+          type: string
+          description: The contents of the assistant message.
+          nullable: true
+        tool_calls:
+          title: Tool Calls
+          type: array
+          items:
+            $ref: '#/components/schemas/AssistantToolCall'
+          description: The tool calls generated by the model.
           nullable: true
       required:
-      - function
-    ResponseFormatJSONObject:
-      title: ResponseFormatJSONObject
-      type: object
-      description: Specifies that the model should produce output as a raw JSON object.
-      additionalProperties: true
-      properties:
-        type:
-          const: json_object
-          enum:
-          - json_object
-          title: Type
-          type: string
-      required:
-      - type
-      example:
-        type: json_object
-    ChatCompletionChoice:
-      title: Chat Completion Choice
+      - role
+      - content
+    ToolMessage:
+      title: Tool Message
       type: object
       additionalProperties: true
       properties:
-        message:
-          $ref: '#/components/schemas/CompletionResponseMessage'
-        finish_reason:
-          title: Finish Reason
+        role:
+          title: Role
           type: string
-          description: The reason the model stopped generating tokens.  Will be `stop` if the model hit a natural stop point or a provided stop sequence,  `length` if the maximum number of tokens specified in the request was reached,  `tool_calls` if the model called a tool.
+          description: The role of the messages author, in this case `tool`.
           enum:
-          - stop
-          - length
-          - tool_calls
-        index:
-          title: Index
-          type: integer
-          description: The index of the choice in the list of choices
-        logprobs:
-          title: Logprobs
+          - tool
+          const: tool
+        content:
+          title: Content
+          description: The contents of the tool message.
           anyOf:
-          - $ref: '#/components/schemas/LogProbs'
-          description: Returns the log probability of each generated token, indicating the model's confidence.  Setting logprobs=true and top_logprobs (up to 5) reveals the likelihood of chosen tokens
-          nullable: true
+          - type: string
+          - title: Text Content Part Array
+            type: array
+            items:
+              $ref: '#/components/schemas/TextContent'
       required:
-      - finish_reason
-      - index
-      - message
-    FunctionParameters:
-      title: Function Parameters
-      type: object
-      additionalProperties: true
-      description: The parameters the functions accepts, described as a JSON Schema object. see the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format.  Omitting `parameters` defines a function with an empty parameter list.
-    ChatCompletionChunkChoice:
-      title: Chat Completion Chunk Choice
-      type: object
-      additionalProperties: true
-      properties:
-        delta:
-          $ref: '#/components/schemas/CompletionResponseDelta'
-        finish_reason:
-          title: Finish Reason
-          type: string
-          description: The reason the model stopped generating tokens.  Will be `stop` if the model hit a natural stop point or a provided stop sequence,  `length` if the maximum number of tokens specified in the request was reached,  `tool_calls` if the model called a tool.
-          enum:
-          - stop
-          - length
-          - tool_calls
-          nullable: true
-        index:
-          title: Index
-          type: integer
-          description: The index of the choice in the list of choices
-        logprobs:
-          title: Logprobs
-          anyOf:
-          - $ref: '#/components/schemas/LogProbs'
-          description: Returns the log probability of each generated token, indicating the model's confidence.  Setting logprobs=true and top_logprobs (up to 5) reveals the likelihood of chosen tokens
-          nullable: true
-      required:
-      - index
-      - delta
+      - content
+      - role
   securitySchemes:
     api_key:
       type: http

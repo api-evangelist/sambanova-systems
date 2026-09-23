@@ -22,9 +22,7 @@ paths:
       tags:
       - Subagents
       summary: Coding Agent
-      description: 'The coding agent executes Python code in a sandboxed environment, fixes errors, and returns results. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.
-
-        '
+      description: The coding agent executes Python code in a sandboxed environment, fixes errors, and returns results. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.
       operationId: coding_agent_agent_coding_post
       security:
       - api_key: []
@@ -51,9 +49,7 @@ paths:
     post:
       tags:
       - Subagents
-      description: 'The data science agent analyzes datasets, generates visualizations, and produces comprehensive reports. This fire-and-forget endpoint submits a prompt and returns the final report in a single call.
-
-        '
+      description: The data science agent analyzes datasets, generates visualizations, and produces comprehensive reports. This fire-and-forget endpoint submits a prompt and returns the final report in a single call.
       operationId: datascience_agent_and_report_agent_datascience_post
       security:
       - api_key: []
@@ -86,9 +82,7 @@ paths:
 
         1. Submit a prompt to receive a thread_id and research plan for approval
 
-        2. Submit a prompt with thread_id and resume=true to generate the final report
-
-        '
+        2. Submit a prompt with thread_id and resume=true to generate the final report'
       operationId: deepresearch_agent_agent_deepresearch_post
       security:
       - api_key: []
@@ -117,9 +111,7 @@ paths:
       tags:
       - Subagents
       summary: Financial Analysis Agent
-      description: 'The financial analysis agent analyzes stocks, companies, and market data. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.
-
-        '
+      description: The financial analysis agent analyzes stocks, companies, and market data. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.
       operationId: financial_analysis_agent_agent_financialanalysis_post
       security:
       - api_key: []
@@ -144,15 +136,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
     ValidationError:
       properties:
         loc:
@@ -174,6 +157,31 @@ components:
       - type
       title: ValidationError
       type: object
+    DataScienceAgentHTMLResponse:
+      type: object
+      title: Data Science Agent HTML Response
+      description: Generated HTML report for exploratory data analysis (EDA)
+      additionalProperties: false
+      properties:
+        content_type:
+          title: content_type
+          description: MIME type of the generated report (should be 'text/html')
+          type: string
+          example: text/html
+        title:
+          title: title
+          description: Title of the analysis report
+          type: string
+          example: Data Science Analysis Report
+        html:
+          title: html
+          description: Full HTML content of the generated report
+          type: string
+          example: "<!DOCTYPE html>\n<html>\n<head>\n  <title>Data Science Analysis Report</title>\n  <style>/* Professional styling */</style>\n</head>\n<body>\n  <h1>Exploratory Data Analysis Report</h1>\n  <h2>Dataset Overview</h2>\n  <p>The dataset contains 1,000 rows and 15 columns...</p>\n  <h2>Statistical Summary</h2>\n  <table><!-- Summary statistics --></table>\n  <h2>Visualizations</h2>\n  <img src=\"data:image/png;base64,...\" alt=\"Distribution Plot\">\n  <img src=\"data:image/png;base64,...\" alt=\"Correlation Heatmap\">\n  <h2>Key Findings</h2>\n  <ul>\n    <li>Strong correlation between features X and Y</li>\n    <li>Missing values detected in column Z</li>\n  </ul>\n</body>\n</html>\n"
+      required:
+      - content_type
+      - title
+      - html
     DeepResearchRequest:
       title: DeepResearchRequest
       type: object
@@ -188,6 +196,20 @@ components:
       - prompt
       examples:
       - prompt: Conduct research on quantum computing advances in 2024
+    FinancialAnalysisRequest:
+      title: FinancialAnalysisRequest
+      type: object
+      description: Request for  financial agent json object
+      additionalProperties: false
+      properties:
+        prompt:
+          title: Prompt
+          description: The main prompt for the financial agent
+          type: string
+      required:
+      - prompt
+      examples:
+      - prompt: Perform a financial analysis of Apple
     BaseAgentResponse:
       type: object
       title: Base agent response object
@@ -224,20 +246,38 @@ components:
         artifacts:
         - file-id-123
         thread_id: thread-abc
-    FinancialAnalysisRequest:
-      title: FinancialAnalysisRequest
+    DatascienceAgentRequest:
+      title: DatascienceAgentRequest
       type: object
-      description: Request for  financial agent json object
+      description: Request for data science agent json object
       additionalProperties: false
       properties:
+        files:
+          description: One or more files to be analyzed.
+          items:
+            format: binary
+            type: string
+          title: Files
+          type: array
         prompt:
+          description: The main prompt for the data science agent.
           title: Prompt
-          description: The main prompt for the financial agent
           type: string
       required:
       - prompt
+      - files
       examples:
-      - prompt: Perform a financial analysis of Apple
+      - prompt: Perform exploratory data analysis on this dataset
+        files: '@dataset.csv'
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
     CodingAgentRequest:
       title: CodingAgentRequest
       type: object
@@ -273,54 +313,6 @@ components:
           print("Chart created!")
 
           '
-    DatascienceAgentRequest:
-      title: DatascienceAgentRequest
-      type: object
-      description: Request for data science agent json object
-      additionalProperties: false
-      properties:
-        files:
-          description: One or more files to be analyzed.
-          items:
-            format: binary
-            type: string
-          title: Files
-          type: array
-        prompt:
-          description: The main prompt for the data science agent.
-          title: Prompt
-          type: string
-      required:
-      - prompt
-      - files
-      examples:
-      - prompt: Perform exploratory data analysis on this dataset
-        files: '@dataset.csv'
-    DataScienceAgentHTMLResponse:
-      type: object
-      title: Data Science Agent HTML Response
-      description: Generated HTML report for exploratory data analysis (EDA)
-      additionalProperties: false
-      properties:
-        content_type:
-          title: content_type
-          description: MIME type of the generated report (should be 'text/html')
-          type: string
-          example: text/html
-        title:
-          title: title
-          description: Title of the analysis report
-          type: string
-          example: Data Science Analysis Report
-        html:
-          title: html
-          description: Full HTML content of the generated report
-          type: string
-          example: "<!DOCTYPE html>\n<html>\n<head>\n  <title>Data Science Analysis Report</title>\n  <style>/* Professional styling */</style>\n</head>\n<body>\n  <h1>Exploratory Data Analysis Report</h1>\n  <h2>Dataset Overview</h2>\n  <p>The dataset contains 1,000 rows and 15 columns...</p>\n  <h2>Statistical Summary</h2>\n  <table><!-- Summary statistics --></table>\n  <h2>Visualizations</h2>\n  <img src=\"data:image/png;base64,...\" alt=\"Distribution Plot\">\n  <img src=\"data:image/png;base64,...\" alt=\"Correlation Heatmap\">\n  <h2>Key Findings</h2>\n  <ul>\n    <li>Strong correlation between features X and Y</li>\n    <li>Missing values detected in column Z</li>\n  </ul>\n</body>\n</html>\n"
-      required:
-      - content_type
-      - title
-      - html
   securitySchemes:
     api_key:
       type: http
