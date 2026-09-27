@@ -157,6 +157,77 @@ components:
       - type
       title: ValidationError
       type: object
+    BaseAgentResponse:
+      type: object
+      title: Base agent response object
+      description: Base agent response object
+      additionalProperties: false
+      properties:
+        status:
+          title: status
+          description: status of agent gereneration
+          type: string
+        result:
+          title: result
+          description: results description
+          type: string
+        artifacts:
+          title: artifacts
+          description: generated artifacts
+          type: array
+          items:
+            type: string
+            description: id of generated artifact
+        thread_id:
+          title: thread_id
+          description: thread id for persistent context
+          type: string
+      required:
+      - status
+      - result
+      - artifacts
+      - thread_id
+      example:
+        status: success
+        result: I've created the bar chart...
+        artifacts:
+        - file-id-123
+        thread_id: thread-abc
+    CodingAgentRequest:
+      title: CodingAgentRequest
+      type: object
+      description: Request for coding agent json object
+      additionalProperties: false
+      properties:
+        code:
+          title: Code
+          description: Code to run
+          type: string
+        prompt:
+          title: Prompt
+          description: The main prompt for the coding agent
+          type: string
+      required:
+      - prompt
+      - code
+      examples:
+      - prompt: Run this code and explain the output
+        code: 'import numpy as np
+
+          import matplotlib.pyplot as plt
+
+
+          x = np.linspace(0, 2 * np.pi, 100)
+
+          y = np.sin(x)
+
+          plt.plot(x, y)
+
+          plt.savefig("sine_wave.png")
+
+          print("Chart created!")
+
+          '
     DataScienceAgentHTMLResponse:
       type: object
       title: Data Science Agent HTML Response
@@ -196,56 +267,6 @@ components:
       - prompt
       examples:
       - prompt: Conduct research on quantum computing advances in 2024
-    FinancialAnalysisRequest:
-      title: FinancialAnalysisRequest
-      type: object
-      description: Request for  financial agent json object
-      additionalProperties: false
-      properties:
-        prompt:
-          title: Prompt
-          description: The main prompt for the financial agent
-          type: string
-      required:
-      - prompt
-      examples:
-      - prompt: Perform a financial analysis of Apple
-    BaseAgentResponse:
-      type: object
-      title: Base agent response object
-      description: Base agent response object
-      additionalProperties: false
-      properties:
-        status:
-          title: status
-          description: status of agent gereneration
-          type: string
-        result:
-          title: result
-          description: results description
-          type: string
-        artifacts:
-          title: artifacts
-          description: generated artifacts
-          type: array
-          items:
-            type: string
-            description: id of generated artifact
-        thread_id:
-          title: thread_id
-          description: thread id for persistent context
-          type: string
-      required:
-      - status
-      - result
-      - artifacts
-      - thread_id
-      example:
-        status: success
-        result: I've created the bar chart...
-        artifacts:
-        - file-id-123
-        thread_id: thread-abc
     DatascienceAgentRequest:
       title: DatascienceAgentRequest
       type: object
@@ -269,6 +290,20 @@ components:
       examples:
       - prompt: Perform exploratory data analysis on this dataset
         files: '@dataset.csv'
+    FinancialAnalysisRequest:
+      title: FinancialAnalysisRequest
+      type: object
+      description: Request for  financial agent json object
+      additionalProperties: false
+      properties:
+        prompt:
+          title: Prompt
+          description: The main prompt for the financial agent
+          type: string
+      required:
+      - prompt
+      examples:
+      - prompt: Perform a financial analysis of Apple
     HTTPValidationError:
       title: HTTPValidationError
       type: object
@@ -278,41 +313,6 @@ components:
             $ref: '#/components/schemas/ValidationError'
           title: Detail
           type: array
-    CodingAgentRequest:
-      title: CodingAgentRequest
-      type: object
-      description: Request for coding agent json object
-      additionalProperties: false
-      properties:
-        code:
-          title: Code
-          description: Code to run
-          type: string
-        prompt:
-          title: Prompt
-          description: The main prompt for the coding agent
-          type: string
-      required:
-      - prompt
-      - code
-      examples:
-      - prompt: Run this code and explain the output
-        code: 'import numpy as np
-
-          import matplotlib.pyplot as plt
-
-
-          x = np.linspace(0, 2 * np.pi, 100)
-
-          y = np.sin(x)
-
-          plt.plot(x, y)
-
-          plt.savefig("sine_wave.png")
-
-          print("Chart created!")
-
-          '
   securitySchemes:
     api_key:
       type: http

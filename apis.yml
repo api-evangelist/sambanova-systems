@@ -49,7 +49,7 @@ image: https://github.com/sambanova.png
 tags:
 - Company
 - Artificial Intelligence
-- Machine-Learning
+- Machine Learning
 - LLM
 - Inference
 - Generative AI
@@ -66,6 +66,7 @@ tags_raw:
 - API
 - Agents
 - Embeddings
+- Machine-Learning
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

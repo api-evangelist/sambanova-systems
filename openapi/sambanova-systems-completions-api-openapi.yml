@@ -161,187 +161,18 @@ paths:
         source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nfor completion in client.completions.create(\n    model=\"gpt-oss-120b\",\n    prompt=\"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n):\n  print(completion)"
 components:
   schemas:
-    CompletionStreamResponse:
-      title: Completion Stream Response
+    SimpleError:
+      title: SimpleError
       type: object
-      description: streamed chunk of a completion response returned by the model
-      additionalProperties: true
+      description: other kind of simple schema errors
       properties:
-        choices:
-          title: Choices
-          type: array
-          description: A list of chat completion choices.
-          items:
-            $ref: '#/components/schemas/CompletionChunkChoice'
-          minItems: 0
-          nullable: true
-        created:
-          title: Created
-          type: number
-          description: The Unix timestamp (in seconds) of when the chat completion was created.
-        id:
-          title: Id
+        error:
+          title: error
           type: string
-          description: A unique identifier for the chat completion.
-        model:
-          title: Model
-          description: The model used for the chat completion.
-          type: string
-        object:
-          title: Object
-          type: string
-          description: The object type, always `chat.completion.chunk`.
-          enum:
-          - chat.completion.chunk
-          const: chat.completion.chunk
-        system_fingerprint:
-          title: System fingerprint
-          type: string
-          description: Backend configuration that the model runs with.
-        usage:
-          $ref: '#/components/schemas/Usage'
-      required:
-      - choices
-      - created
-      - id
-      - model
-      - object
-      - system_fingerprint
-      examples:
-      - choices:
-        - delta:
-            role: assistant
-            content: ''
-          index: 0
-          finish_reason: null
-          logprobs: null
-        created: 1737642515.6076705
-        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
-        model: gpt-oss-120b
-        object: chat.completion.chunk
-        system_fingerprint: fastcoe
-      - choices:
-        - delta:
-            role: assistant
-            content: in
-          index: 0
-          finish_reason: null
-          logprobs: null
-        created: 1737642515.6076705
-        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
-        model: gpt-oss-120b
-        object: chat.completion.chunk
-        system_fingerprint: fastcoe
-      - choices:
-        - delta:
-            content: ''
-          index: 0
-          finish_reason: length
-          logprobs: null
-        created: 1737642515.6076705
-        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
-        model: gpt-oss-120b
-        object: chat.completion.chunk
-        system_fingerprint: fastcoe
-      - choices: []
-        created: 1737642515.6076705
-        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
-        model: gpt-oss-120b
-        object: chat.completion.chunk
-        system_fingerprint: fastcoe
-        usage:
-          acceptance_rate: 3
-          completion_tokens: 100
-          completion_tokens_after_first_per_sec: 262.2771255106759
-          completion_tokens_after_first_per_sec_first_ten: 266.98193514986144
-          completion_tokens_after_first_per_sec_graph: 266.98193514986144
-          completion_tokens_per_sec: 217.87260449707574
-          end_time: 1737642515.9077535
-          is_last_response: true
-          prompt_tokens: 43
-          prompt_tokens_details:
-            cached_tokens: 0
-          start_time: 1737642515.4458635
-          time_to_first_token: 0.0844266414642334
-          total_latency: 0.4589838186899821
-          total_tokens: 143
-          total_tokens_per_sec: 311.55782443081836
-    AssistantToolCall:
-      title: AssistantToolCall
-      type: object
-      additionalProperties: true
-      properties:
-        function:
-          $ref: '#/components/schemas/AssistantToolCallFunction'
-        id:
-          title: Id
-          type: string
-          description: ID of the tool call.
-          nullable: true
-        type:
-          title: Type
-          type: string
-          description: type of the tool cal. only `function` is supported.
-          enum:
-          - function
-          const: function
-          nullable: true
-        index:
-          title: index
-          description: index of tool call chunk only used when using streaming
-          type: integer
+          description: error detail.
           nullable: true
       required:
-      - function
-    LogProbsContent:
-      title: Log Probs Content
-      additionalProperties: true
-      properties:
-        bytes:
-          title: Bytes
-          anyOf:
-          - items:
-              type: integer
-            type: array
-          nullable: true
-        logprob:
-          title: Logprob
-          type: number
-        token:
-          title: Token
-          type: string
-        top_logprobs:
-          $ref: '#/components/schemas/TopLogProbs'
-      required:
-      - token
-      - logprob
-      - top_logprobs
-      examples:
-      - token: ' Hello'
-        logprob: -0.00012340000000000002
-        bytes:
-        - 32
-        - 72
-        - 101
-        - 108
-        - 108
-        - 111
-        top_logprobs:
-        - token: ' Hello'
-          logprob: -0.00012340000000000002
-          bytes:
-          - 32
-          - 72
-          - 101
-          - 108
-          - 108
-          - 111
-        - token: ' Hi'
-          logprob: -8.243
-          bytes:
-          - 32
-          - 72
-          - 105
+      - error
     CompletionRequest:
       title: Completion Request
       type: object
@@ -532,6 +363,188 @@ components:
         stream: false
         temperature: 0.7
         top_p: 1
+    CompletionStreamResponse:
+      title: Completion Stream Response
+      type: object
+      description: streamed chunk of a completion response returned by the model
+      additionalProperties: true
+      properties:
+        choices:
+          title: Choices
+          type: array
+          description: A list of chat completion choices.
+          items:
+            $ref: '#/components/schemas/CompletionChunkChoice'
+          minItems: 0
+          nullable: true
+        created:
+          title: Created
+          type: number
+          description: The Unix timestamp (in seconds) of when the chat completion was created.
+        id:
+          title: Id
+          type: string
+          description: A unique identifier for the chat completion.
+        model:
+          title: Model
+          description: The model used for the chat completion.
+          type: string
+        object:
+          title: Object
+          type: string
+          description: The object type, always `chat.completion.chunk`.
+          enum:
+          - chat.completion.chunk
+          const: chat.completion.chunk
+        system_fingerprint:
+          title: System fingerprint
+          type: string
+          description: Backend configuration that the model runs with.
+        usage:
+          $ref: '#/components/schemas/Usage'
+      required:
+      - choices
+      - created
+      - id
+      - model
+      - object
+      - system_fingerprint
+      examples:
+      - choices:
+        - delta:
+            role: assistant
+            content: ''
+          index: 0
+          finish_reason: null
+          logprobs: null
+        created: 1737642515.6076705
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: gpt-oss-120b
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+      - choices:
+        - delta:
+            role: assistant
+            content: in
+          index: 0
+          finish_reason: null
+          logprobs: null
+        created: 1737642515.6076705
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: gpt-oss-120b
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+      - choices:
+        - delta:
+            content: ''
+          index: 0
+          finish_reason: length
+          logprobs: null
+        created: 1737642515.6076705
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: gpt-oss-120b
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+      - choices: []
+        created: 1737642515.6076705
+        id: 15fcaba4-1c4a-48fc-bc6e-05b55ddfb30b
+        model: gpt-oss-120b
+        object: chat.completion.chunk
+        system_fingerprint: fastcoe
+        usage:
+          acceptance_rate: 3
+          completion_tokens: 100
+          completion_tokens_after_first_per_sec: 262.2771255106759
+          completion_tokens_after_first_per_sec_first_ten: 266.98193514986144
+          completion_tokens_after_first_per_sec_graph: 266.98193514986144
+          completion_tokens_per_sec: 217.87260449707574
+          end_time: 1737642515.9077535
+          is_last_response: true
+          prompt_tokens: 43
+          prompt_tokens_details:
+            cached_tokens: 0
+          start_time: 1737642515.4458635
+          time_to_first_token: 0.0844266414642334
+          total_latency: 0.4589838186899821
+          total_tokens: 143
+          total_tokens_per_sec: 311.55782443081836
+    LogProbs:
+      title: Completion Log Probs
+      type: object
+      description: Completion Log Probs object
+      additionalProperties: true
+      properties:
+        content:
+          $ref: '#/components/schemas/LogProbsContent'
+      required:
+      - content
+      examples:
+      - content:
+        - token: ' Hello'
+          logprob: -0.00012340000000000002
+          bytes:
+          - 32
+          - 72
+          - 101
+          - 108
+          - 108
+          - 111
+          top_logprobs:
+          - token: ' Hello'
+            logprob: -0.00012340000000000002
+            bytes:
+            - 32
+            - 72
+            - 101
+            - 108
+            - 108
+            - 111
+          - token: ' Hi'
+            logprob: -8.243
+            bytes:
+            - 32
+            - 72
+            - 105
+        - token: '!'
+          logprob: -0.0023456
+          bytes:
+          - 33
+          top_logprobs:
+          - token: '!'
+            logprob: -0.0023456
+            bytes:
+            - 33
+          - token: ','
+            logprob: -6.712
+            bytes:
+            - 44
+    AssistantToolCall:
+      title: AssistantToolCall
+      type: object
+      additionalProperties: true
+      properties:
+        function:
+          $ref: '#/components/schemas/AssistantToolCallFunction'
+        id:
+          title: Id
+          type: string
+          description: ID of the tool call.
+          nullable: true
+        type:
+          title: Type
+          type: string
+          description: type of the tool cal. only `function` is supported.
+          enum:
+          - function
+          const: function
+          nullable: true
+        index:
+          title: index
+          description: index of tool call chunk only used when using streaming
+          type: integer
+          nullable: true
+      required:
+      - function
     CompletionChoice:
       title: Completion Choice
       type: object
@@ -565,22 +578,85 @@ components:
       - finish_reason
       - index
       - text
-    AssistantToolCallFunction:
-      title: AssistantToolCallFunction
-      type: object
-      description: The tool that the model called.
+    LogProbsContent:
+      title: Log Probs Content
       additionalProperties: true
       properties:
-        name:
-          title: Name
-          type: string
-          description: The name of the function to call.
+        bytes:
+          title: Bytes
+          anyOf:
+          - items:
+              type: integer
+            type: array
           nullable: true
-        arguments:
-          title: Arguments
+        logprob:
+          title: Logprob
+          type: number
+        token:
+          title: Token
           type: string
-          description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
+        top_logprobs:
+          $ref: '#/components/schemas/TopLogProbs'
+      required:
+      - token
+      - logprob
+      - top_logprobs
+      examples:
+      - token: ' Hello'
+        logprob: -0.00012340000000000002
+        bytes:
+        - 32
+        - 72
+        - 101
+        - 108
+        - 108
+        - 111
+        top_logprobs:
+        - token: ' Hello'
+          logprob: -0.00012340000000000002
+          bytes:
+          - 32
+          - 72
+          - 101
+          - 108
+          - 108
+          - 111
+        - token: ' Hi'
+          logprob: -8.243
+          bytes:
+          - 32
+          - 72
+          - 105
+    CompletionResponseMessage:
+      title: Completion Response Message
+      type: object
+      description: completion response message object
+      additionalProperties: true
+      properties:
+        role:
+          title: Role
+          type: string
+          description: The role of the messages author
+          enum:
+          - assistant
+          - user
+          - system
+          - tool
+        content:
+          title: Content
+          type: string
+          description: The contents of the assistant message.
           nullable: true
+        tool_calls:
+          title: Tool Calls
+          type: array
+          items:
+            $ref: '#/components/schemas/AssistantToolCall'
+          description: The tool calls generated by the model.
+          nullable: true
+      required:
+      - role
+      - content
     GeneralError:
       title: GeneralError
       type: object
@@ -764,18 +840,6 @@ components:
         total_tokens_per_sec: 423.40996981919204
       - prompt_tokens: 43
         total_tokens: 393
-    SimpleError:
-      title: SimpleError
-      type: object
-      description: other kind of simple schema errors
-      properties:
-        error:
-          title: error
-          type: string
-          description: error detail.
-          nullable: true
-      required:
-      - error
     TopLogProbs:
       title: TopLogProbs
       type: object
@@ -813,86 +877,6 @@ components:
         - 32
         - 72
         - 105
-    LogProbs:
-      title: Completion Log Probs
-      type: object
-      description: Completion Log Probs object
-      additionalProperties: true
-      properties:
-        content:
-          $ref: '#/components/schemas/LogProbsContent'
-      required:
-      - content
-      examples:
-      - content:
-        - token: ' Hello'
-          logprob: -0.00012340000000000002
-          bytes:
-          - 32
-          - 72
-          - 101
-          - 108
-          - 108
-          - 111
-          top_logprobs:
-          - token: ' Hello'
-            logprob: -0.00012340000000000002
-            bytes:
-            - 32
-            - 72
-            - 101
-            - 108
-            - 108
-            - 111
-          - token: ' Hi'
-            logprob: -8.243
-            bytes:
-            - 32
-            - 72
-            - 105
-        - token: '!'
-          logprob: -0.0023456
-          bytes:
-          - 33
-          top_logprobs:
-          - token: '!'
-            logprob: -0.0023456
-            bytes:
-            - 33
-          - token: ','
-            logprob: -6.712
-            bytes:
-            - 44
-    CompletionResponseMessage:
-      title: Completion Response Message
-      type: object
-      description: completion response message object
-      additionalProperties: true
-      properties:
-        role:
-          title: Role
-          type: string
-          description: The role of the messages author
-          enum:
-          - assistant
-          - user
-          - system
-          - tool
-        content:
-          title: Content
-          type: string
-          description: The contents of the assistant message.
-          nullable: true
-        tool_calls:
-          title: Tool Calls
-          type: array
-          items:
-            $ref: '#/components/schemas/AssistantToolCall'
-          description: The tool calls generated by the model.
-          nullable: true
-      required:
-      - role
-      - content
     CompletionResponse:
       title: Completion Response
       type: object
@@ -961,6 +945,22 @@ components:
           total_latency: 1.4649275719174653
           total_tokens: 393
           total_tokens_per_sec: 268.27264878740493
+    AssistantToolCallFunction:
+      title: AssistantToolCallFunction
+      type: object
+      description: The tool that the model called.
+      additionalProperties: true
+      properties:
+        name:
+          title: Name
+          type: string
+          description: The name of the function to call.
+          nullable: true
+        arguments:
+          title: Arguments
+          type: string
+          description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
+          nullable: true
   securitySchemes:
     api_key:
       type: http
