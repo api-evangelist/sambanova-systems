@@ -47,6 +47,51 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    MainAgentRequest:
+      type: object
+      title: MainAgentRequest
+      description: Request for  main agent json object
+      additionalProperties: false
+      properties:
+        prompt:
+          title: prompt
+          description: The main prompt for the main agent
+          type: string
+      required:
+      - prompt
+      examples:
+      - prompt: Create a bar chart for Q1 sales
+        resume: false
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
     BaseAgentResponse:
       type: object
       title: Base agent response object
@@ -83,51 +128,6 @@ components:
         artifacts:
         - file-id-123
         thread_id: thread-abc
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    MainAgentRequest:
-      type: object
-      title: MainAgentRequest
-      description: Request for  main agent json object
-      additionalProperties: false
-      properties:
-        prompt:
-          title: prompt
-          description: The main prompt for the main agent
-          type: string
-      required:
-      - prompt
-      examples:
-      - prompt: Create a bar chart for Q1 sales
-        resume: false
   securitySchemes:
     api_key:
       type: http
