@@ -90,18 +90,6 @@ components:
           - list
       required:
       - data
-    SimpleError:
-      title: SimpleError
-      type: object
-      description: other kind of simple schema errors
-      properties:
-        error:
-          title: error
-          type: string
-          description: error detail.
-          nullable: true
-      required:
-      - error
     ModelMetadata:
       title: Model Metadata
       type: object
@@ -157,6 +145,18 @@ components:
               nullable: true
       required:
       - id
+    SimpleError:
+      title: SimpleError
+      type: object
+      description: other kind of simple schema errors
+      properties:
+        error:
+          title: error
+          type: string
+          description: error detail.
+          nullable: true
+      required:
+      - error
   securitySchemes:
     api_key:
       type: http

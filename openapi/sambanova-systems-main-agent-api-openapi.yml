@@ -62,6 +62,15 @@ components:
       examples:
       - prompt: Create a bar chart for Q1 sales
         resume: false
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
     ValidationError:
       properties:
         loc:
@@ -83,15 +92,6 @@ components:
       - type
       title: ValidationError
       type: object
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
-          type: array
     BaseAgentResponse:
       type: object
       title: Base agent response object
