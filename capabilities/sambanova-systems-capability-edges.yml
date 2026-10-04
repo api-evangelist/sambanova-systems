@@ -1,0 +1,69 @@
+slug: sambanova-systems
+provider: SambaNova Systems
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Completions
+  spec_file: sambanova-systems-completions-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.75
+  evidence: POST /completions  createCompletion  Create completion
+  reason: LLM text-completion inference endpoint; the closest honest capability is AI/ML model lifecycle
+    & serving under Information & Data Management. Vendor is an AI infrastructure provider, so no industry-specific
+    capability fits.
+- tag: Embeddings
+  spec_file: sambanova-systems-embeddings-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.72
+  evidence: POST /embeddings  createEmbedding  Create embeddings
+  reason: Embedding generation is AI model inference; maps to Artificial Intelligence Management as the
+    serving of ML models.
+- tag: Chat Completions
+  spec_file: sambanova-systems-chat-completions-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: POST /chat/completions  createChatCompletion  Create chat-based completion
+  reason: LLM chat inference with tool calling and streaming on SambaNova Cloud — AI/ML model serving,
+    best represented by Artificial Intelligence Management. Not a customer-service or product capability
+    despite the 'chat' wording.
+- tag: Messages
+  spec_file: sambanova-systems-messages-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: POST /messages  createMessage  Create a message
+  reason: Anthropic-compatible LLM messages inference endpoint (token counting, content blocks, thinking
+    blocks) — AI inference, not customer messaging/communications.
+- tag: Models
+  spec_file: sambanova-systems-models-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: GET /models  getModelList  Get environment's available model list metadata
+  reason: Catalogue/metadata of available AI models for inference; AI model lifecycle management.
+- tag: Responses
+  spec_file: sambanova-systems-responses-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: POST /responses  createResponse  Create a model response
+  reason: Model response generation (OpenAI Responses API compatible) — AI inference serving.

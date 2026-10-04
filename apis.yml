@@ -200,6 +200,9 @@ apis:
   - type: OpenAPI
     url: openapi/sambanova-systems-subagents-interactive-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/sambanova-systems-capability-edges.yml
+  name: SambaNova Systems Business Capability Map
 - type: TrustCenter
   url: security/sambanova-systems-trust-center.yml
 - type: Community
