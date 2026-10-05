@@ -1,0 +1,12 @@
+{
+ "url": "https://raw.githubusercontent.com/sambanova/agents/refs/heads/main/chat-sambanova-agent-api-spec.yaml",
+ "requested_url": "https://raw.githubusercontent.com/sambanova/agents/refs/heads/main/chat-sambanova-agent-api-spec.yaml",
+ "status": 200,
+ "content_type": "text/plain; charset=utf-8",
+ "bytes": 26264,
+ "sha256": "71c07b3a60bc6b4853adc5be49ee35a476739de302492956a914610f8efecb70",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
