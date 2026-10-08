@@ -1,0 +1,99 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://cloud.sambanova.ai/plans/pricing
+sources:
+- https://cloud.sambanova.ai/plans/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: per-call
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+published: true
+note: Token-based model pricing table; cached input only listed for MiniMax-M3, others N/A.
+plan_count: 13
+currency: USD
+plans:
+- name: MiniMax-M3 input
+  price_text: 0.60 USD
+  price: 0.6
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: MiniMax-M3 output
+  price_text: 2.40 USD
+  price: 2.4
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: MiniMax-M3 cached input
+  price_text: 0.06 USD
+  price: 0.06
+  currency: USD
+  period: per-use
+  unit: per 1M cached input tokens
+- name: DeepSeek-V3.1 input
+  price_text: 3 USD
+  price: 3
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: DeepSeek-V3.1 output
+  price_text: 4.50 USD
+  price: 4.5
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: DeepSeek-V3.2 input
+  price_text: 3 USD
+  price: 3
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: DeepSeek-V3.2 output
+  price_text: 4.50 USD
+  price: 4.5
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: gemma-4-31B-it input
+  price_text: 0.38 USD
+  price: 0.38
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: gemma-4-31B-it output
+  price_text: 1.15 USD
+  price: 1.15
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: gpt-oss-120b input
+  price_text: 0.22 USD
+  price: 0.22
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: gpt-oss-120b output
+  price_text: 0.59 USD
+  price: 0.59
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: Meta-Llama-3.3-70B-Instruct input
+  price_text: 0.60 USD
+  price: 0.6
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
+- name: Meta-Llama-3.3-70B-Instruct output
+  price_text: 1.20 USD
+  price: 1.2
+  currency: USD
+  period: per-use
+  unit: per 1M tokens
