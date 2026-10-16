@@ -66,6 +66,6 @@
       token in the `Authorization` header (`Authorization: Bearer <key>`). Default authentication scheme used by
       the'''
     detected_by: sweep-model-routing.py
-    detected: '2026-10-13'
+    detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
