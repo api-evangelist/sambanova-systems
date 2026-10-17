@@ -159,44 +159,6 @@ paths:
         source: "import os\nfrom sambanova import SambaNova\n\nclient = SambaNova(\n    api_key=os.environ.get(\"SAMBANOVA_API_KEY\"),  # This is the default and can be omitted\n)\nembeddings_response = client.embeddings.create(\n    input=[\"text to embed number 1\", \"text to embed number 2\"],\n    model=\"E5-Mistral-7B-Instruct\",\n)\nprint(embeddings_response.data)"
 components:
   schemas:
-    GeneralError:
-      title: GeneralError
-      type: object
-      description: other kind of errors
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              title: code
-              type: string
-              description: error code
-              nullable: true
-            message:
-              title: message
-              type: string
-              description: error message
-            param:
-              title: param
-              type: string
-              description: error params
-              nullable: true
-            type:
-              title: type
-              type: string
-              description: error type
-            error_model_output:
-              title: Error Model Output
-              type: string
-              description: Raw model output that could not be parsed. Present on `server_error` responses when the model produced output that failed internal parsing (e.g. a malformed tool call JSON).
-              nullable: true
-        request_id:
-          title: request_id
-          type: string
-          description: unique request identifier for debugging
-          nullable: true
-      required:
-      - error
     Usage:
       title: Usage
       type: object
@@ -313,6 +275,44 @@ components:
         total_tokens_per_sec: 423.40996981919204
       - prompt_tokens: 43
         total_tokens: 393
+    SimpleError:
+      title: SimpleError
+      type: object
+      description: other kind of simple schema errors
+      properties:
+        error:
+          title: error
+          type: string
+          description: error detail.
+          nullable: true
+      required:
+      - error
+    Embedding:
+      type: object
+      title: Embedding
+      description: Represents an embedding vector returned by embeddings endpoint.
+      properties:
+        index:
+          type: integer
+          title: index
+          description: The index of the embedding in the list of embeddings.
+        object:
+          type: string
+          title: object
+          description: Object type, always embedding.
+          enum:
+          - embedding
+        embedding:
+          type: array
+          items:
+            type: number
+          title: embedding
+          description: List of floats containing the embedding vector.
+          nullable: true
+      required:
+      - index
+      - object
+      - embedding
     EmbeddingsRequest:
       title: Embeddings Request
       type: object
@@ -390,44 +390,44 @@ components:
         usage:
           prompt_tokens: 716
           total_tokens: 716
-    SimpleError:
-      title: SimpleError
+    GeneralError:
+      title: GeneralError
       type: object
-      description: other kind of simple schema errors
+      description: other kind of errors
       properties:
         error:
-          title: error
+          type: object
+          properties:
+            code:
+              title: code
+              type: string
+              description: error code
+              nullable: true
+            message:
+              title: message
+              type: string
+              description: error message
+            param:
+              title: param
+              type: string
+              description: error params
+              nullable: true
+            type:
+              title: type
+              type: string
+              description: error type
+            error_model_output:
+              title: Error Model Output
+              type: string
+              description: Raw model output that could not be parsed. Present on `server_error` responses when the model produced output that failed internal parsing (e.g. a malformed tool call JSON).
+              nullable: true
+        request_id:
+          title: request_id
           type: string
-          description: error detail.
+          description: unique request identifier for debugging
           nullable: true
       required:
       - error
-    Embedding:
-      type: object
-      title: Embedding
-      description: Represents an embedding vector returned by embeddings endpoint.
-      properties:
-        index:
-          type: integer
-          title: index
-          description: The index of the embedding in the list of embeddings.
-        object:
-          type: string
-          title: object
-          description: Object type, always embedding.
-          enum:
-          - embedding
-        embedding:
-          type: array
-          items:
-            type: number
-          title: embedding
-          description: List of floats containing the embedding vector.
-          nullable: true
-      required:
-      - index
-      - object
-      - embedding
   securitySchemes:
     api_key:
       type: http

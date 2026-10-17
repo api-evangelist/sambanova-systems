@@ -136,99 +136,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    CodingAgentRequest:
-      title: CodingAgentRequest
-      type: object
-      description: Request for coding agent json object
-      additionalProperties: false
-      properties:
-        code:
-          title: Code
-          description: Code to run
-          type: string
-        prompt:
-          title: Prompt
-          description: The main prompt for the coding agent
-          type: string
-      required:
-      - prompt
-      - code
-      examples:
-      - prompt: Run this code and explain the output
-        code: 'import numpy as np
-
-          import matplotlib.pyplot as plt
-
-
-          x = np.linspace(0, 2 * np.pi, 100)
-
-          y = np.sin(x)
-
-          plt.plot(x, y)
-
-          plt.savefig("sine_wave.png")
-
-          print("Chart created!")
-
-          '
-    FinancialAnalysisRequest:
-      title: FinancialAnalysisRequest
-      type: object
-      description: Request for  financial agent json object
-      additionalProperties: false
-      properties:
-        prompt:
-          title: Prompt
-          description: The main prompt for the financial agent
-          type: string
-      required:
-      - prompt
-      examples:
-      - prompt: Perform a financial analysis of Apple
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          title: Location
-          type: array
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-      type: object
-    DatascienceAgentRequest:
-      title: DatascienceAgentRequest
-      type: object
-      description: Request for data science agent json object
-      additionalProperties: false
-      properties:
-        files:
-          description: One or more files to be analyzed.
-          items:
-            format: binary
-            type: string
-          title: Files
-          type: array
-        prompt:
-          description: The main prompt for the data science agent.
-          title: Prompt
-          type: string
-      required:
-      - prompt
-      - files
-      examples:
-      - prompt: Perform exploratory data analysis on this dataset
-        files: '@dataset.csv'
     BaseAgentResponse:
       type: object
       title: Base agent response object
@@ -265,6 +172,41 @@ components:
         artifacts:
         - file-id-123
         thread_id: thread-abc
+    CodingAgentRequest:
+      title: CodingAgentRequest
+      type: object
+      description: Request for coding agent json object
+      additionalProperties: false
+      properties:
+        code:
+          title: Code
+          description: Code to run
+          type: string
+        prompt:
+          title: Prompt
+          description: The main prompt for the coding agent
+          type: string
+      required:
+      - prompt
+      - code
+      examples:
+      - prompt: Run this code and explain the output
+        code: 'import numpy as np
+
+          import matplotlib.pyplot as plt
+
+
+          x = np.linspace(0, 2 * np.pi, 100)
+
+          y = np.sin(x)
+
+          plt.plot(x, y)
+
+          plt.savefig("sine_wave.png")
+
+          print("Chart created!")
+
+          '
     DataScienceAgentHTMLResponse:
       type: object
       title: Data Science Agent HTML Response
@@ -290,6 +232,29 @@ components:
       - content_type
       - title
       - html
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+    FinancialAnalysisRequest:
+      title: FinancialAnalysisRequest
+      type: object
+      description: Request for  financial agent json object
+      additionalProperties: false
+      properties:
+        prompt:
+          title: Prompt
+          description: The main prompt for the financial agent
+          type: string
+      required:
+      - prompt
+      examples:
+      - prompt: Perform a financial analysis of Apple
     DeepResearchRequest:
       title: DeepResearchRequest
       type: object
@@ -304,15 +269,50 @@ components:
       - prompt
       examples:
       - prompt: Conduct research on quantum computing advances in 2024
-    HTTPValidationError:
-      title: HTTPValidationError
+    DatascienceAgentRequest:
+      title: DatascienceAgentRequest
       type: object
+      description: Request for data science agent json object
+      additionalProperties: false
       properties:
-        detail:
+        files:
+          description: One or more files to be analyzed.
           items:
-            $ref: '#/components/schemas/ValidationError'
-          title: Detail
+            format: binary
+            type: string
+          title: Files
           type: array
+        prompt:
+          description: The main prompt for the data science agent.
+          title: Prompt
+          type: string
+      required:
+      - prompt
+      - files
+      examples:
+      - prompt: Perform exploratory data analysis on this dataset
+        files: '@dataset.csv'
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
   securitySchemes:
     api_key:
       type: http
