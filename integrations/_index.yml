@@ -15,6 +15,68 @@
   relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
+- slug: sambanova-systems-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/sambanova
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: sambanova
+      version: 1.10.0
+      released: '2026-09-17'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/sambanova
+      repo_leg: github-org:sambanova
+      publisher_leg: email:sambanova.ai
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: sambanova-systems-pypi
+  label: PyPI
+  partner: pypi
+  partner_name: PyPI
+  category: official SDK (Python)
+  type: register
+  channel: package-registry
+  evidence: https://pypi.org/project/sambanova/
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: PyPI (public registry JSON)
+    spec_file: null
+    language: Python
+    packages:
+    - name: sambanova
+      version: 1.13.0
+      released: '2026-09-17'
+      released_field: upload_time
+      lapsed: false
+      page: https://pypi.org/project/sambanova/
+      repo_leg: github-org:sambanova
+      publisher_leg: email:sambanova.ai
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
 - slug: sambanova-systems-openrouter
   label: OpenRouter
   partner: openrouter
@@ -66,6 +128,34 @@
       token in the `Authorization` header (`Authorization: Bearer <key>`). Default authentication scheme used by
       the'''
     detected_by: sweep-model-routing.py
-    detected: '2026-10-15'
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: sambanova-systems-battery-ventures
+  label: Battery Ventures
+  partner: battery-ventures
+  partner_name: Battery Ventures
+  category: vc portfolio participation
+  type: register
+  channel: standard-directory
+  evidence: https://www.battery.com/company/sambanova/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: Battery Ventures companies (battery.com/company/, the page's own admin-ajax list + company pages)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: SambaNova
+    register_id: https://www.battery.com/company/sambanova/
+    register_country: San Francisco, California
+    register_website: https://sambanova.ai/
+    matched_domain: sambanova.ai
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+    status: Active
   status: not-a-workflow
   arazzo: null
