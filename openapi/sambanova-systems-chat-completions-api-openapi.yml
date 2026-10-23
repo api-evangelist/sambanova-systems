@@ -1575,3 +1575,9 @@ components:
 externalDocs:
   description: Find out more in the official SambaNova docs
   url: https://docs.sambanova.ai/docs/en/api-reference/overview
+x-provenance:
+  method: harvested
+  publisher: SambaNova Systems
+  source: https://raw.githubusercontent.com/sambanova/sambanova-inference-api-spec/refs/heads/main/openapi.documented.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
