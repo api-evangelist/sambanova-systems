@@ -200,6 +200,8 @@ apis:
   - type: OpenAPI
     url: openapi/sambanova-systems-subagents-interactive-api-openapi.yml
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/sambanova-systems/overview
 - type: Plans
   url: plans/sambanova-systems-plans-pricing.yml
 - url: https://sambanova.ai/blog/rss.xml
