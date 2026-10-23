@@ -159,3 +159,16 @@
     status: Active
   status: not-a-workflow
   arazzo: null
+- slug: sambanova-systems-hugging-face-hugging-face-hub
+  label: Hugging Face (hugging-face-hub)
+  partner: hugging-face
+  partner_name: Hugging Face (hugging-face-hub)
+  category: Hugging Face Hub datasets
+  type: marketplace
+  marketplace: hugging-face-hub
+  channel: partner-built
+  evidence: https://huggingface.co/sambanovasystems
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

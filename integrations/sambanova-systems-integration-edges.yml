@@ -18,6 +18,7 @@ checked:
 - https://www.indexventures.com/companies/
 - https://www.sequoiacap.com/our-companies/
 - https://www.sequoiacap.com/sitemap.xml
+- hugging-face/integrations/hugging-face-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: Microsoft Azure Marketplace
@@ -200,6 +201,43 @@ edges:
     status: Active
   detected_by: sweep-vc-portfolios.py
   first_seen: '2026-10-21'
+- partner_name: Hugging Face (hugging-face-hub)
+  partner: hugging-face
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: hugging-face-hub
+  evidence: https://huggingface.co/sambanovasystems
+  mirror_of: hugging-face/integrations/hugging-face-integration-edges.yml
+  apps:
+  - sambanovasystems/attackqa
+  - sambanovasystems/xOA22
+  - sambanovasystems/x-self-instruct-seed-32
+  - sambanovasystems/SambaLingo-Japanese-Base
+  - sambanovasystems/SambaLingo-Thai-Base
+  - sambanovasystems/BLOOMChat-176B-v1
+  - sambanovasystems/SambaLingo-Russian-Base
+  - sambanovasystems/SambaLingo-Turkish-Base
+  - sambanovasystems/SambaLingo-Hungarian-Base
+  - sambanovasystems/SambaLingo-Slovenian-Base
+  - sambanovasystems/SambaLingo-Serbian-Base
+  - sambanovasystems/SambaNova-Qwen2.5-Coder-Artifacts
+  - sambanovasystems/BLOOMChat
+  - sambanovasystems/Llama3.1-Instruct-O1
+  - sambanovasystems/Samba-CoE-v0.1
+  - sambanovasystems/auto-web-search
+  - sambanovasystems/SambaCoder-nsql-llama-2-70b-text-to-SQL
+  - sambanovasystems/trip-planner
+  - sambanovasystems/sambanova-gradio
+  listing_count: 3
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Hugging Face Hub datasets
+  badges:
+  - Verified publisher (Hugging Face verified organisation)
 source:
 - https://registry.npmjs.org
 - https://pypi.org/pypi
