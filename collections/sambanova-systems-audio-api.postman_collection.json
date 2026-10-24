@@ -1,2201 +1,1879 @@
 {
+  "info": {
+    "_postman_id": "c15a64ad-aac6-4ccc-8964-876759d9494e",
+    "name": "SambaNova cloud Audio API",
+    "description": "SambaNova cloud API Specification\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:50:19.000Z",
+    "updatedAt": "2026-10-22T01:50:19.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c15a64ad-aac6-4ccc-8964-876759d9494e"
+  },
   "item": [
     {
-      "id": "4a219e96-9bee-4fe9-a1d2-276e80a02228",
-      "name": "Audio",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "audio",
       "item": [
         {
-          "id": "2fa47dd3-bc46-4fd9-8c38-b0c7843486e6",
-          "name": "Transcribes audio into the input language.",
-          "request": {
-            "name": "Transcribes audio into the input language.",
-            "description": {},
-            "url": {
-              "path": [
-                "audio",
-                "transcriptions"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "multipart/form-data"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "0",
-                  "value": "<",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "1",
-                  "value": "o",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "2",
-                  "value": "b",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "3",
-                  "value": "j",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "4",
-                  "value": "e",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "5",
-                  "value": "c",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "6",
-                  "value": "t",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "7",
-                  "value": ">",
-                  "type": "text",
-                  "description": ""
-                }
-              ]
-            }
-          },
-          "response": [
+          "name": "transcriptions",
+          "item": [
             {
-              "id": "27e68a42-371f-47d6-b327-3e11ee88dbdd",
-              "name": "Successful Response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "transcriptions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+              "name": "Transcribes audio into the input language",
+              "id": "fbde9230-0ece-44ed-ac89-1b90e6515a07",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "formdata",
                   "formdata": [
                     {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
+                      "description": "(Required) ",
                       "key": "model",
-                      "value": "string",
+                      "value": "<string>",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
+                      "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
                       "key": "file",
-                      "value": "string",
-                      "type": "text"
+                      "type": "file",
+                      "value": null
                     },
                     {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
+                      "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
                       "key": "prompt",
-                      "value": "string",
+                      "value": "<string>",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
+                      "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
                       "key": "language",
-                      "value": "mt",
+                      "value": "br",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
+                      "description": "Output format JSON or text. (This can only be one of json,text)",
                       "key": "response_format",
                       "value": "json",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
+                      "description": "Enables streaming responses. (This can only be one of true,false)",
                       "key": "stream",
                       "value": "false",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
+                      "description": "Optional settings that apply when `stream` is true.",
                       "key": "stream_options",
-                      "value": "{\"include_usage\":\"false\"}",
+                      "value": "[object Object]",
                       "type": "text"
                     }
                   ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"text\": \"Es un efecto de sonido de una campana sonando, específicamente una campana de iglesia.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "442433c7-36c3-4f02-8de4-9b38e367dc65",
-              "name": "Bad Request - Missing or invalid parameters",
-              "originalRequest": {
+                },
                 "url": {
-                  "path": [
-                    "audio",
-                    "transcriptions"
-                  ],
+                  "raw": "{{baseUrl}}/audio/transcriptions",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "text/plain"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "mt",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"false\"}",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"message\": \"you must provide a model parameter\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  },\n  \"request_id\": \"a4fa849e\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5b409ce0-786e-4d20-8bcc-eb3f33951db7",
-              "name": "Unauthorized access",
-              "originalRequest": {
-                "url": {
                   "path": [
                     "audio",
                     "transcriptions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "mt",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"false\"}",
-                      "type": "text"
-                    }
                   ]
                 }
               },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: *****. You can find your API key at https://cloud.sambanova.ai/apis.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"invalid_api_key\"\n  },\n  \"request_id\": \"d79vcq57os633dverhi0\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "77706fdb-b077-448c-9aea-f28fa57ee8fd",
-              "name": "Not found - model does not exist or wrong endpoint called",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "transcriptions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
+                  "id": "48a5efeb-581b-45b3-bd1c-c8f02d7389f1",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
                       },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
                       },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "br",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
                     },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "mt",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"false\"}",
-                      "type": "text"
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/transcriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "transcriptions"
+                      ]
                     }
-                  ]
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"model_not_found\",\n    \"message\": \"The model `abc` does not exist or you do not have access to it.\",\n    \"param\": \"model\",\n    \"type\": \"invalid_request_error\"\n  },\n  \"request_id\": \"887a8227\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f821c0c5-e318-4352-82ff-8af26385b064",
-              "name": "Request timeout",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "transcriptions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "mt",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"false\"}",
-                      "type": "text"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
-                  ]
-                }
-              },
-              "status": "Request Timeout",
-              "code": 408,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5e04b46a-3f79-4788-976b-2b42eaad7ce4",
-              "name": "Gone - model is no longer available (deprecated or removed)",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "transcriptions"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"text\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-48a5efeb-581b-45b3-bd1c-c8f02d7389f1"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "mt",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"false\"}",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Gone",
-              "code": 410,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e3071f81-3291-4b4f-8870-3af63efcb47d",
-              "name": "Too Many Requests",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "transcriptions"
+                  "id": "a7cac300-1f21-4266-a3b1-0f69569e4acc",
+                  "name": "Bad Request - Missing or invalid parameters",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/plain"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "br",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/transcriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "transcriptions"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-a7cac300-1f21-4266-a3b1-0f69569e4acc"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "mt",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"false\"}",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"param\": \"string\",\n    \"type\": \"string\",\n    \"error_model_output\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "4c1b4996-fc63-4920-acab-9c177f12a238",
-              "name": "Internal Server Error. Unexpected issue on server side.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "transcriptions"
+                  "id": "34f3719e-0bb9-417e-a2da-387cad370848",
+                  "name": "Unauthorized access",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "br",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/transcriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "transcriptions"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-34f3719e-0bb9-417e-a2da-387cad370848"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "text/plain"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "mt",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"false\"}",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "string",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "4ebfbc92-f5d2-42af-8f8b-77a843e1565d",
-              "name": "Service Temporarily Unavailable",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "transcriptions"
+                  "id": "cb9a4fec-e209-42c1-9056-6acb4fb849f1",
+                  "name": "Not found - model does not exist or wrong endpoint called",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "br",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/transcriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "transcriptions"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-cb9a4fec-e209-42c1-9056-6acb4fb849f1"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "text/plain"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "mt",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"false\"}",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Service Unavailable",
-              "code": 503,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "id": "269a87de-0eae-48a4-852f-e6b2a8851430",
+                  "name": "Request timeout",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "br",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/transcriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "transcriptions"
+                      ]
+                    }
+                  },
+                  "status": "Request Timeout",
+                  "code": 408,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-269a87de-0eae-48a4-852f-e6b2a8851430"
+                },
+                {
+                  "id": "1d7ae495-5007-439d-a958-f356ddb8e043",
+                  "name": "Gone - model is no longer available (deprecated or removed)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "br",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/transcriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "transcriptions"
+                      ]
+                    }
+                  },
+                  "status": "Gone",
+                  "code": 410,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-1d7ae495-5007-439d-a958-f356ddb8e043"
+                },
+                {
+                  "id": "71ab0b18-0342-4a6b-99c2-78e800207912",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "br",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/transcriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "transcriptions"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-71ab0b18-0342-4a6b-99c2-78e800207912"
+                },
+                {
+                  "id": "5c0459a6-807b-4dad-a380-99ca42893b37",
+                  "name": "Internal Server Error. Unexpected issue on server side.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/plain"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "br",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/transcriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "transcriptions"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<string>",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-5c0459a6-807b-4dad-a380-99ca42893b37"
+                },
+                {
+                  "id": "6d5ca674-529c-4ce3-8b87-86dbe61c4b54",
+                  "name": "Service Temporarily Unavailable",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/plain"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "br",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/transcriptions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "transcriptions"
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<string>",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-6d5ca674-529c-4ce3-8b87-86dbe61c4b54"
                 }
               ],
-              "body": "Service Temporarily Unavailable",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "createdAt": "2026-10-22T01:50:20.000Z",
+              "updatedAt": "2026-10-22T01:50:20.000Z",
+              "uid": "35240-fbde9230-0ece-44ed-ac89-1b90e6515a07"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "ae4a77b8-dd50-452a-b850-0beb417e904b",
+          "createdAt": "2026-10-22T01:50:20.000Z",
+          "updatedAt": "2026-10-22T01:50:20.000Z",
+          "uid": "35240-ae4a77b8-dd50-452a-b850-0beb417e904b"
         },
         {
-          "id": "8f57ed53-6a07-4043-bca9-69d995f37421",
-          "name": "Translate audio into English.",
-          "request": {
-            "name": "Translate audio into English.",
-            "description": {},
-            "url": {
-              "path": [
-                "audio",
-                "translations"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "multipart/form-data"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "0",
-                  "value": "<",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "1",
-                  "value": "o",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "2",
-                  "value": "b",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "3",
-                  "value": "j",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "4",
-                  "value": "e",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "5",
-                  "value": "c",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "6",
-                  "value": "t",
-                  "type": "text",
-                  "description": ""
-                },
-                {
-                  "key": "7",
-                  "value": ">",
-                  "type": "text",
-                  "description": ""
-                }
-              ]
-            }
-          },
-          "response": [
+          "name": "translations",
+          "item": [
             {
-              "id": "b696444d-387b-4f5f-b58d-ff960a1a5c26",
-              "name": "Successful Response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "translations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+              "name": "Translate audio into English",
+              "id": "40b0ca39-ee1d-4543-aab3-88f7a90cf946",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "formdata",
                   "formdata": [
                     {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
+                      "description": "(Required) ",
                       "key": "model",
-                      "value": "string",
+                      "value": "<string>",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
+                      "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
                       "key": "file",
-                      "value": "string",
-                      "type": "text"
+                      "type": "file",
+                      "value": null
                     },
                     {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
+                      "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
                       "key": "prompt",
-                      "value": "string",
+                      "value": "<string>",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
+                      "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
                       "key": "language",
-                      "value": "sv",
+                      "value": "ba",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
+                      "description": "Output format JSON or text. (This can only be one of json,text)",
                       "key": "response_format",
                       "value": "json",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
+                      "description": "Enables streaming responses. (This can only be one of true,false)",
                       "key": "stream",
                       "value": "false",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
+                      "description": "Optional settings that apply when `stream` is true.",
                       "key": "stream_options",
-                      "value": "{\"include_usage\":\"true\"}",
+                      "value": "[object Object]",
                       "type": "text"
                     }
                   ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"text\": \"It's a sound effect of a bell chiming, specifically a church bell.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9084dee4-7f70-496b-8d06-8edb84f8a09d",
-              "name": "Bad Request - Missing or invalid parameters",
-              "originalRequest": {
+                },
                 "url": {
-                  "path": [
-                    "audio",
-                    "translations"
-                  ],
+                  "raw": "{{baseUrl}}/audio/translations",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "text/plain"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "sv",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"true\"}",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"message\": \"you must provide a model parameter\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  },\n  \"request_id\": \"a4fa849e\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "6bdcfdfa-9f2e-4b0a-89dc-75ee9d0c39c1",
-              "name": "Unauthorized access",
-              "originalRequest": {
-                "url": {
                   "path": [
                     "audio",
                     "translations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "sv",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"true\"}",
-                      "type": "text"
-                    }
                   ]
                 }
               },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: *****. You can find your API key at https://cloud.sambanova.ai/apis.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"invalid_api_key\"\n  },\n  \"request_id\": \"d79vcq57os633dverhi0\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "bc4f8eb2-e872-4c53-b12b-afcca0832be5",
-              "name": "Not found - model does not exist or wrong endpoint called",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "translations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
+                  "id": "fd437951-03d1-4122-8821-51f7f7503346",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
                       },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
                       },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "ba",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
                     },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "sv",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"true\"}",
-                      "type": "text"
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/translations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "translations"
+                      ]
                     }
-                  ]
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"model_not_found\",\n    \"message\": \"The model `abc` does not exist or you do not have access to it.\",\n    \"param\": \"model\",\n    \"type\": \"invalid_request_error\"\n  },\n  \"request_id\": \"887a8227\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3d0daa4b-7d5d-459f-bff8-8e935bef0927",
-              "name": "Request timeout",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "translations"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "sv",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"true\"}",
-                      "type": "text"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
-                  ]
-                }
-              },
-              "status": "Request Timeout",
-              "code": 408,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "61717388-28da-419a-b909-f4a9055ccca1",
-              "name": "Gone - model is no longer available (deprecated or removed)",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "translations"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"text\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-fd437951-03d1-4122-8821-51f7f7503346"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "sv",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"true\"}",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Gone",
-              "code": 410,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a786c53b-1358-47cf-bc8f-3b45fbb23fc2",
-              "name": "Too Many Requests",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "translations"
+                  "id": "2b691c0b-b066-4d08-930a-6be068d59d11",
+                  "name": "Bad Request - Missing or invalid parameters",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/plain"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "ba",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/translations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "translations"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-2b691c0b-b066-4d08-930a-6be068d59d11"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "sv",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"true\"}",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"param\": \"string\",\n    \"type\": \"string\",\n    \"error_model_output\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2dddd4ea-d319-4641-8963-643f23973482",
-              "name": "Internal Server Error. Unexpected issue on server side.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "translations"
+                  "id": "0c74b201-2369-42c4-9eec-a2c24990ef32",
+                  "name": "Unauthorized access",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "ba",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/translations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "translations"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-0c74b201-2369-42c4-9eec-a2c24990ef32"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "text/plain"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "sv",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"true\"}",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "string",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "e1eb9051-7a41-49f6-a3d8-ef593379773f",
-              "name": "Service Temporarily Unavailable",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "audio",
-                    "translations"
+                  "id": "bc8d5fde-eae6-40b4-a7af-ab6359d7703d",
+                  "name": "Not found - model does not exist or wrong endpoint called",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "ba",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/translations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "translations"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-bc8d5fde-eae6-40b4-a7af-ab6359d7703d"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "text/plain"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "model",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "(Required) ",
-                        "type": "text/plain"
-                      },
-                      "key": "file",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "prompt",
-                      "value": "string",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "language",
-                      "value": "sv",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "response_format",
-                      "value": "json",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream",
-                      "value": "false",
-                      "type": "text"
-                    },
-                    {
-                      "description": {
-                        "content": "",
-                        "type": "text/plain"
-                      },
-                      "key": "stream_options",
-                      "value": "{\"include_usage\":\"true\"}",
-                      "type": "text"
-                    }
-                  ]
-                }
-              },
-              "status": "Service Unavailable",
-              "code": 503,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "id": "5c6abf79-8e9d-4eb2-9ec1-8afac5fdd42c",
+                  "name": "Request timeout",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "ba",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/translations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "translations"
+                      ]
+                    }
+                  },
+                  "status": "Request Timeout",
+                  "code": 408,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-5c6abf79-8e9d-4eb2-9ec1-8afac5fdd42c"
+                },
+                {
+                  "id": "9e75fd30-42c6-4984-8661-437dbebd7eb5",
+                  "name": "Gone - model is no longer available (deprecated or removed)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "ba",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/translations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "translations"
+                      ]
+                    }
+                  },
+                  "status": "Gone",
+                  "code": 410,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-9e75fd30-42c6-4984-8661-437dbebd7eb5"
+                },
+                {
+                  "id": "a3b35e7f-62d7-48f3-907f-ee7d4b296f2c",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "ba",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/translations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "translations"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-a3b35e7f-62d7-48f3-907f-ee7d4b296f2c"
+                },
+                {
+                  "id": "8887c440-eab6-4615-88ca-9a9da620ce08",
+                  "name": "Internal Server Error. Unexpected issue on server side.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/plain"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "ba",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/translations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "translations"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<string>",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-8887c440-eab6-4615-88ca-9a9da620ce08"
+                },
+                {
+                  "id": "dbc8ceb7-911b-48e8-81e8-d11eabe13bf9",
+                  "name": "Service Temporarily Unavailable",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "text/plain"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "model",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) The audio file object to transcribe or translate, in one of these formats: FLAC, MP3, MP4, MPEG, MPGA, M4A, Ogg, WAV, or WebM format.  File size limit is 25MB.",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "Optional text prompt provided to influence transcription Translation style or vocabulary. Example: \u201cPlease transcribe carefully, including pauses and hesitations.\u201d",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional language of the input audio.  Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency. (This can only be one of en,zh,de,es,ru,ko,fr,ja,pt,tr,pl,ca,nl,ar,sv,it,id,hi,fi,vi,he,uk,el,ms,cs,ro,da,hu,ta,no,th,ur,hr,bg,lt,la,mi,ml,cy,sk,te,fa,lv,bn,sr,az,sl,kn,et,mk,br,eu,is,hy,ne,mn,bs,kk,sq,sw,gl,mr,pa,si,km,sn,yo,so,af,oc,ka,be,tg,sd,gu,am,yi,lo,uz,fo,ht,ps,tk,nn,mt,sa,lb,my,bo,tl,mg,as,tt,haw,ln,ha,ba,jw,su,yue)",
+                          "key": "language",
+                          "value": "ba",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Output format JSON or text. (This can only be one of json,text)",
+                          "key": "response_format",
+                          "value": "json",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Enables streaming responses. (This can only be one of true,false)",
+                          "key": "stream",
+                          "value": "false",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Optional settings that apply when `stream` is true.",
+                          "key": "stream_options",
+                          "value": "[object Object]",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/audio/translations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audio",
+                        "translations"
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "<string>",
+                  "createdAt": "2026-10-22T01:50:20.000Z",
+                  "updatedAt": "2026-10-22T01:50:20.000Z",
+                  "uid": "35240-dbc8ceb7-911b-48e8-81e8-d11eabe13bf9"
                 }
               ],
-              "body": "Service Temporarily Unavailable",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "createdAt": "2026-10-22T01:50:20.000Z",
+              "updatedAt": "2026-10-22T01:50:20.000Z",
+              "uid": "35240-40b0ca39-ee1d-4543-aab3-88f7a90cf946"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "45bfadf4-2d98-40d0-9437-ad1f394d231c",
+          "createdAt": "2026-10-22T01:50:20.000Z",
+          "updatedAt": "2026-10-22T01:50:20.000Z",
+          "uid": "35240-45bfadf4-2d98-40d0-9437-ad1f394d231c"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://chat.sambanova.ai/api",
-      "key": "baseUrl"
+      "id": "ae51033d-39c3-4fd5-8fbb-3e5d11dc3ae3",
+      "createdAt": "2026-10-22T01:50:20.000Z",
+      "updatedAt": "2026-10-22T01:50:20.000Z",
+      "uid": "35240-ae51033d-39c3-4fd5-8fbb-3e5d11dc3ae3"
     }
   ],
   "auth": {
@@ -2203,17 +1881,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "40772a26-6d59-4d6f-8fe4-7837a6b36bfd",
-    "name": "Sambanova Agents Service Audio API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Service for Sambanova agents\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.sambanova.ai/v1"
     }
-  }
+  ]
 }

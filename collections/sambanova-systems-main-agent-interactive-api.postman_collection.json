@@ -1,187 +1,214 @@
 {
+  "info": {
+    "_postman_id": "915d7f73-d1d1-456f-8cd7-fd1752405970",
+    "name": "Sambanova Agents Service Main Agent Interactive API",
+    "description": "Service for Sambanova agents\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:50:56.000Z",
+    "updatedAt": "2026-10-22T01:50:56.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-915d7f73-d1d1-456f-8cd7-fd1752405970"
+  },
   "item": [
     {
-      "id": "dfae184e-faa2-43e9-a1e3-958efd9fb170",
-      "name": "Main Agent Interactive",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "agent",
       "item": [
         {
-          "id": "77f2d626-6680-4af0-9598-38dc59c67c67",
-          "name": "Main Agent Interactive",
-          "request": {
-            "name": "Main Agent Interactive",
-            "description": {
-              "content": "The main agent is a general-purpose AI assistant that coordinates with specialized subagents (coding, financial analysis, deep research, and data science) to complete complex tasks. This interactive endpoint supports multi-turn conversations with persistent context.\n\nStep 1: Submit prompt, get thread_id and initial response.\nStep 2: Continue conversation with thread_id and resume=true.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "agent",
-                "mainagent",
-                "interactive"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{bearerToken}}"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"prompt\": \"<string>\",\n  \"resume\": false,\n  \"thread_id\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "mainagent",
+          "item": [
             {
-              "id": "10b3564c-34e2-4a9b-b1ce-c7baec531b18",
-              "name": "Successful Response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "agent",
-                    "mainagent",
-                    "interactive"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Create a bar chart for Q1 sales\",\n  \"resume\": false\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "interactive",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "Main Agent Interactive",
+                  "id": "db0e072e-fc28-46bb-9a04-9837c980008f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"prompt\": \"<string>\",\n  \"resume\": false,\n  \"thread_id\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/agent/mainagent/interactive",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "agent",
+                        "mainagent",
+                        "interactive"
+                      ]
+                    },
+                    "description": "The main agent is a general-purpose AI assistant that coordinates with specialized subagents (coding, financial analysis, deep research, and data science) to complete complex tasks. This interactive endpoint supports multi-turn conversations with persistent context.\n\nStep 1: Submit prompt, get thread_id and initial response.\nStep 2: Continue conversation with thread_id and resume=true."
+                  },
+                  "response": [
+                    {
+                      "id": "150a9f8a-ac8a-4a26-b31c-295e619b9bc2",
+                      "name": "Successful Response",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"prompt\": \"<string>\",\n  \"resume\": false,\n  \"thread_id\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/agent/mainagent/interactive",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "agent",
+                            "mainagent",
+                            "interactive"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"<string>\",\n  \"result\": \"<string>\",\n  \"artifacts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"thread_id\": \"<string>\"\n}",
+                      "createdAt": "2026-10-22T01:50:57.000Z",
+                      "updatedAt": "2026-10-22T01:50:57.000Z",
+                      "uid": "35240-150a9f8a-ac8a-4a26-b31c-295e619b9bc2"
+                    },
+                    {
+                      "id": "2e3259eb-1833-46f1-8d11-9caeef15bdb1",
+                      "name": "Validation Error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"prompt\": \"<string>\",\n  \"resume\": false,\n  \"thread_id\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/agent/mainagent/interactive",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "agent",
+                            "mainagent",
+                            "interactive"
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-10-22T01:50:57.000Z",
+                      "updatedAt": "2026-10-22T01:50:57.000Z",
+                      "uid": "35240-2e3259eb-1833-46f1-8d11-9caeef15bdb1"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T01:50:57.000Z",
+                  "updatedAt": "2026-10-22T01:50:57.000Z",
+                  "uid": "35240-db0e072e-fc28-46bb-9a04-9837c980008f"
                 }
               ],
-              "body": "{\n  \"status\": \"success\",\n  \"result\": \"I've created the bar chart...\",\n  \"artifacts\": [\n    \"file-id-123\"\n  ],\n  \"thread_id\": \"thread-abc\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5623189a-33a2-424b-9ed0-189cd31b8698",
-              "name": "Validation Error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "agent",
-                    "mainagent",
-                    "interactive"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Create a bar chart for Q1 sales\",\n  \"resume\": false\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
-              "code": 422,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "0f92443f-1f40-41a3-a728-1fa6fc97b2d9",
+              "createdAt": "2026-10-22T01:50:57.000Z",
+              "updatedAt": "2026-10-22T01:50:57.000Z",
+              "uid": "35240-0f92443f-1f40-41a3-a728-1fa6fc97b2d9"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "5a765f5b-1690-4be2-866d-8ded139e0f8b",
+          "createdAt": "2026-10-22T01:50:57.000Z",
+          "updatedAt": "2026-10-22T01:50:57.000Z",
+          "uid": "35240-5a765f5b-1690-4be2-866d-8ded139e0f8b"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://chat.sambanova.ai/api",
-      "key": "baseUrl"
+      "id": "0de0120c-a3cf-40ac-8525-c16735fcb155",
+      "createdAt": "2026-10-22T01:50:57.000Z",
+      "updatedAt": "2026-10-22T01:50:57.000Z",
+      "uid": "35240-0de0120c-a3cf-40ac-8525-c16735fcb155"
     }
   ],
   "auth": {
@@ -189,17 +216,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "4ab6214f-c750-4f88-ac26-557e6325ba84",
-    "name": "Sambanova Agents Service Audio Main Agent Interactive API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Service for Sambanova agents\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://chat.sambanova.ai/api"
     }
-  }
+  ]
 }

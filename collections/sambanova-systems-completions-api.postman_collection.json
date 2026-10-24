@@ -1,29 +1,36 @@
 {
+  "info": {
+    "_postman_id": "01837451-0e33-43fd-a5be-d958bc20538c",
+    "name": "SambaNova cloud Completions API",
+    "description": "SambaNova cloud API Specification\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:50:33.000Z",
+    "updatedAt": "2026-10-22T01:50:33.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-01837451-0e33-43fd-a5be-d958bc20538c"
+  },
   "item": [
     {
-      "id": "28ad6353-28c8-45c5-b529-33c86ab59bdf",
-      "name": "Completions",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "completions",
       "item": [
         {
-          "id": "935afb77-6ac9-4623-bd78-db7f38fab45b",
           "name": "Create completion",
+          "id": "917cf8f1-da03-44c5-bcc0-ea546aa8b8d3",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Create completion",
-            "description": {},
-            "url": {
-              "path": [
-                "completions"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
             },
+            "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
@@ -34,502 +41,541 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{bearerToken}}"
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\"\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": \"<object>\",\n  \"seed\": \"<integer>\"\n}",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"sitd\": -39106374\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": {},\n  \"seed\": \"<integer>\"\n}",
               "options": {
                 "raw": {
+                  "headerFamily": "json",
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/completions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "completions"
+              ]
             }
           },
           "response": [
             {
-              "id": "c1e8a139-9f76-450d-8852-d094874338f5",
+              "id": "c2febbaf-531b-4db8-ac26-de87bf4115d2",
               "name": "Successful Response",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "completions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n  \"max_tokens\": 2048,\n  \"model\": \"gpt-oss-120b\",\n  \"stream\": false,\n  \"temperature\": 0.7,\n  \"top_p\": 1\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"sitd\": -39106374\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": {},\n  \"seed\": \"<integer>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
                 }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"choices\": [\n    {\n      \"finish_reason\": \"length\",\n      \"index\": 963,\n      \"text\": \"string\",\n      \"message\": {\n        \"role\": \"tool\",\n        \"content\": \"string\",\n        \"tool_calls\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"logprobs\": {\n        \"content\": [\n          {\n            \"token\": \" Hello\",\n            \"logprob\": -0.00012340000000000002,\n            \"bytes\": [\n              32,\n              72,\n              101,\n              108,\n              108,\n              111\n            ],\n            \"top_logprobs\": [\n              {\n                \"token\": \" Hello\",\n                \"logprob\": -0.00012340000000000002,\n                \"bytes\": [\n                  32,\n                  72,\n                  101,\n                  108,\n                  108,\n                  111\n                ]\n              },\n              {\n                \"token\": \" Hi\",\n                \"logprob\": -8.243,\n                \"bytes\": [\n                  32,\n                  72,\n                  105\n                ]\n              }\n            ]\n          },\n          {\n            \"token\": \"!\",\n            \"logprob\": -0.0023456,\n            \"bytes\": [\n              33\n            ],\n            \"top_logprobs\": [\n              {\n                \"token\": \"!\",\n                \"logprob\": -0.0023456,\n                \"bytes\": [\n                  33\n                ]\n              },\n              {\n                \"token\": \",\",\n                \"logprob\": -6.712,\n                \"bytes\": [\n                  44\n                ]\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"created\": 2539.1494795109916,\n  \"id\": \"string\",\n  \"model\": \"string\",\n  \"object\": \"chat.completion\",\n  \"system_fingerprint\": \"string\",\n  \"usage\": {\n    \"completion_tokens\": 260,\n    \"completion_tokens_after_first_per_sec\": 422.79282728043336,\n    \"completion_tokens_after_first_per_sec_first_ten\": 423.6108998455803,\n    \"completion_tokens_after_first_per_sec_graph\": 423.6108998455803,\n    \"completion_tokens_per_sec\": 314.53312043711406,\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": 55\n    },\n    \"end_time\": 1776189309.02061,\n    \"is_last_response\": true,\n    \"prompt_tokens\": 90,\n    \"prompt_tokens_details\": {\n      \"cached_tokens\": 0\n    },\n    \"start_time\": 1776189308.193988,\n    \"stop_reason\": \"stop\",\n    \"time_to_first_token\": 0.21402883529663086,\n    \"time_to_first_token_graph\": 0.2102978229522705,\n    \"total_latency\": 0.8266220092773438,\n    \"total_tokens\": 350,\n    \"total_tokens_per_sec\": 423.40996981919204\n  }\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"choices\": [\n    {\n      \"finish_reason\": \"stop\",\n      \"index\": \"<integer>\",\n      \"text\": \"<string>\",\n      \"message\": {\n        \"role\": \"user\",\n        \"content\": \"<string>\",\n        \"tool_calls\": [\n          {\n            \"function\": {\n              \"name\": \"<string>\",\n              \"arguments\": \"<string>\",\n              \"et34f\": false\n            },\n            \"id\": \"<string>\",\n            \"type\": \"function\",\n            \"index\": \"<integer>\"\n          },\n          {\n            \"function\": {\n              \"name\": \"<string>\",\n              \"arguments\": \"<string>\",\n              \"et_1c7\": \"et u\",\n              \"reprehenderit_b97\": true,\n              \"occaecatce\": \"consectetur eu\"\n            },\n            \"id\": \"<string>\",\n            \"type\": \"function\",\n            \"index\": \"<integer>\"\n          }\n        ]\n      },\n      \"logprobs\": {\n        \"content\": {\n          \"token\": \"<string>\",\n          \"logprob\": \"<number>\",\n          \"top_logprobs\": {\n            \"token\": \"<string>\",\n            \"logprob\": \"<number>\",\n            \"bytes\": [\n              \"<integer>\",\n              \"<integer>\"\n            ]\n          },\n          \"bytes\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      }\n    }\n  ],\n  \"created\": \"<number>\",\n  \"id\": \"<string>\",\n  \"model\": \"<string>\",\n  \"object\": \"chat.completion\",\n  \"system_fingerprint\": \"<string>\",\n  \"usage\": {\n    \"acceptance_rate\": \"<number>\",\n    \"completion_tokens\": \"<integer>\",\n    \"completion_tokens_after_first_per_sec\": \"<number>\",\n    \"completion_tokens_after_first_per_sec_first_ten\": \"<number>\",\n    \"completion_tokens_after_first_per_sec_graph\": \"<number>\",\n    \"completion_tokens_per_sec\": \"<number>\",\n    \"end_time\": \"<number>\",\n    \"is_last_response\": \"<boolean>\",\n    \"prompt_tokens_details\": {\n      \"cached_tokens\": \"<integer>\",\n      \"pariatur0\": \"anim velit ipsum reprehenderit Ut\"\n    },\n    \"prompt_tokens\": \"<integer>\",\n    \"start_time\": \"<number>\",\n    \"time_to_first_token\": \"<number>\",\n    \"time_to_first_token_graph\": \"<number>\",\n    \"stop_reason\": \"<string>\",\n    \"completion_tokens_details\": {\n      \"reasoning_tokens\": \"<integer>\",\n      \"ine_\": \"aliquip culpa sit\",\n      \"laboris_597\": \"sed ullamco id\",\n      \"do2_e\": \"proident id est veniam anim\"\n    },\n    \"total_latency\": \"<number>\",\n    \"total_tokens\": \"<integer>\",\n    \"total_tokens_per_sec\": \"<number>\",\n    \"Duis_7a_\": \"deserunt magna sed amet\"\n  }\n}",
+              "createdAt": "2026-10-22T01:50:34.000Z",
+              "updatedAt": "2026-10-22T01:50:34.000Z",
+              "uid": "35240-c2febbaf-531b-4db8-ac26-de87bf4115d2"
             },
             {
-              "id": "131e608c-87c8-4df0-a68e-99942ba5081e",
+              "id": "bd0f220d-8bd8-43df-ae4d-490db3869a0a",
               "name": "Bad Request - Missing or invalid parameters",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "completions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "text/plain"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n  \"max_tokens\": 2048,\n  \"model\": \"gpt-oss-120b\",\n  \"stream\": false,\n  \"temperature\": 0.7,\n  \"top_p\": 1\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"sitd\": -39106374\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": {},\n  \"seed\": \"<integer>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
                 }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"message\": \"you must provide a model parameter\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  },\n  \"request_id\": \"a4fa849e\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:50:34.000Z",
+              "updatedAt": "2026-10-22T01:50:34.000Z",
+              "uid": "35240-bd0f220d-8bd8-43df-ae4d-490db3869a0a"
             },
             {
-              "id": "f88dd2e9-7297-4b13-b25b-2c24c12cc114",
+              "id": "6db02380-3384-4d73-adb1-6ee068fbe7f3",
               "name": "Unauthorized access",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "completions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n  \"max_tokens\": 2048,\n  \"model\": \"gpt-oss-120b\",\n  \"stream\": false,\n  \"temperature\": 0.7,\n  \"top_p\": 1\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"sitd\": -39106374\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": {},\n  \"seed\": \"<integer>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: *****. You can find your API key at https://cloud.sambanova.ai/apis.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"invalid_api_key\"\n  },\n  \"request_id\": \"d79vcq57os633dverhi0\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:50:34.000Z",
+              "updatedAt": "2026-10-22T01:50:34.000Z",
+              "uid": "35240-6db02380-3384-4d73-adb1-6ee068fbe7f3"
             },
             {
-              "id": "756a773e-ca44-4e0b-b08a-e33a55db6665",
+              "id": "25abe93a-99d7-4453-a93c-4d688201a139",
               "name": "Not found - model does not exist or wrong endpoint called",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "completions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n  \"max_tokens\": 2048,\n  \"model\": \"gpt-oss-120b\",\n  \"stream\": false,\n  \"temperature\": 0.7,\n  \"top_p\": 1\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"sitd\": -39106374\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": {},\n  \"seed\": \"<integer>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
                 }
               },
               "status": "Not Found",
               "code": 404,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"code\": \"model_not_found\",\n    \"message\": \"The model `abc` does not exist or you do not have access to it.\",\n    \"param\": \"model\",\n    \"type\": \"invalid_request_error\"\n  },\n  \"request_id\": \"887a8227\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:50:34.000Z",
+              "updatedAt": "2026-10-22T01:50:34.000Z",
+              "uid": "35240-25abe93a-99d7-4453-a93c-4d688201a139"
             },
             {
-              "id": "893dac64-fd5c-468e-ba40-dd3b041d62e4",
+              "id": "bf935b48-7710-4f88-b087-5b7b3bda2c7e",
               "name": "Request timeout",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "completions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n  \"max_tokens\": 2048,\n  \"model\": \"gpt-oss-120b\",\n  \"stream\": false,\n  \"temperature\": 0.7,\n  \"top_p\": 1\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"sitd\": -39106374\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": {},\n  \"seed\": \"<integer>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
                 }
               },
               "status": "Request Timeout",
               "code": 408,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:50:34.000Z",
+              "updatedAt": "2026-10-22T01:50:34.000Z",
+              "uid": "35240-bf935b48-7710-4f88-b087-5b7b3bda2c7e"
             },
             {
-              "id": "1fc3aed7-ede4-4d39-b287-08c8bad2131b",
+              "id": "4506070d-31e3-4282-b075-175c148b38e9",
               "name": "Gone - model is no longer available (deprecated or removed)",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "completions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n  \"max_tokens\": 2048,\n  \"model\": \"gpt-oss-120b\",\n  \"stream\": false,\n  \"temperature\": 0.7,\n  \"top_p\": 1\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"sitd\": -39106374\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": {},\n  \"seed\": \"<integer>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
                 }
               },
               "status": "Gone",
               "code": 410,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:50:34.000Z",
+              "updatedAt": "2026-10-22T01:50:34.000Z",
+              "uid": "35240-4506070d-31e3-4282-b075-175c148b38e9"
             },
             {
-              "id": "c4917043-d3dc-4ecb-a128-5c4bb0319031",
+              "id": "dd8c3d5c-e49f-4580-b5a6-7af5aa2b117f",
               "name": "Too Many Requests",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "completions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n  \"max_tokens\": 2048,\n  \"model\": \"gpt-oss-120b\",\n  \"stream\": false,\n  \"temperature\": 0.7,\n  \"top_p\": 1\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"sitd\": -39106374\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": {},\n  \"seed\": \"<integer>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
                 }
               },
               "status": "Too Many Requests",
               "code": 429,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"param\": \"string\",\n    \"type\": \"string\",\n    \"error_model_output\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:50:34.000Z",
+              "updatedAt": "2026-10-22T01:50:34.000Z",
+              "uid": "35240-dd8c3d5c-e49f-4580-b5a6-7af5aa2b117f"
             },
             {
-              "id": "48f1fc9e-8996-44b5-9c7f-26424fdd054d",
+              "id": "7d38d075-512c-46bb-9f7a-70c21850a66e",
               "name": "Internal Server Error. Unexpected issue on server side.",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "completions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "text/plain"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n  \"max_tokens\": 2048,\n  \"model\": \"gpt-oss-120b\",\n  \"stream\": false,\n  \"temperature\": 0.7,\n  \"top_p\": 1\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"sitd\": -39106374\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": {},\n  \"seed\": \"<integer>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
                 }
               },
               "status": "Internal Server Error",
               "code": 500,
+              "_postman_previewlanguage": "text",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "text/plain"
                 }
               ],
-              "body": "string",
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": "<string>",
+              "createdAt": "2026-10-22T01:50:34.000Z",
+              "updatedAt": "2026-10-22T01:50:34.000Z",
+              "uid": "35240-7d38d075-512c-46bb-9f7a-70c21850a66e"
             },
             {
-              "id": "1865d5a4-0471-4f34-b988-aa4bae7ee344",
+              "id": "d00fb858-f19c-4b99-9288-fe0ab8720347",
               "name": "Service Temporarily Unavailable",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "completions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "text/plain"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|> create a poem using palindromes<|eot_id|><|start_header_id|>assistant<|end_header_id|>\",\n  \"max_tokens\": 2048,\n  \"model\": \"gpt-oss-120b\",\n  \"stream\": false,\n  \"temperature\": 0.7,\n  \"top_p\": 1\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 0,\n  \"do_sample\": \"<boolean>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"sitd\": -39106374\n  },\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"n\": 1,\n  \"logit_bias\": {},\n  \"seed\": \"<integer>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/completions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "completions"
+                  ]
                 }
               },
               "status": "Service Unavailable",
               "code": 503,
+              "_postman_previewlanguage": "text",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "text/plain"
                 }
               ],
-              "body": "Service Temporarily Unavailable",
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": "<string>",
+              "createdAt": "2026-10-22T01:50:34.000Z",
+              "updatedAt": "2026-10-22T01:50:34.000Z",
+              "uid": "35240-d00fb858-f19c-4b99-9288-fe0ab8720347"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T01:50:34.000Z",
+          "updatedAt": "2026-10-22T01:50:34.000Z",
+          "uid": "35240-917cf8f1-da03-44c5-bcc0-ea546aa8b8d3"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://chat.sambanova.ai/api",
-      "key": "baseUrl"
+      "id": "f7b655be-a050-4917-9908-71f6db9140c7",
+      "createdAt": "2026-10-22T01:50:34.000Z",
+      "updatedAt": "2026-10-22T01:50:34.000Z",
+      "uid": "35240-f7b655be-a050-4917-9908-71f6db9140c7"
     }
   ],
   "auth": {
@@ -537,17 +583,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "89f730af-0b18-492b-8f08-85e04d4d25de",
-    "name": "Sambanova Agents Service Audio Completions API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Service for Sambanova agents\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.sambanova.ai/v1"
     }
-  }
+  ]
 }

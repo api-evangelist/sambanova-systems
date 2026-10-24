@@ -1,703 +1,760 @@
 {
+  "info": {
+    "_postman_id": "3fb366a5-ebe7-4ff1-b0f7-0f1b7e3bee46",
+    "name": "Sambanova Agents Service Subagents API",
+    "description": "Service for Sambanova agents\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:51:22.000Z",
+    "updatedAt": "2026-10-22T01:51:23.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3fb366a5-ebe7-4ff1-b0f7-0f1b7e3bee46"
+  },
   "item": [
     {
-      "id": "7db9e9e5-0b8d-49aa-90bf-cabf3d650b71",
-      "name": "Subagents",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "agent",
       "item": [
         {
-          "id": "aefc2e86-d9e1-4d9d-83c4-a48916d2f679",
-          "name": "Coding Agent",
-          "request": {
-            "name": "Coding Agent",
-            "description": {
-              "content": "The coding agent executes Python code in a sandboxed environment, fixes errors, and returns results. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "agent",
-                "coding"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{bearerToken}}"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"prompt\": \"<string>\",\n  \"code\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "coding",
+          "item": [
             {
-              "id": "de584e2a-a111-40f3-9749-9680ab8c4421",
-              "name": "Successful Response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "agent",
-                    "coding"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+              "name": "Coding Agent",
+              "id": "308e950b-5342-4973-aa66-4b2c62d35658",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
                 },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Run this code and explain the output\",\n  \"code\": \"import numpy as np\\nimport matplotlib.pyplot as plt\\n\\nx = np.linspace(0, 2 * np.pi, 100)\\ny = np.sin(x)\\nplt.plot(x, y)\\nplt.savefig(\\\"sine_wave.png\\\")\\nprint(\\\"Chart created!\\\")\\n\"\n}",
+                  "raw": "{\n  \"prompt\": \"<string>\",\n  \"code\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"success\",\n  \"result\": \"I've created the bar chart...\",\n  \"artifacts\": [\n    \"file-id-123\"\n  ],\n  \"thread_id\": \"thread-abc\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8f8d98ae-9a31-45b8-b44d-9ed2dbc97fe9",
-              "name": "Validation Error",
-              "originalRequest": {
+                },
                 "url": {
-                  "path": [
-                    "agent",
-                    "coding"
-                  ],
+                  "raw": "{{baseUrl}}/agent/coding",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": []
+                  "path": [
+                    "agent",
+                    "coding"
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Run this code and explain the output\",\n  \"code\": \"import numpy as np\\nimport matplotlib.pyplot as plt\\n\\nx = np.linspace(0, 2 * np.pi, 100)\\ny = np.sin(x)\\nplt.plot(x, y)\\nplt.savefig(\\\"sine_wave.png\\\")\\nprint(\\\"Chart created!\\\")\\n\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
+                "description": "The coding agent executes Python code in a sandboxed environment, fixes errors, and returns results. This fire-and-forget endpoint submits a prompt and returns the final response in a single call."
               },
-              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
-              "code": 422,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "f023fc95-39f4-4f10-8852-403d12f584fc",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"prompt\": \"<string>\",\n  \"code\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/agent/coding",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "agent",
+                        "coding"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"status\": \"<string>\",\n  \"result\": \"<string>\",\n  \"artifacts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"thread_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:23.000Z",
+                  "updatedAt": "2026-10-22T01:51:23.000Z",
+                  "uid": "35240-f023fc95-39f4-4f10-8852-403d12f584fc"
+                },
+                {
+                  "id": "d547498f-75cb-47f7-bc77-53c7f15051e7",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"prompt\": \"<string>\",\n  \"code\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/agent/coding",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "agent",
+                        "coding"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:51:23.000Z",
+                  "updatedAt": "2026-10-22T01:51:23.000Z",
+                  "uid": "35240-d547498f-75cb-47f7-bc77-53c7f15051e7"
                 }
               ],
-              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T01:51:23.000Z",
+              "updatedAt": "2026-10-22T01:51:23.000Z",
+              "uid": "35240-308e950b-5342-4973-aa66-4b2c62d35658"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "3653d774-b122-4683-ab25-3620c3bbeb37",
+          "createdAt": "2026-10-22T01:51:23.000Z",
+          "updatedAt": "2026-10-22T01:51:23.000Z",
+          "uid": "35240-3653d774-b122-4683-ab25-3620c3bbeb37"
         },
         {
-          "id": "152fd5b0-6ae0-42e4-b135-9d59f501a616",
-          "name": "Datascience Agent And Report",
-          "request": {
-            "name": "Datascience Agent And Report",
-            "description": {
-              "content": "The data science agent analyzes datasets, generates visualizations, and produces comprehensive reports. This fire-and-forget endpoint submits a prompt and returns the final report in a single call.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "agent",
-                "datascience"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "multipart/form-data"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{bearerToken}}"
-                }
-              ]
-            },
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "prompt",
-                  "value": "<string>",
-                  "type": "text",
-                  "description": "(Required) The main prompt for the data science agent."
-                },
-                {
-                  "key": "files",
-                  "value": "[\"<binary>\",\"<binary>\"]",
-                  "type": "text",
-                  "description": "(Required) One or more files to be analyzed."
-                }
-              ]
-            }
-          },
-          "response": [
+          "name": "datascience",
+          "item": [
             {
-              "id": "bfcde81d-a4de-4c6e-b01b-8fa4116f3074",
-              "name": "Successful Response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "agent",
-                    "datascience"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+              "name": "Datascience Agent And Report",
+              "id": "1ab65ee2-394e-4871-9635-d91ddd96c41e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
                 },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "formdata",
                   "formdata": [
                     {
-                      "description": {
-                        "content": "(Required) The main prompt for the data science agent.",
-                        "type": "text/plain"
-                      },
+                      "description": "(Required) The main prompt for the data science agent.",
                       "key": "prompt",
                       "value": "<string>",
                       "type": "text"
                     },
                     {
-                      "description": {
-                        "content": "(Required) One or more files to be analyzed.",
-                        "type": "text/plain"
-                      },
+                      "description": "(Required) One or more files to be analyzed.",
                       "key": "files",
-                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "value": "<binary>,<binary>",
                       "type": "text"
                     }
                   ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"content_type\": \"text/html\",\n  \"title\": \"Data Science Analysis Report\",\n  \"html\": \"<!DOCTYPE html>\\n<html>\\n<head>\\n  <title>Data Science Analysis Report</title>\\n  <style>/* Professional styling */</style>\\n</head>\\n<body>\\n  <h1>Exploratory Data Analysis Report</h1>\\n  <h2>Dataset Overview</h2>\\n  <p>The dataset contains 1,000 rows and 15 columns...</p>\\n  <h2>Statistical Summary</h2>\\n  <table><!-- Summary statistics --></table>\\n  <h2>Visualizations</h2>\\n  <img src=\\\"data:image/png;base64,...\\\" alt=\\\"Distribution Plot\\\">\\n  <img src=\\\"data:image/png;base64,...\\\" alt=\\\"Correlation Heatmap\\\">\\n  <h2>Key Findings</h2>\\n  <ul>\\n    <li>Strong correlation between features X and Y</li>\\n    <li>Missing values detected in column Z</li>\\n  </ul>\\n</body>\\n</html>\\n\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f5ed4d32-1585-43e3-b609-4e7ff8de1a34",
-              "name": "Validation Error",
-              "originalRequest": {
+                },
                 "url": {
+                  "raw": "{{baseUrl}}/agent/datascience",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "agent",
                     "datascience"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
+                "description": "The data science agent analyzes datasets, generates visualizations, and produces comprehensive reports. This fire-and-forget endpoint submits a prompt and returns the final report in a single call."
+              },
+              "response": [
+                {
+                  "id": "36153897-7cb9-47f0-a031-20de4f42fdac",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) The main prompt for the data science agent.",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) One or more files to be analyzed.",
+                          "key": "files",
+                          "value": "<binary>,<binary>",
+                          "type": "text"
+                        }
+                      ]
                     },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "url": {
+                      "raw": "{{baseUrl}}/agent/datascience",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "agent",
+                        "datascience"
+                      ]
+                    }
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "description": {
-                        "content": "(Required) The main prompt for the data science agent.",
-                        "type": "text/plain"
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"content_type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"html\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:23.000Z",
+                  "updatedAt": "2026-10-22T01:51:23.000Z",
+                  "uid": "35240-36153897-7cb9-47f0-a031-20de4f42fdac"
+                },
+                {
+                  "id": "f30f36e1-a1d9-44e0-95cb-33ca6beeb1a1",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
                       },
-                      "key": "prompt",
-                      "value": "<string>",
-                      "type": "text"
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) The main prompt for the data science agent.",
+                          "key": "prompt",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "(Required) One or more files to be analyzed.",
+                          "key": "files",
+                          "value": "<binary>,<binary>",
+                          "type": "text"
+                        }
+                      ]
                     },
+                    "url": {
+                      "raw": "{{baseUrl}}/agent/datascience",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "agent",
+                        "datascience"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "description": {
-                        "content": "(Required) One or more files to be analyzed.",
-                        "type": "text/plain"
-                      },
-                      "key": "files",
-                      "value": "[\"<binary>\",\"<binary>\"]",
-                      "type": "text"
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:51:23.000Z",
+                  "updatedAt": "2026-10-22T01:51:23.000Z",
+                  "uid": "35240-f30f36e1-a1d9-44e0-95cb-33ca6beeb1a1"
+                }
+              ],
+              "createdAt": "2026-10-22T01:51:23.000Z",
+              "updatedAt": "2026-10-22T01:51:23.000Z",
+              "uid": "35240-1ab65ee2-394e-4871-9635-d91ddd96c41e"
+            }
+          ],
+          "id": "2cc17131-efd4-408c-9c71-ad81c89b485e",
+          "createdAt": "2026-10-22T01:51:23.000Z",
+          "updatedAt": "2026-10-22T01:51:23.000Z",
+          "uid": "35240-2cc17131-efd4-408c-9c71-ad81c89b485e"
+        },
+        {
+          "name": "deepresearch",
+          "item": [
+            {
+              "name": "Deepresearch Agent",
+              "id": "4b38b5cf-040e-469d-ad13-60270279d11b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
                     }
                   ]
-                }
-              },
-              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
-              "code": 422,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "8c7230cd-ae10-456b-b1f5-10df87f8d961",
-          "name": "Deepresearch Agent",
-          "request": {
-            "name": "Deepresearch Agent",
-            "description": {
-              "content": "The deep research agent conducts multi-iteration research and produces comprehensive reports. This interactive endpoint uses a two-step workflow:\n\n1. Submit a prompt to receive a thread_id and research plan for approval\n2. Submit a prompt with thread_id and resume=true to generate the final report\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "agent",
-                "deepresearch"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{bearerToken}}"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"prompt\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "60b6cb87-9659-4b26-9474-0e34b8a01906",
-              "name": "Successful Response",
-              "originalRequest": {
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
+                  "raw": "{{baseUrl}}/agent/deepresearch",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "agent",
                     "deepresearch"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Conduct research on quantum computing advances in 2024\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
+                "description": "The deep research agent conducts multi-iteration research and produces comprehensive reports. This interactive endpoint uses a two-step workflow:\n\n1. Submit a prompt to receive a thread_id and research plan for approval\n2. Submit a prompt with thread_id and resume=true to generate the final report"
               },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "316bd1a7-2ccb-4106-ad9c-f7e5005ba780",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"prompt\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/agent/deepresearch",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "agent",
+                        "deepresearch"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"status\": \"<string>\",\n  \"result\": \"<string>\",\n  \"artifacts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"thread_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:23.000Z",
+                  "updatedAt": "2026-10-22T01:51:23.000Z",
+                  "uid": "35240-316bd1a7-2ccb-4106-ad9c-f7e5005ba780"
+                },
+                {
+                  "id": "26d2e2dd-c7a8-4090-8b70-458cb8b7db2c",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"prompt\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/agent/deepresearch",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "agent",
+                        "deepresearch"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:51:23.000Z",
+                  "updatedAt": "2026-10-22T01:51:23.000Z",
+                  "uid": "35240-26d2e2dd-c7a8-4090-8b70-458cb8b7db2c"
                 }
               ],
-              "body": "{\n  \"status\": \"success\",\n  \"result\": \"I've created the bar chart...\",\n  \"artifacts\": [\n    \"file-id-123\"\n  ],\n  \"thread_id\": \"thread-abc\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7156f538-c06f-4091-8eb7-c23d9dcde120",
-              "name": "Validation Error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "agent",
-                    "deepresearch"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Conduct research on quantum computing advances in 2024\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
-              "code": 422,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T01:51:23.000Z",
+              "updatedAt": "2026-10-22T01:51:23.000Z",
+              "uid": "35240-4b38b5cf-040e-469d-ad13-60270279d11b"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "81c4046e-a22d-4d0e-bec9-2f848005f5fd",
+          "createdAt": "2026-10-22T01:51:23.000Z",
+          "updatedAt": "2026-10-22T01:51:23.000Z",
+          "uid": "35240-81c4046e-a22d-4d0e-bec9-2f848005f5fd"
         },
         {
-          "id": "464026d9-92a6-4093-8949-1b8ac239b874",
-          "name": "Financial Analysis Agent",
-          "request": {
-            "name": "Financial Analysis Agent",
-            "description": {
-              "content": "The financial analysis agent analyzes stocks, companies, and market data. This fire-and-forget endpoint submits a prompt and returns the final response in a single call.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "agent",
-                "financialanalysis"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{bearerToken}}"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"prompt\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "financialanalysis",
+          "item": [
             {
-              "id": "ab181d36-c9cd-4aca-9b4a-45246dccd00b",
-              "name": "Successful Response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "agent",
-                    "financialanalysis"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
+              "name": "Financial Analysis Agent",
+              "id": "241795f5-d549-4a2e-852b-8483725e0e8a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
                 },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Perform a financial analysis of Apple\"\n}",
+                  "raw": "{\n  \"prompt\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"status\": \"success\",\n  \"result\": \"I've created the bar chart...\",\n  \"artifacts\": [\n    \"file-id-123\"\n  ],\n  \"thread_id\": \"thread-abc\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e772dc80-e1ab-4fb4-9875-e2b345178bab",
-              "name": "Validation Error",
-              "originalRequest": {
+                },
                 "url": {
-                  "path": [
-                    "agent",
-                    "financialanalysis"
-                  ],
+                  "raw": "{{baseUrl}}/agent/financialanalysis",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": []
+                  "path": [
+                    "agent",
+                    "financialanalysis"
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Perform a financial analysis of Apple\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
+                "description": "The financial analysis agent analyzes stocks, companies, and market data. This fire-and-forget endpoint submits a prompt and returns the final response in a single call."
               },
-              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
-              "code": 422,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "98ae72ff-9ebb-4f96-a81f-6234b15aa8c2",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"prompt\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/agent/financialanalysis",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "agent",
+                        "financialanalysis"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"status\": \"<string>\",\n  \"result\": \"<string>\",\n  \"artifacts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"thread_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:23.000Z",
+                  "updatedAt": "2026-10-22T01:51:23.000Z",
+                  "uid": "35240-98ae72ff-9ebb-4f96-a81f-6234b15aa8c2"
+                },
+                {
+                  "id": "c294a55c-42bc-427f-a07f-1d6696f26f6d",
+                  "name": "Validation Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"prompt\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/agent/financialanalysis",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "agent",
+                        "financialanalysis"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T01:51:23.000Z",
+                  "updatedAt": "2026-10-22T01:51:23.000Z",
+                  "uid": "35240-c294a55c-42bc-427f-a07f-1d6696f26f6d"
                 }
               ],
-              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T01:51:23.000Z",
+              "updatedAt": "2026-10-22T01:51:23.000Z",
+              "uid": "35240-241795f5-d549-4a2e-852b-8483725e0e8a"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "fd6429e5-2909-40c3-9efe-4d51fd30038c",
+          "createdAt": "2026-10-22T01:51:23.000Z",
+          "updatedAt": "2026-10-22T01:51:23.000Z",
+          "uid": "35240-fd6429e5-2909-40c3-9efe-4d51fd30038c"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://chat.sambanova.ai/api",
-      "key": "baseUrl"
+      "id": "29e872df-2b99-4fa6-9e57-c1ec8de42f46",
+      "createdAt": "2026-10-22T01:51:23.000Z",
+      "updatedAt": "2026-10-22T01:51:23.000Z",
+      "uid": "35240-29e872df-2b99-4fa6-9e57-c1ec8de42f46"
     }
   ],
   "auth": {
@@ -705,17 +762,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "a040f2de-67fa-471e-b996-59cb1d38bff8",
-    "name": "Sambanova Agents Service Audio Subagents API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Service for Sambanova agents\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://chat.sambanova.ai/api"
     }
-  }
+  ]
 }

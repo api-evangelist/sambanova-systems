@@ -1,243 +1,239 @@
 {
+  "info": {
+    "_postman_id": "51241498-3377-4b3f-87b3-7619a2176a9f",
+    "name": "SambaNova cloud Models API",
+    "description": "SambaNova cloud API Specification\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:51:11.000Z",
+    "updatedAt": "2026-10-22T01:51:11.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-51241498-3377-4b3f-87b3-7619a2176a9f"
+  },
   "item": [
     {
-      "id": "c63290c3-6c50-4e89-84d4-f2a197272635",
-      "name": "Models",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "models",
       "item": [
         {
-          "id": "0bd9afa2-114b-4f7b-a231-770f60236eca",
-          "name": "Get environment's available model list metadata",
-          "request": {
-            "name": "Get environment's available model list metadata",
-            "description": {},
-            "url": {
-              "path": [
-                "models"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "{model_id}",
+          "item": [
             {
-              "id": "199b93f8-6cd5-4e87-b66a-04dac50f30ef",
-              "name": "Successful Response",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "models"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+              "name": "Get environment's available model metadata",
+              "id": "355721e2-4b94-4ba0-944c-a5e874b6d2c0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/models/:model_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "models",
+                    ":model_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "02826536-8803-4555-a1ed-2e0790136bdb",
+                      "key": "model_id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
               },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "3a78a1ac-6d1a-41a0-a6f4-d6bc1f93ad6c",
+                  "name": "Successful Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/models/:model_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "models",
+                        ":model_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "model_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"object\": \"model\",\n  \"owned_by\": \"<string>\",\n  \"context_length\": \"<integer>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"sn_metadata\": {},\n  \"pricing\": {\n    \"prompt\": \"<number>\",\n    \"completion\": \"<number>\",\n    \"duration_per_hour\": \"<number>\"\n  }\n}",
+                  "createdAt": "2026-10-22T01:51:12.000Z",
+                  "updatedAt": "2026-10-22T01:51:12.000Z",
+                  "uid": "35240-3a78a1ac-6d1a-41a0-a6f4-d6bc1f93ad6c"
+                },
+                {
+                  "id": "1f5f937c-088e-490e-abdc-385281d92307",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/models/:model_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "models",
+                        ":model_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "model_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:12.000Z",
+                  "updatedAt": "2026-10-22T01:51:12.000Z",
+                  "uid": "35240-1f5f937c-088e-490e-abdc-385281d92307"
                 }
               ],
-              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"owned_by\": \"string\",\n      \"context_length\": 3655,\n      \"max_completion_tokens\": 9963,\n      \"sn_metadata\": {},\n      \"pricing\": {\n        \"prompt\": 5308.703273502185,\n        \"completion\": 7281.082457695602,\n        \"duration_per_hour\": 3028.784586308907,\n        \"key_0\": \"string\",\n        \"key_1\": 2131.521921897127,\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"model\",\n      \"owned_by\": \"string\",\n      \"context_length\": 8190,\n      \"max_completion_tokens\": 7975,\n      \"sn_metadata\": {},\n      \"pricing\": {\n        \"prompt\": 5122.264069968362,\n        \"completion\": 1939.0212153831365,\n        \"duration_per_hour\": 7293.824526885141\n      }\n    }\n  ],\n  \"object\": \"list\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T01:51:12.000Z",
+              "updatedAt": "2026-10-22T01:51:12.000Z",
+              "uid": "35240-355721e2-4b94-4ba0-944c-a5e874b6d2c0"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "087924cf-6282-475d-8652-7d101984ba55",
+          "createdAt": "2026-10-22T01:51:12.000Z",
+          "updatedAt": "2026-10-22T01:51:12.000Z",
+          "uid": "35240-087924cf-6282-475d-8652-7d101984ba55"
         },
         {
-          "id": "70c580b0-4616-460e-bef4-7ee00d15d572",
-          "name": "Get environment's available model metadata",
+          "name": "Get environment's available model list metadata",
+          "id": "dc29bc81-c45e-4a62-a5fd-0ed8dc9ff281",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Get environment's available model metadata",
-            "description": {},
-            "url": {
-              "path": [
-                "models",
-                ":model_id"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "model_id",
-                  "description": "(Required) "
-                }
-              ]
-            },
+            "method": "GET",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
+            "url": {
+              "raw": "{{baseUrl}}/models",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "models"
+              ]
+            }
           },
           "response": [
             {
-              "id": "f38c03cf-de56-4e54-abd7-c5c9ec8886cf",
+              "id": "9c2d65d2-78f8-42bf-a476-83cd0bbc578c",
               "name": "Successful Response",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "models",
-                    ":model_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "model_id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/models",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "models"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"string\",\n  \"object\": \"model\",\n  \"owned_by\": \"string\",\n  \"context_length\": 3563,\n  \"max_completion_tokens\": 8152,\n  \"sn_metadata\": {},\n  \"pricing\": {\n    \"prompt\": 2286.250094547919,\n    \"completion\": 8627.566175470907,\n    \"duration_per_hour\": 756.9117465642439,\n    \"key_0\": 7215\n  }\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b180b29a-d9fd-4225-884c-24e7938e4aa8",
-              "name": "Not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "models",
-                    ":model_id"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "model_id",
-                      "description": "(Required) "
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"error\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"object\": \"model\",\n      \"owned_by\": \"<string>\",\n      \"context_length\": \"<integer>\",\n      \"max_completion_tokens\": \"<integer>\",\n      \"sn_metadata\": {},\n      \"pricing\": {\n        \"prompt\": \"<number>\",\n        \"completion\": \"<number>\",\n        \"duration_per_hour\": \"<number>\",\n        \"dolorf3c\": 57605488.32288101,\n        \"deserunt3_b\": false,\n        \"Ut_0\": -49267412,\n        \"pariatur824\": 64561787\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"object\": \"model\",\n      \"owned_by\": \"<string>\",\n      \"context_length\": \"<integer>\",\n      \"max_completion_tokens\": \"<integer>\",\n      \"sn_metadata\": {},\n      \"pricing\": {\n        \"prompt\": \"<number>\",\n        \"completion\": \"<number>\",\n        \"duration_per_hour\": \"<number>\",\n        \"est_b0a\": false\n      }\n    }\n  ],\n  \"object\": \"list\"\n}",
+              "createdAt": "2026-10-22T01:51:12.000Z",
+              "updatedAt": "2026-10-22T01:51:12.000Z",
+              "uid": "35240-9c2d65d2-78f8-42bf-a476-83cd0bbc578c"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T01:51:12.000Z",
+          "updatedAt": "2026-10-22T01:51:12.000Z",
+          "uid": "35240-dc29bc81-c45e-4a62-a5fd-0ed8dc9ff281"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://chat.sambanova.ai/api",
-      "key": "baseUrl"
+      "id": "d7a5ab69-54ea-4936-9912-e935b1ac8936",
+      "createdAt": "2026-10-22T01:51:12.000Z",
+      "updatedAt": "2026-10-22T01:51:12.000Z",
+      "uid": "35240-d7a5ab69-54ea-4936-9912-e935b1ac8936"
     }
   ],
   "auth": {
@@ -245,17 +241,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "79149e8c-8f21-48c6-a1d1-3809538f9c7a",
-    "name": "Sambanova Agents Service Audio Models API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Service for Sambanova agents\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.sambanova.ai/v1"
     }
-  }
+  ]
 }

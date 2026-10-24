@@ -1,32 +1,36 @@
 {
+  "info": {
+    "_postman_id": "177fb5ce-70b3-4d5f-b4cf-6ef74ff904ae",
+    "name": "SambaNova cloud Responses API",
+    "description": "SambaNova cloud API Specification\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:51:17.000Z",
+    "updatedAt": "2026-10-22T01:51:18.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-177fb5ce-70b3-4d5f-b4cf-6ef74ff904ae"
+  },
   "item": [
     {
-      "id": "f48bb322-87c8-4696-84ff-8d6067785c81",
-      "name": "Responses",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "responses",
       "item": [
         {
-          "id": "4f0c5e20-12e3-4c32-8fdd-b82ce9a10b06",
           "name": "Create a model response",
+          "id": "73cb69e1-b6d4-4e71-8b00-c01fbd4d6bf3",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Create a model response",
-            "description": {
-              "content": "Creates a model response for the given input. Only `type: \"function\"` tools are supported; other tool types are filtered server-side. SambaNova is stateless, conversation history must be supplied in full via `input[]` on each request.",
-              "type": "text/plain"
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
             },
-            "url": {
-              "path": [
-                "responses"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
+            "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
@@ -37,502 +41,542 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{bearerToken}}"
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 3883.2436587386564,\n        \"key_1\": 5279.125078731896\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": 6156,\n        \"key_1\": true,\n        \"key_2\": 355,\n        \"key_3\": true\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"<string>\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"<string>\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"in_83\": true,\n        \"in_2_\": \"dolor elit sint eiusmod laboris\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"occaecat_430\": \"irure\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"anim9ce\": \"<string>\",\n    \"aliquip_56_\": \"<string>\",\n    \"nisi_885\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
               "options": {
                 "raw": {
+                  "headerFamily": "json",
                   "language": "json"
                 }
               }
-            }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/responses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "responses"
+              ]
+            },
+            "description": "Creates a model response for the given input. Only `type: \"function\"` tools are supported; other tool types are filtered server-side. SambaNova is stateless, conversation history must be supplied in full via `input[]` on each request."
           },
           "response": [
             {
-              "id": "27640bd3-76a1-4828-9d50-ed650a444b0e",
+              "id": "4634b9b2-4632-4399-aff5-7f3a8d8b6771",
               "name": "Successful response. Returns a ResponseResponse object (non-streaming), or a stream of server-sent ResponseStreamEvent object events ending with a response.completed event (when stream: true).",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "responses"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": 1024,\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": 5,\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"in_83\": true,\n        \"in_2_\": \"dolor elit sint eiusmod laboris\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"occaecat_430\": \"irure\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"anim9ce\": \"<string>\",\n    \"aliquip_56_\": \"<string>\",\n    \"nisi_885\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/responses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "responses"
+                  ]
                 }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"string\",\n  \"object\": \"response\",\n  \"status\": \"failed\",\n  \"created_at\": 4110,\n  \"model\": \"string\",\n  \"output\": [\n    {\n      \"type\": \"message\",\n      \"role\": \"user\",\n      \"content\": \"What is the weather in San Francisco?\"\n    },\n    {\n      \"type\": \"message\",\n      \"role\": \"user\",\n      \"content\": \"What is the weather in San Francisco?\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    }\n  ],\n  \"tool_choice\": \"none\",\n  \"truncation\": \"auto\",\n  \"parallel_tool_calls\": false,\n  \"background\": false,\n  \"metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"temperature\": 5758.434513019324,\n  \"top_p\": 9017.384615825316,\n  \"store\": false,\n  \"service_tier\": \"string\",\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  },\n  \"incomplete_details\": {\n    \"reason\": \"string\"\n  },\n  \"frequency_penalty\": 3295.616233271541,\n  \"presence_penalty\": 5453.361670163541,\n  \"user\": \"string\",\n  \"completed_at\": 2067,\n  \"usage\": {\n    \"input_tokens\": 248,\n    \"output_tokens\": 72,\n    \"total_tokens\": 320,\n    \"input_tokens_details\": {\n      \"cached_tokens\": 0\n    },\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 18\n    },\n    \"start_time\": 1737642515.445,\n    \"end_time\": 1737642515.904,\n    \"time_to_first_token\": 0.084,\n    \"total_latency\": 0.459,\n    \"output_tokens_per_sec\": 156.8,\n    \"output_tokens_after_first_per_sec\": 161.2,\n    \"total_tokens_per_sec\": 311.6,\n    \"acceptance_rate\": 4.06,\n    \"is_last_response\": true\n  },\n  \"instructions\": \"string\",\n  \"top_k\": 723,\n  \"max_tool_calls\": 5270,\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"high\",\n    \"summary\": \"string\"\n  },\n  \"max_output_tokens\": 3853,\n  \"top_logprobs\": 462,\n  \"previous_response_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<string>\",\n  \"object\": \"response\",\n  \"status\": \"in_progress\",\n  \"created_at\": \"<integer>\",\n  \"model\": \"<string>\",\n  \"output\": [\n    {\n      \"type\": \"message\",\n      \"role\": \"developer\",\n      \"content\": \"<string>\",\n      \"id\": \"<string>\",\n      \"status\": \"incomplete\"\n    },\n    {\n      \"type\": \"message\",\n      \"role\": \"developer\",\n      \"content\": \"<string>\",\n      \"id\": \"<string>\",\n      \"status\": \"incomplete\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"exercitation_be3\": true,\n        \"est_2\": 386763\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"irure__f\": \"eiusmod nisi\",\n        \"voluptate2\": 61592410,\n        \"dof\": true\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": \"none\",\n  \"truncation\": \"auto\",\n  \"parallel_tool_calls\": \"<boolean>\",\n  \"background\": \"<boolean>\",\n  \"metadata\": {\n    \"veniam_e6\": \"<string>\",\n    \"ut_d82\": \"<string>\",\n    \"tempor02c\": \"<string>\",\n    \"ullamco_07\": \"<string>\"\n  },\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"store\": \"<boolean>\",\n  \"service_tier\": \"<string>\",\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\"\n  },\n  \"incomplete_details\": {\n    \"reason\": \"<string>\"\n  },\n  \"frequency_penalty\": \"<number>\",\n  \"presence_penalty\": \"<number>\",\n  \"user\": \"<string>\",\n  \"completed_at\": \"<integer>\",\n  \"usage\": {\n    \"input_tokens\": \"<integer>\",\n    \"output_tokens\": \"<integer>\",\n    \"total_tokens\": \"<integer>\",\n    \"input_tokens_details\": {\n      \"cached_tokens\": \"<integer>\"\n    },\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": \"<integer>\"\n    },\n    \"start_time\": \"<number>\",\n    \"end_time\": \"<number>\",\n    \"time_to_first_token\": \"<number>\",\n    \"total_latency\": \"<number>\",\n    \"output_tokens_per_sec\": \"<number>\",\n    \"output_tokens_after_first_per_sec\": \"<number>\",\n    \"total_tokens_per_sec\": \"<number>\",\n    \"acceptance_rate\": \"<number>\",\n    \"is_last_response\": \"<boolean>\"\n  },\n  \"instructions\": \"<string>\",\n  \"top_k\": \"<integer>\",\n  \"max_tool_calls\": \"<integer>\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"high\",\n    \"summary\": \"<string>\"\n  },\n  \"max_output_tokens\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"previous_response_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:18.000Z",
+              "updatedAt": "2026-10-22T01:51:18.000Z",
+              "uid": "35240-4634b9b2-4632-4399-aff5-7f3a8d8b6771"
             },
             {
-              "id": "e9aef924-2878-4aa8-a41a-74a9c710d579",
-              "name": "Bad Request — missing or invalid parameters",
+              "id": "d43893b0-00ac-4735-b1f0-03b85b18f05a",
+              "name": "Bad Request \u2014 missing or invalid parameters",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "responses"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": 1024,\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": 5,\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"in_83\": true,\n        \"in_2_\": \"dolor elit sint eiusmod laboris\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"occaecat_430\": \"irure\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"anim9ce\": \"<string>\",\n    \"aliquip_56_\": \"<string>\",\n    \"nisi_885\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/responses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "responses"
+                  ]
                 }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"message\": \"Missing required field: 'input'.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"input\",\n    \"code\": \"missing_required_field\"\n  },\n  \"request_id\": \"abc123\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:18.000Z",
+              "updatedAt": "2026-10-22T01:51:18.000Z",
+              "uid": "35240-d43893b0-00ac-4735-b1f0-03b85b18f05a"
             },
             {
-              "id": "e07f00f8-40f5-4a2f-b454-13f8b0bb90d7",
-              "name": "Unauthorized — invalid or missing API key",
+              "id": "20aec461-460c-4bfb-8b97-fea2a93043e7",
+              "name": "Unauthorized \u2014 invalid or missing API key",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "responses"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": 1024,\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": 5,\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"in_83\": true,\n        \"in_2_\": \"dolor elit sint eiusmod laboris\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"occaecat_430\": \"irure\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"anim9ce\": \"<string>\",\n    \"aliquip_56_\": \"<string>\",\n    \"nisi_885\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/responses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "responses"
+                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: *****. You can find your API key at https://cloud.sambanova.ai/apis.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"invalid_api_key\"\n  },\n  \"request_id\": \"abc126\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:18.000Z",
+              "updatedAt": "2026-10-22T01:51:18.000Z",
+              "uid": "35240-20aec461-460c-4bfb-8b97-fea2a93043e7"
             },
             {
-              "id": "952791da-99a2-4094-a4ec-77a917238616",
-              "name": "Not found — model does not exist or is not accessible",
+              "id": "e2fe6c60-17bf-4a37-9789-66a041c4862e",
+              "name": "Not found \u2014 model does not exist or is not accessible",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "responses"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": 1024,\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": 5,\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"in_83\": true,\n        \"in_2_\": \"dolor elit sint eiusmod laboris\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"occaecat_430\": \"irure\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"anim9ce\": \"<string>\",\n    \"aliquip_56_\": \"<string>\",\n    \"nisi_885\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/responses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "responses"
+                  ]
                 }
               },
               "status": "Not Found",
               "code": 404,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"message\": \"The model `abc` does not exist or you do not have access to it.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"model\",\n    \"code\": \"model_not_found\"\n  },\n  \"request_id\": \"abc128\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:18.000Z",
+              "updatedAt": "2026-10-22T01:51:18.000Z",
+              "uid": "35240-e2fe6c60-17bf-4a37-9789-66a041c4862e"
             },
             {
-              "id": "035fd7bf-4a83-47d5-b25c-84290a01f734",
+              "id": "073efb17-e6ae-494e-bde3-1d06e9f5e060",
               "name": "Request Timeout",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "responses"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": 1024,\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": 5,\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"in_83\": true,\n        \"in_2_\": \"dolor elit sint eiusmod laboris\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"occaecat_430\": \"irure\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"anim9ce\": \"<string>\",\n    \"aliquip_56_\": \"<string>\",\n    \"nisi_885\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/responses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "responses"
+                  ]
                 }
               },
               "status": "Request Timeout",
               "code": 408,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:18.000Z",
+              "updatedAt": "2026-10-22T01:51:18.000Z",
+              "uid": "35240-073efb17-e6ae-494e-bde3-1d06e9f5e060"
             },
             {
-              "id": "a7ac0e1f-0b0c-4529-b4ff-a3ff8f4fa50b",
-              "name": "Gone — model is no longer available (deprecated or removed)",
+              "id": "ff4da111-3e83-403d-913c-fedc4f27927c",
+              "name": "Gone \u2014 model is no longer available (deprecated or removed)",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "responses"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": 1024,\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": 5,\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"in_83\": true,\n        \"in_2_\": \"dolor elit sint eiusmod laboris\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"occaecat_430\": \"irure\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"anim9ce\": \"<string>\",\n    \"aliquip_56_\": \"<string>\",\n    \"nisi_885\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/responses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "responses"
+                  ]
                 }
               },
               "status": "Gone",
               "code": 410,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:18.000Z",
+              "updatedAt": "2026-10-22T01:51:18.000Z",
+              "uid": "35240-ff4da111-3e83-403d-913c-fedc4f27927c"
             },
             {
-              "id": "744eab8f-ed46-4518-888a-a76321da513b",
-              "name": "Too Many Requests — rate limit exceeded",
+              "id": "1d1da689-ee68-4588-a4dd-559ad07d7e62",
+              "name": "Too Many Requests \u2014 rate limit exceeded",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "responses"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": 1024,\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": 5,\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"in_83\": true,\n        \"in_2_\": \"dolor elit sint eiusmod laboris\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"occaecat_430\": \"irure\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"anim9ce\": \"<string>\",\n    \"aliquip_56_\": \"<string>\",\n    \"nisi_885\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/responses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "responses"
+                  ]
                 }
               },
               "status": "Too Many Requests",
               "code": 429,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"param\": \"string\",\n    \"type\": \"string\",\n    \"error_model_output\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"param\": \"<string>\",\n    \"type\": \"<string>\",\n    \"error_model_output\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:18.000Z",
+              "updatedAt": "2026-10-22T01:51:18.000Z",
+              "uid": "35240-1d1da689-ee68-4588-a4dd-559ad07d7e62"
             },
             {
-              "id": "b1d42574-9262-49dc-a8f1-9ec90b65e786",
-              "name": "Internal Server Error — unexpected issue on server side",
+              "id": "bcf25b3b-99dc-412b-92fa-3f6852726183",
+              "name": "Internal Server Error \u2014 unexpected issue on server side",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "responses"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "text/plain"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": 1024,\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": 5,\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"in_83\": true,\n        \"in_2_\": \"dolor elit sint eiusmod laboris\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"occaecat_430\": \"irure\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"anim9ce\": \"<string>\",\n    \"aliquip_56_\": \"<string>\",\n    \"nisi_885\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/responses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "responses"
+                  ]
                 }
               },
               "status": "Internal Server Error",
               "code": 500,
+              "_postman_previewlanguage": "text",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "text/plain"
                 }
               ],
-              "body": "string",
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": "<string>",
+              "createdAt": "2026-10-22T01:51:18.000Z",
+              "updatedAt": "2026-10-22T01:51:18.000Z",
+              "uid": "35240-bcf25b3b-99dc-412b-92fa-3f6852726183"
             },
             {
-              "id": "21e958c6-0c40-4ff8-992a-d24f5677bac6",
+              "id": "936e19af-c41e-4228-a6ed-23090283eaa4",
               "name": "Service Temporarily Unavailable",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "responses"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "text/plain"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": 1024,\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": 5,\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"get_weather\",\n      \"description\": \"Get the current weather for a given location.\",\n      \"parameters\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"location\": {\n            \"type\": \"string\",\n            \"description\": \"The city and state, e.g. San Francisco, CA\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": null\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"input\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"stream\": false,\n  \"max_output_tokens\": \"<integer>\",\n  \"temperature\": 0.7,\n  \"top_p\": 1,\n  \"top_k\": \"<integer>\",\n  \"top_logprobs\": \"<integer>\",\n  \"frequency_penalty\": 0,\n  \"presence_penalty\": 0,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"in_83\": true,\n        \"in_2_\": \"dolor elit sint eiusmod laboris\"\n      },\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"type\": \"function\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"occaecat_430\": \"irure\"\n      },\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"max_tool_calls\": \"<integer>\",\n  \"tool_choice\": \"auto\",\n  \"text\": {\n    \"format\": {\n      \"type\": \"text\"\n    }\n  },\n  \"reasoning\": {\n    \"effort\": \"medium\"\n  },\n  \"user\": \"<string>\",\n  \"metadata\": {\n    \"anim9ce\": \"<string>\",\n    \"aliquip_56_\": \"<string>\",\n    \"nisi_885\": \"<string>\"\n  },\n  \"store\": false,\n  \"truncation\": \"disabled\",\n  \"previous_response_id\": \"<string>\",\n  \"background\": \"<boolean>\",\n  \"service_tier\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/responses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "responses"
+                  ]
                 }
               },
               "status": "Service Unavailable",
               "code": 503,
+              "_postman_previewlanguage": "text",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "text/plain"
                 }
               ],
-              "body": "Service Temporarily Unavailable",
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": "<string>",
+              "createdAt": "2026-10-22T01:51:18.000Z",
+              "updatedAt": "2026-10-22T01:51:18.000Z",
+              "uid": "35240-936e19af-c41e-4228-a6ed-23090283eaa4"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T01:51:18.000Z",
+          "updatedAt": "2026-10-22T01:51:18.000Z",
+          "uid": "35240-73cb69e1-b6d4-4e71-8b00-c01fbd4d6bf3"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://chat.sambanova.ai/api",
-      "key": "baseUrl"
+      "id": "9b31b692-74d6-400d-bc81-5530d4595415",
+      "createdAt": "2026-10-22T01:51:18.000Z",
+      "updatedAt": "2026-10-22T01:51:18.000Z",
+      "uid": "35240-9b31b692-74d6-400d-bc81-5530d4595415"
     }
   ],
   "auth": {
@@ -540,17 +584,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "6d52b688-6232-4cee-978a-14700bdb39c1",
-    "name": "Sambanova Agents Service Audio Responses API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Service for Sambanova agents\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.sambanova.ai/v1"
     }
-  }
+  ]
 }

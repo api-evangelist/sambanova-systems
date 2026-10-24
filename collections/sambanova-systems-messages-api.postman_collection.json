@@ -1,36 +1,667 @@
 {
+  "info": {
+    "_postman_id": "8ad0888b-bf42-4333-8401-b17302497954",
+    "name": "SambaNova cloud Messages API",
+    "description": "SambaNova cloud API Specification\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:51:03.000Z",
+    "updatedAt": "2026-10-22T01:51:03.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8ad0888b-bf42-4333-8401-b17302497954"
+  },
   "item": [
     {
-      "id": "629c8ca4-b3b8-4609-81af-37e97aaff54f",
-      "name": "Messages",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "messages",
       "item": [
         {
-          "id": "524d8d21-de34-4fe4-a823-501ead765046",
+          "name": "count_tokens",
+          "item": [
+            {
+              "name": "Count tokens for a message request",
+              "id": "32a1fbd2-d7aa-4ad0-91f5-1a34227c47f6",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_3\": true\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"et2b\": \"pariatur nostrud ip\",\n          \"eiusmod_6\": 30822557.705425262,\n          \"cillum_0eb\": -29699259\n        },\n        {\n          \"cupidatatc0\": \"dolor aute dolor\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_f\": false,\n        \"ut_0\": -88556038\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"eu65\": -85622794.95957772\n        },\n        {\n          \"est__eb\": \"enim magna laborum consectetur\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages/count_tokens",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages",
+                    "count_tokens"
+                  ]
+                },
+                "description": "Anthropic `count_tokens` compatible endpoint. Returns the number of input tokens that would be consumed by a `POST /messages` call with the same prompt content (system, messages, tools, tool_choice). Authentication accepts either the bearer `Authorization: Bearer ` header (SambaNova SDK default) or the `x-api-key` header (Anthropic SDK default); the same API key is used in both cases."
+              },
+              "response": [
+                {
+                  "id": "bc5a5cb8-0c22-41e6-9361-9a1bcea20d7b",
+                  "name": "Successful response. Returns the input token count.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                        "key": "anthropic-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_3\": true\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"et2b\": \"pariatur nostrud ip\",\n          \"eiusmod_6\": 30822557.705425262,\n          \"cillum_0eb\": -29699259\n        },\n        {\n          \"cupidatatc0\": \"dolor aute dolor\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_f\": false,\n        \"ut_0\": -88556038\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"eu65\": -85622794.95957772\n        },\n        {\n          \"est__eb\": \"enim magna laborum consectetur\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/count_tokens",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "count_tokens"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"input_tokens\": \"<integer>\"\n}",
+                  "createdAt": "2026-10-22T01:51:03.000Z",
+                  "updatedAt": "2026-10-22T01:51:03.000Z",
+                  "uid": "35240-bc5a5cb8-0c22-41e6-9361-9a1bcea20d7b"
+                },
+                {
+                  "id": "70057982-3366-4217-a5ac-3f8d4b50042f",
+                  "name": "Bad Request \u2014 `invalid_request_error`. Returned for missing or invalid parameters, unsupported feature flags, unsupported tool types, image source `type:\"url\"`, `document` content blocks, or non-object request bodies.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                        "key": "anthropic-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_3\": true\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"et2b\": \"pariatur nostrud ip\",\n          \"eiusmod_6\": 30822557.705425262,\n          \"cillum_0eb\": -29699259\n        },\n        {\n          \"cupidatatc0\": \"dolor aute dolor\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_f\": false,\n        \"ut_0\": -88556038\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"eu65\": -85622794.95957772\n        },\n        {\n          \"est__eb\": \"enim magna laborum consectetur\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/count_tokens",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "count_tokens"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:03.000Z",
+                  "updatedAt": "2026-10-22T01:51:03.000Z",
+                  "uid": "35240-70057982-3366-4217-a5ac-3f8d4b50042f"
+                },
+                {
+                  "id": "47120b57-d050-401b-95c2-7b115d9e729b",
+                  "name": "Unauthorized \u2014 `authentication_error`. Invalid or missing API key.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                        "key": "anthropic-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_3\": true\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"et2b\": \"pariatur nostrud ip\",\n          \"eiusmod_6\": 30822557.705425262,\n          \"cillum_0eb\": -29699259\n        },\n        {\n          \"cupidatatc0\": \"dolor aute dolor\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_f\": false,\n        \"ut_0\": -88556038\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"eu65\": -85622794.95957772\n        },\n        {\n          \"est__eb\": \"enim magna laborum consectetur\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/count_tokens",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "count_tokens"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:03.000Z",
+                  "updatedAt": "2026-10-22T01:51:03.000Z",
+                  "uid": "35240-47120b57-d050-401b-95c2-7b115d9e729b"
+                },
+                {
+                  "id": "8c17c3d9-5637-40d9-a429-9f76045c4808",
+                  "name": "Forbidden \u2014 `permission_error`. API key lacks access to the requested resource.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                        "key": "anthropic-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_3\": true\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"et2b\": \"pariatur nostrud ip\",\n          \"eiusmod_6\": 30822557.705425262,\n          \"cillum_0eb\": -29699259\n        },\n        {\n          \"cupidatatc0\": \"dolor aute dolor\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_f\": false,\n        \"ut_0\": -88556038\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"eu65\": -85622794.95957772\n        },\n        {\n          \"est__eb\": \"enim magna laborum consectetur\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/count_tokens",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "count_tokens"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:03.000Z",
+                  "updatedAt": "2026-10-22T01:51:03.000Z",
+                  "uid": "35240-8c17c3d9-5637-40d9-a429-9f76045c4808"
+                },
+                {
+                  "id": "d1eef68f-46b5-4783-9089-64ea4ac2fff9",
+                  "name": "Not Found \u2014 `not_found_error`. Model does not exist or is not accessible.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                        "key": "anthropic-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_3\": true\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"et2b\": \"pariatur nostrud ip\",\n          \"eiusmod_6\": 30822557.705425262,\n          \"cillum_0eb\": -29699259\n        },\n        {\n          \"cupidatatc0\": \"dolor aute dolor\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_f\": false,\n        \"ut_0\": -88556038\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"eu65\": -85622794.95957772\n        },\n        {\n          \"est__eb\": \"enim magna laborum consectetur\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/count_tokens",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "count_tokens"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:03.000Z",
+                  "updatedAt": "2026-10-22T01:51:03.000Z",
+                  "uid": "35240-d1eef68f-46b5-4783-9089-64ea4ac2fff9"
+                },
+                {
+                  "id": "3c38c4be-1acf-454a-8e3a-e2d6b8bbcadd",
+                  "name": "Payload Too Large \u2014 `request_too_large`. Request exceeds the maximum allowed size.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                        "key": "anthropic-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_3\": true\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"et2b\": \"pariatur nostrud ip\",\n          \"eiusmod_6\": 30822557.705425262,\n          \"cillum_0eb\": -29699259\n        },\n        {\n          \"cupidatatc0\": \"dolor aute dolor\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_f\": false,\n        \"ut_0\": -88556038\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"eu65\": -85622794.95957772\n        },\n        {\n          \"est__eb\": \"enim magna laborum consectetur\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/count_tokens",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "count_tokens"
+                      ]
+                    }
+                  },
+                  "status": "Request Entity Too Large",
+                  "code": 413,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:03.000Z",
+                  "updatedAt": "2026-10-22T01:51:03.000Z",
+                  "uid": "35240-3c38c4be-1acf-454a-8e3a-e2d6b8bbcadd"
+                },
+                {
+                  "id": "085ed937-2ad6-4948-9237-cfa2fe2bddf9",
+                  "name": "Too Many Requests \u2014 `rate_limit_error`. Rate limit exceeded.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                        "key": "anthropic-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_3\": true\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"et2b\": \"pariatur nostrud ip\",\n          \"eiusmod_6\": 30822557.705425262,\n          \"cillum_0eb\": -29699259\n        },\n        {\n          \"cupidatatc0\": \"dolor aute dolor\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_f\": false,\n        \"ut_0\": -88556038\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"eu65\": -85622794.95957772\n        },\n        {\n          \"est__eb\": \"enim magna laborum consectetur\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/count_tokens",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "count_tokens"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:03.000Z",
+                  "updatedAt": "2026-10-22T01:51:03.000Z",
+                  "uid": "35240-085ed937-2ad6-4948-9237-cfa2fe2bddf9"
+                },
+                {
+                  "id": "e50e1843-fa72-48e3-bc4c-4d09a69b1bbc",
+                  "name": "Internal Server Error \u2014 `api_error`. Unexpected issue on the server side.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                        "key": "anthropic-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_3\": true\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"et2b\": \"pariatur nostrud ip\",\n          \"eiusmod_6\": 30822557.705425262,\n          \"cillum_0eb\": -29699259\n        },\n        {\n          \"cupidatatc0\": \"dolor aute dolor\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_f\": false,\n        \"ut_0\": -88556038\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"eu65\": -85622794.95957772\n        },\n        {\n          \"est__eb\": \"enim magna laborum consectetur\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/count_tokens",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "count_tokens"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:03.000Z",
+                  "updatedAt": "2026-10-22T01:51:03.000Z",
+                  "uid": "35240-e50e1843-fa72-48e3-bc4c-4d09a69b1bbc"
+                },
+                {
+                  "id": "e149ecb2-7812-4649-ae16-a8e181df9af8",
+                  "name": "Service Unavailable \u2014 `overloaded_error`. Backend is temporarily over capacity.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
+                        "key": "anthropic-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_3\": true\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"et2b\": \"pariatur nostrud ip\",\n          \"eiusmod_6\": 30822557.705425262,\n          \"cillum_0eb\": -29699259\n        },\n        {\n          \"cupidatatc0\": \"dolor aute dolor\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"Lorem_f\": false,\n        \"ut_0\": -88556038\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"eu65\": -85622794.95957772\n        },\n        {\n          \"est__eb\": \"enim magna laborum consectetur\"\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/messages/count_tokens",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "messages",
+                        "count_tokens"
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:51:03.000Z",
+                  "updatedAt": "2026-10-22T01:51:03.000Z",
+                  "uid": "35240-e149ecb2-7812-4649-ae16-a8e181df9af8"
+                }
+              ],
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-32a1fbd2-d7aa-4ad0-91f5-1a34227c47f6"
+            }
+          ],
+          "id": "26cf10ea-9a66-4483-86d7-389301814b50",
+          "createdAt": "2026-10-22T01:51:03.000Z",
+          "updatedAt": "2026-10-22T01:51:03.000Z",
+          "uid": "35240-26cf10ea-9a66-4483-86d7-389301814b50"
+        },
+        {
           "name": "Create a message",
+          "id": "a108805f-205e-4194-beca-0119fb7d3a44",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Create a message",
-            "description": {
-              "content": "Anthropic Messages API compatible endpoint. Generates a model response for the supplied conversation. Authentication accepts either the bearer `Authorization: Bearer <key>` header (SambaNova SDK default) or the `x-api-key` header (Anthropic SDK default); the same API key is used in both cases. When `stream: true` is set, the response is a sequence of Server-Sent Events whose payloads conform to `MessageStreamEvent`; otherwise the response is a single `Message` object.",
-              "type": "text/plain"
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
             },
-            "url": {
-              "path": [
-                "messages"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
+            "method": "POST",
             "header": [
               {
-                "disabled": false,
-                "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
+                "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
                 "key": "anthropic-version",
                 "value": "<string>"
               },
@@ -43,1198 +674,648 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{bearerToken}}"
-                }
-              ]
-            },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\"\n  },\n  \"thinking\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"key_0\": \"string\"\n      },\n      \"cache_control\": {\n        \"type\": \"<string>\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"key_0\": 7509.158990366976\n        },\n        {\n          \"key_0\": false,\n          \"key_1\": 5834.424871818353,\n          \"key_2\": 784\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"key_0\": \"string\",\n        \"key_1\": 3317.15027840364,\n        \"key_2\": \"string\",\n        \"key_3\": 2365\n      },\n      \"cache_control\": {\n        \"type\": \"<string>\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"key_0\": 9413\n        },\n        {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": 3894\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"<string>\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"<string>\",\n  \"container\": \"<string>\"\n}",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
               "options": {
                 "raw": {
+                  "headerFamily": "json",
                   "language": "json"
                 }
               }
-            }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/messages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "messages"
+              ]
+            },
+            "description": "Anthropic Messages API compatible endpoint. Generates a model response for the supplied conversation. Authentication accepts either the bearer `Authorization: Bearer ` header (SambaNova SDK default) or the `x-api-key` header (Anthropic SDK default); the same API key is used in both cases. When `stream: true` is set, the response is a sequence of Server-Sent Events whose payloads conform to `MessageStreamEvent`; otherwise the response is a single `Message` object."
           },
           "response": [
             {
-              "id": "593ce5e4-4ef3-4c1f-a995-22e51d4b5e87",
+              "id": "da6a2935-bc6c-4117-a0fc-11fd43b616f3",
               "name": "Successful response. Returns a `Message` object (non-streaming), or a stream of Server-Sent Events whose payloads conform to `MessageStreamEvent` ending with a `message_stop` event (when `stream: true`).",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
                   },
                   {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
                 }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"id\": \"string\",\n  \"type\": \"message\",\n  \"role\": \"assistant\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"string\",\n      \"citations\": [\n        {\n          \"key_0\": \"string\"\n        },\n        {\n          \"key_0\": 1173,\n          \"key_1\": 9325,\n          \"key_2\": 181.16132444113032\n        }\n      ]\n    },\n    {\n      \"type\": \"text\",\n      \"text\": \"string\",\n      \"citations\": [\n        {\n          \"key_0\": 1370.331296625683\n        },\n        {\n          \"key_0\": 6133,\n          \"key_1\": 3521.228506206768\n        }\n      ]\n    }\n  ],\n  \"model\": \"string\",\n  \"stop_reason\": \"model_context_window_exceeded\",\n  \"usage\": {\n    \"input_tokens\": 827,\n    \"output_tokens\": 6544,\n    \"cache_creation_input_tokens\": 8914,\n    \"cache_read_input_tokens\": 7581,\n    \"server_tool_use\": {\n      \"key_0\": 7855.02363588773,\n      \"key_1\": 7003,\n      \"key_2\": 6949.814684501271\n    },\n    \"service_tier\": \"string\",\n    \"cache_creation\": {\n      \"key_0\": 4986\n    },\n    \"inference_geo\": \"string\"\n  },\n  \"stop_sequence\": \"string\",\n  \"stop_details\": {\n    \"type\": \"refusal\",\n    \"category\": \"bio\"\n  },\n  \"container\": {\n    \"id\": \"string\",\n    \"expires_at\": \"string\"\n  }\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<string>\",\n  \"type\": \"message\",\n  \"role\": \"assistant\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"<string>\",\n      \"citations\": [\n        {\n          \"deserunt71\": -18912772,\n          \"deserunt_7\": false,\n          \"qui_90a\": \"reprehenderit irure ex fugiat\"\n        },\n        {\n          \"amet_f81\": 39639881,\n          \"dolor89b\": \"dolor laboris officia elit n\",\n          \"proident__32\": 21303929\n        }\n      ]\n    },\n    {\n      \"type\": \"text\",\n      \"text\": \"<string>\",\n      \"citations\": [\n        {\n          \"sunt44\": -30308341.173614338,\n          \"ut889\": 29499799\n        },\n        {\n          \"exercitation_3f8\": \"do magna elit ad\",\n          \"irure_4ac\": 2846783.9469101876,\n          \"minim159\": 37733282.26009157\n        }\n      ]\n    }\n  ],\n  \"model\": \"<string>\",\n  \"stop_reason\": \"pause_turn\",\n  \"usage\": {\n    \"input_tokens\": \"<integer>\",\n    \"output_tokens\": \"<integer>\",\n    \"cache_creation_input_tokens\": \"<integer>\",\n    \"cache_read_input_tokens\": \"<integer>\",\n    \"server_tool_use\": {\n      \"id_83\": true,\n      \"sed_6\": true\n    },\n    \"service_tier\": \"<string>\",\n    \"cache_creation\": {\n      \"velit99\": \"veniam magna Duis dolore\"\n    },\n    \"inference_geo\": \"<string>\"\n  },\n  \"stop_sequence\": \"<string>\",\n  \"stop_details\": {\n    \"type\": \"refusal\",\n    \"category\": \"bio\"\n  },\n  \"container\": {\n    \"id\": \"<string>\",\n    \"expires_at\": \"<string>\"\n  }\n}",
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-da6a2935-bc6c-4117-a0fc-11fd43b616f3"
             },
             {
-              "id": "072a0494-daf7-4bdc-a75f-7c212963fa25",
-              "name": "Bad Request — `invalid_request_error`. Returned for missing or invalid parameters, unsupported feature flags (e.g. `thinking` with `type:\"enabled\"` or `\"adaptive\"`), unsupported tool types (`web_search`, `code_execution`, `bash`, `text_editor`, `memory`, `tool_search` variants), image source `type:\"url\"`, `document` content blocks, or non-object request bodies.",
+              "id": "f644b1d3-00d1-4af1-b879-3f5e9662d967",
+              "name": "Bad Request \u2014 `invalid_request_error`. Returned for missing or invalid parameters, unsupported feature flags (e.g. `thinking` with `type:\"enabled\"` or `\"adaptive\"`), unsupported tool types (`web_search`, `code_execution`, `bash`, `text_editor`, `memory`, ",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
                   },
                   {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
                 }
               },
               "status": "Bad Request",
               "code": 400,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-f644b1d3-00d1-4af1-b879-3f5e9662d967"
             },
             {
-              "id": "1599fbf6-6780-402b-8958-e25a18fd1b7d",
-              "name": "Unauthorized — `authentication_error`. Invalid or missing API key.",
+              "id": "5abaced7-5ae4-44c5-b8f5-becdb0dab461",
+              "name": "Unauthorized \u2014 `authentication_error`. Invalid or missing API key.",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
                   },
                   {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-5abaced7-5ae4-44c5-b8f5-becdb0dab461"
             },
             {
-              "id": "48d67ead-05dc-48bd-af00-524b61447aa8",
-              "name": "Forbidden — `permission_error`. API key lacks access to the requested resource.",
+              "id": "f195a324-2f44-41d6-acd6-b286f97e78ba",
+              "name": "Forbidden \u2014 `permission_error`. API key lacks access to the requested resource.",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
                   },
                   {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
                 }
               },
               "status": "Forbidden",
               "code": 403,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-f195a324-2f44-41d6-acd6-b286f97e78ba"
             },
             {
-              "id": "a1e5bd66-b68e-4e14-9184-0e74f97807dd",
-              "name": "Not Found — `not_found_error`. Model does not exist or is not accessible.",
+              "id": "d7dbdd55-27a3-48ff-9c0c-b9a2e9a6d016",
+              "name": "Not Found \u2014 `not_found_error`. Model does not exist or is not accessible.",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
                   },
                   {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
                 }
               },
               "status": "Not Found",
               "code": 404,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-d7dbdd55-27a3-48ff-9c0c-b9a2e9a6d016"
             },
             {
-              "id": "e82de673-fc30-4ee8-8810-c755d8e68065",
-              "name": "Payload Too Large — `request_too_large`. Request exceeds the maximum allowed size.",
+              "id": "ac2055da-357e-4c74-9af5-09070205b8b2",
+              "name": "Payload Too Large \u2014 `request_too_large`. Request exceeds the maximum allowed size.",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
                   },
                   {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
                 }
               },
               "status": "Request Entity Too Large",
               "code": 413,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-ac2055da-357e-4c74-9af5-09070205b8b2"
             },
             {
-              "id": "d2a33bec-677f-4a7a-a855-1a3f7041692e",
-              "name": "Too Many Requests — `rate_limit_error`. Rate limit exceeded.",
+              "id": "eb987a89-fc1f-45f6-a75c-e453655016f1",
+              "name": "Too Many Requests \u2014 `rate_limit_error`. Rate limit exceeded.",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
                   },
                   {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
                 }
               },
               "status": "Too Many Requests",
               "code": 429,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-eb987a89-fc1f-45f6-a75c-e453655016f1"
             },
             {
-              "id": "e4af3346-13c2-4e88-9fda-561ed74c71bc",
-              "name": "Internal Server Error — `api_error`. Unexpected issue on the server side.",
+              "id": "5efdc769-ff9c-40bd-bea8-d9532e49aa0c",
+              "name": "Internal Server Error \u2014 `api_error`. Unexpected issue on the server side.",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
                   },
                   {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
                 }
               },
               "status": "Internal Server Error",
               "code": 500,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-5efdc769-ff9c-40bd-bea8-d9532e49aa0c"
             },
             {
-              "id": "b52bf68f-cf3f-4660-a06d-f4fc227eaa53",
-              "name": "Not Implemented — `not_implemented_error`. Currently returned when `stream: true` is set, until streaming support lands (PRD Phase 4).",
+              "id": "a8317d3a-e5b8-4e7f-b3d3-75218b3bfd61",
+              "name": "Not Implemented \u2014 `not_implemented_error`. Currently returned when `stream: true` is set, until streaming support lands (PRD Phase 4).",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "POST",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
                   },
                   {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
+                    "key": "Content-Type",
+                    "value": "application/json"
                   },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/messages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
                 }
               },
               "status": "Not Implemented",
               "code": 501,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-a8317d3a-e5b8-4e7f-b3d3-75218b3bfd61"
             },
             {
-              "id": "e0edc64e-011b-4ab2-8063-9e26052d931c",
-              "name": "Service Unavailable — `overloaded_error`. Backend is temporarily over capacity.",
+              "id": "ae1ebbe9-2347-41bd-9255-518e7387e338",
+              "name": "Service Unavailable \u2014 `overloaded_error`. Backend is temporarily over capacity.",
               "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape \u2014 included for drop-in SDK compatibility.",
+                    "key": "anthropic-version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"max_tokens\": \"<integer>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"top_k\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": false,\n  \"metadata\": {\n    \"user_id\": \"<string>\",\n    \"estf41\": \"ut\"\n  },\n  \"thinking\": {\n    \"type\": \"disabled\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"voluptate_a75\": -49655251.9473405,\n        \"aliquip_3c\": false\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"voluptatee6\": -83750418,\n          \"tempor_2c\": true\n        },\n        {\n          \"nisifa\": -81347464.04650551,\n          \"aliqua8\": 90713897.44248927\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"custom\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"do1f\": \"pariatur ullam\",\n        \"cupidatat_6ed\": 51162464,\n        \"ullamco_20\": \"nulla amet consequat\"\n      },\n      \"cache_control\": {\n        \"type\": \"ephemeral\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"sunte30\": -33789480.05737721,\n          \"reprehenderit_29\": \"Lorem esse aliqua in\",\n          \"ex_4\": \"ad adipisicing ex\",\n          \"consectetur_252\": 90692930\n        },\n        {\n          \"laboris_1\": 28750357\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"auto\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  },\n  \"service_tier\": \"auto\",\n  \"container\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
+                  "raw": "{{baseUrl}}/messages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "messages"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape — included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
+                  ]
                 }
               },
               "status": "Service Unavailable",
               "code": 503,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"permission_error\",\n    \"message\": \"<string>\"\n  },\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:51:03.000Z",
+              "updatedAt": "2026-10-22T01:51:03.000Z",
+              "uid": "35240-ae1ebbe9-2347-41bd-9255-518e7387e338"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "07c5577f-85a0-4e04-842e-f91dc3b5cc44",
-          "name": "Count tokens for a message request",
-          "request": {
-            "name": "Count tokens for a message request",
-            "description": {
-              "content": "Anthropic `count_tokens` compatible endpoint. Returns the number of input tokens that would be consumed by a `POST /messages` call with the same prompt content (system, messages, tools, tool_choice). Authentication accepts either the bearer `Authorization: Bearer <key>` header (SambaNova SDK default) or the `x-api-key` header (Anthropic SDK default); the same API key is used in both cases.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "messages",
-                "count_tokens"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "disabled": false,
-                "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
-                "key": "anthropic-version",
-                "value": "<string>"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{bearerToken}}"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"system\": \"<string>\",\n  \"thinking\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"key_0\": 8389.778274038465,\n        \"key_1\": false\n      },\n      \"cache_control\": {\n        \"type\": \"<string>\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"key_0\": 9150\n        },\n        {\n          \"key_0\": 1943.3276771317164,\n          \"key_1\": 8310.413214372255\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"input_schema\": {\n        \"key_0\": 404,\n        \"key_1\": 1547,\n        \"key_2\": 2359\n      },\n      \"cache_control\": {\n        \"type\": \"<string>\",\n        \"ttl\": \"<string>\"\n      },\n      \"input_examples\": [\n        {\n          \"key_0\": true\n        },\n        {\n          \"key_0\": 1196,\n          \"key_1\": 8685.386043144268\n        }\n      ],\n      \"allowed_callers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"defer_loading\": \"<boolean>\",\n      \"eager_input_streaming\": \"<boolean>\",\n      \"strict\": \"<boolean>\"\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"<string>\",\n    \"disable_parallel_tool_use\": \"<boolean>\"\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "8849e396-b387-4695-a18b-7dbae1757d7b",
-              "name": "Successful response. Returns the input token count.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages",
-                    "count_tokens"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"input_tokens\": 3714\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "5f0c7736-e1e1-4c95-8551-37f86a2c797f",
-              "name": "Bad Request — `invalid_request_error`. Returned for missing or invalid parameters, unsupported feature flags, unsupported tool types, image source `type:\"url\"`, `document` content blocks, or non-object request bodies.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages",
-                    "count_tokens"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "591c7b1a-369b-486e-887c-71c63ed1cd00",
-              "name": "Unauthorized — `authentication_error`. Invalid or missing API key.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages",
-                    "count_tokens"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "41219c0b-ff0e-469b-adbd-88701725f4b0",
-              "name": "Forbidden — `permission_error`. API key lacks access to the requested resource.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages",
-                    "count_tokens"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d5db2b6f-8a9f-4d4b-bdc1-cf4bf13349e2",
-              "name": "Not Found — `not_found_error`. Model does not exist or is not accessible.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages",
-                    "count_tokens"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "90f7572f-288b-4caa-89ab-0d3bb20e073d",
-              "name": "Payload Too Large — `request_too_large`. Request exceeds the maximum allowed size.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages",
-                    "count_tokens"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Request Entity Too Large",
-              "code": 413,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "86ab2cf6-0f00-4782-b382-412e13c8b9ca",
-              "name": "Too Many Requests — `rate_limit_error`. Rate limit exceeded.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages",
-                    "count_tokens"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8104b85a-b4da-4f84-9b57-ed523abff16d",
-              "name": "Internal Server Error — `api_error`. Unexpected issue on the server side.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages",
-                    "count_tokens"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "4bc81070-a6aa-40d8-9007-69c461bc027b",
-              "name": "Service Unavailable — `overloaded_error`. Backend is temporarily over capacity.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "messages",
-                    "count_tokens"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "disabled": false,
-                    "description": "Anthropic API version header sent by the official `anthropic` SDK. Accepted (any value) but currently has no effect on response shape - included for drop-in SDK compatibility.",
-                    "key": "anthropic-version",
-                    "value": "2023-06-01"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"model\": \"DeepSeek-V3.1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Hello, Claude!\"\n    }\n  ]\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Service Unavailable",
-              "code": 503,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"not_implemented_error\",\n    \"message\": \"string\"\n  },\n  \"request_id\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T01:51:03.000Z",
+          "updatedAt": "2026-10-22T01:51:03.000Z",
+          "uid": "35240-a108805f-205e-4194-beca-0119fb7d3a44"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://chat.sambanova.ai/api",
-      "key": "baseUrl"
+      "id": "6591c40e-2cc2-4343-8206-939d762c2a7a",
+      "createdAt": "2026-10-22T01:51:03.000Z",
+      "updatedAt": "2026-10-22T01:51:03.000Z",
+      "uid": "35240-6591c40e-2cc2-4343-8206-939d762c2a7a"
     }
   ],
   "auth": {
@@ -1242,17 +1323,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "f4f6eb37-aef9-46b5-99ea-669a1ae51296",
-    "name": "Sambanova Agents Service Audio Messages API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Service for Sambanova agents\n\nContact Support:\n Name: SambaNova information\n Email: info@sambanova.ai",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.sambanova.ai/v1"
     }
-  }
+  ]
 }
